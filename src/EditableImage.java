@@ -31,7 +31,6 @@ class EditableImage {
         WritableRaster raster = bi.copyData(null);
         return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
     }
-    
     public void open(String filePath) throws Exception {
         imageFilename = filePath;
         opsFilename = imageFilename + ".ops";
@@ -43,7 +42,17 @@ class EditableImage {
         try {
             FileInputStream fileIn = new FileInputStream(this.opsFilename);
             ObjectInputStream objIn = new ObjectInputStream(fileIn);
-            ops = (Stack<ImageOperation>) objIn.readObject();
+
+            // Silence the Java compiler warning about type casting.
+            // Understanding the cause of the warning is way beyond
+            // the scope of COSC202, but if you're interested, it has
+            // to do with "type erasure" in Java: the compiler cannot
+            // produce code that fails at this point in all cases in
+            // which there is actually a type mismatch for one of the
+            // elements within the Stack, i.e., a non-ImageOperation.
+            @SuppressWarnings("unchecked")
+            Stack<ImageOperation> opsFromFile = (Stack<ImageOperation>) objIn.readObject();
+            ops = opsFromFile;
             redoOps.clear();
             objIn.close();
             fileIn.close();

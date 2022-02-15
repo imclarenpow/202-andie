@@ -1,3 +1,5 @@
+package cosc202.andie;
+
 import javax.swing.*;
 
 public abstract class ImageAction extends AbstractAction {

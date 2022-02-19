@@ -6,40 +6,53 @@ import javax.swing.*;
 import javax.imageio.*;
 
 /**
+ * <p>
  * Main class for A Non-Destructive Image Editor (ANDIE).
+ * </p>
  * 
+ * <p>
  * This class is the entry point for the program.
  * It creates a Graphical User Interface (GUI) that provides access to various image editing and processing operations.
+ * </p>
+ * 
+ * <p>
+ * <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+ * </p>
  * 
  * @author Steven Mills
- * @version 0.0
+ * @version 1.0
  */
 public class Andie {
 
     /**
+     * <p>
      * Launches the main GUI for the ANDIE program.
+     * </p>
      * 
+     * <p>
      * This method sets up an interface consisting of an active image (an {@code ImagePanel})
      * and various menus which can be used to trigger operations to load, save, edit, etc. 
-     * These operations are implemented as {@code ImageAction}s grouped by their general purpose into menus.
+     * These operations are implemented {@link ImageOperation}s and triggerd via 
+     * {@code ImageAction}s grouped by their general purpose into menus.
+     * </p>
      * 
      * @see ImagePanel
      * @see ImageAction
+     * @see ImageOperation
      * @see FileActions
      * @see EditActions
      * @see ViewActions
      * @see FilterActions
      * @see ColourActions
+     * 
+     * @throws Exception if something goes wrong.
      */
-    private static void createAndShowGUI() {
+    private static void createAndShowGUI() throws Exception {
         // Set up the main GUI frame
         JFrame frame = new JFrame("ANDIE");
-        try {
-            Image image = ImageIO.read(new File("./src/icon.png"));
-            frame.setIconImage(image);
-        } catch (Exception e) {
-            System.err.println("Failed to load ANDIE icon");
-        }
+
+        Image image = ImageIO.read(new File("./src/icon.png"));
+        frame.setIconImage(image);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // The main content area is an ImagePanel
@@ -74,23 +87,30 @@ public class Andie {
         frame.setJMenuBar(menuBar);
         frame.pack();
         frame.setVisible(true);
-
-
     }
-/**
- * Main entry point to the ANDIE program.
- * 
- * Creates and launches the main GUI in a separate thread.
- * As a result, this is essentially a wrapper around {@code createAndShowGUI()}.
- * 
- * @param args - command line arguments, not currently used
- * @throws Exception - if something goes awry
- * @see #createAndShowGUI()
- */
+
+    /**
+     * <p>
+     * Main entry point to the ANDIE program.
+     * </p>
+     * 
+     * <p>
+     * Creates and launches the main GUI in a separate thread.
+     * As a result, this is essentially a wrapper around {@code createAndShowGUI()}.
+     * </p>
+     * 
+     * @param args Command line arguments, not currently used
+     * @throws Exception If something goes awry
+     * @see #createAndShowGUI()
+     */
     public static void main(String[] args) throws Exception {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                createAndShowGUI();
+                try {
+                    createAndShowGUI();
+                } catch (Exception ex) {
+                    System.exit(1);
+                }
             }
         });
     }

@@ -109,6 +109,7 @@ public class Andie {
                 try {
                     createAndShowGUI();
                 } catch (Exception ex) {
+                    ex.printStackTrace();
                     System.exit(1);
                 }
             }

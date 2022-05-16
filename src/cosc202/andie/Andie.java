@@ -1,6 +1,5 @@
 package cosc202.andie;
 
-import java.io.*;
 import java.awt.*;
 import javax.swing.*;
 import javax.imageio.*;
@@ -51,7 +50,7 @@ public class Andie {
         // Set up the main GUI frame
         JFrame frame = new JFrame("ANDIE");
 
-        Image image = ImageIO.read(new File("./src/icon.png"));
+        Image image = ImageIO.read(Andie.class.getClassLoader().getResource("icon.png"));
         frame.setIconImage(image);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -109,6 +108,7 @@ public class Andie {
                 try {
                     createAndShowGUI();
                 } catch (Exception ex) {
+                    ex.printStackTrace();
                     System.exit(1);
                 }
             }

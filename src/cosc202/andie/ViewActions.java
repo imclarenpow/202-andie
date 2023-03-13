@@ -8,7 +8,6 @@ import javax.swing.*;
  * <p>
  * Actions provided by the View menu.
  * </p>
- * 
  * <p>
  * The View menu contains actions that affect how the image is displayed in the application.
  * These actions do not affect the contents of the image itself, just the way it is displayed.

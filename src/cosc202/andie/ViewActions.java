@@ -4,7 +4,8 @@ import java.util.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-/**
+/**Test test
+ * 
  * <p>
  * Actions provided by the View menu.
  * </p>

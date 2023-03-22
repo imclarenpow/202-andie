@@ -4,3 +4,5 @@ doc
 
 # Ignore VSCode settings
 .vscode/settings.json
+
+*.class

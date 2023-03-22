@@ -39,6 +39,7 @@ public class FilterActions {
         //string values call lang
         actions = new ArrayList<Action>();
         actions.add(new MeanFilterAction(lang.text("meanfilter"), null, lang.text("applymean"), Integer.valueOf(KeyEvent.VK_M)));
+        actions.add(new SoftBlurAction(lang.text("softblur"), null, lang.text("applysoftblur"), Integer.valueOf(KeyEvent.VK_M)));
     }
 
     /**
@@ -116,5 +117,19 @@ public class FilterActions {
             target.getParent().revalidate();
         }
 
+    }
+
+    public class SoftBlurAction extends ImageAction {
+
+        SoftBlurAction(String name, ImageIcon icon, 
+                        String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            target.getImage().apply(new SoftBlur());
+            target.repaint();
+            target.getParent().revalidate();
+        }
     }
 }

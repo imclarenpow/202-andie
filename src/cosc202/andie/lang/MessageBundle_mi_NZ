@@ -18,6 +18,11 @@ file = Kōnae
 # FilterActions.java
 meanfilter = Tātari tikanga
 applymean = Hoatu he tātari tikanga
+# Line 22-25 Filled in in English for now
+gaussian = Gaussian filter
+applygaussian = Apply a Gaussian filter
+softblur = Soft Blur
+applysoftblur = Apply Soft Blur filter
 filter = Tātari
 enterfiltrad = Whakauruhia te radius tātari
 # ViewActions.java

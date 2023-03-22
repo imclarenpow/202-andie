@@ -39,7 +39,8 @@ public class FilterActions {
         //string values call lang
         actions = new ArrayList<Action>();
         actions.add(new MeanFilterAction(lang.text("meanfilter"), null, lang.text("applymean"), Integer.valueOf(KeyEvent.VK_M)));
-        actions.add(new SoftBlurAction(lang.text("softblur"), null, lang.text("applysoftblur"), Integer.valueOf(KeyEvent.VK_M)));
+        actions.add(new SoftBlurAction(lang.text("softblur"), null, lang.text("applysoftblur"), Integer.valueOf(KeyEvent.VK_S)));
+        actions.add(new GaussianFilterAction(lang.text("gaussian"), null, lang.text("applygaussian"), Integer.valueOf(KeyEvent.VK_G)));
     }
 
     /**
@@ -58,7 +59,38 @@ public class FilterActions {
 
         return fileMenu;
     }
+/**
+ * @author Isaac
+ * WIP modelled off of MeanFilter class, currently buggy, no output to be worked on.
+ */
+    public class GaussianFilterAction extends ImageAction{
+        GaussianFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic){
+            super(name, icon, desc, mnemonic);
+        }
+        public void actionPerformed(ActionEvent e) {
 
+            // Determine the radius - ask the user.
+            int radius = 1;
+
+            // Pop-up dialog box to ask for the radius value.
+            // problem is here
+            SpinnerNumberModel radiusModel = new SpinnerNumberModel(0.1, 0, 1, 0.1);
+            JSpinner radiusSpinner = new JSpinner(radiusModel);
+            int option = JOptionPane.showOptionDialog(null, radiusSpinner, lang.text("enterfiltrad"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+            // Check the return value from the dialog box.
+            if (option == JOptionPane.CANCEL_OPTION) {
+                return;
+            } else if (option == JOptionPane.OK_OPTION) {
+                radius = radiusModel.getNumber().intValue();
+            }
+
+            // Create and apply the filter
+            target.getImage().apply(new GaussianBlur(radius));
+            target.repaint();
+            target.getParent().revalidate();
+        }
+    }
     /**
      * <p>
      * Action to blur an image with a mean filter.

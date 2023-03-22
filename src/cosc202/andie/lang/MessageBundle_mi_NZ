@@ -25,6 +25,8 @@ softblur = Soft Blur
 applysoftblur = Apply Soft Blur filter
 filter = Tātari
 enterfiltrad = Whakauruhia te radius tātari
+softblur = Ngohe ngawari
+applysoftblur = Hoatu he tātari purongo ngawari
 # ViewActions.java
 zoomin = Topa Mai
 zoomout = Topa Atu

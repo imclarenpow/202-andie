@@ -3,6 +3,8 @@ package cosc202.andie;
 import java.util.*;
 import java.awt.event.*;
 import javax.swing.*;
+
+import cosc202.andie.lang.LanguageSupport;
  /**
  * <p>
  * Actions provided by the Edit menu.
@@ -22,7 +24,8 @@ import javax.swing.*;
  * @version 1.0
  */
 public class EditActions {
-    
+    // creating an instance of the LanguageSupport class for Internationalisation
+    private LanguageSupport lang = new LanguageSupport();
     /** A list of actions for the Edit menu. */
     protected ArrayList<Action> actions;
 
@@ -32,9 +35,10 @@ public class EditActions {
      * </p>
      */
     public EditActions() {
+        //string values call lang
         actions = new ArrayList<Action>();
-        actions.add(new UndoAction("Undo", null, "Undo", Integer.valueOf(KeyEvent.VK_Z)));
-        actions.add(new RedoAction("Redo", null, "Redo", Integer.valueOf(KeyEvent.VK_Y)));
+        actions.add(new UndoAction(lang.text("undo"), null, lang.text("undo"), Integer.valueOf(KeyEvent.VK_Z)));
+        actions.add(new RedoAction(lang.text("redo"), null, lang.text("redo"), Integer.valueOf(KeyEvent.VK_Y)));
     }
 
     /**
@@ -45,7 +49,7 @@ public class EditActions {
      * @return The edit menu UI element.
      */
     public JMenu createMenu() {
-        JMenu editMenu = new JMenu("Edit");
+        JMenu editMenu = new JMenu(lang.text("edit"));
 
         for (Action action: actions) {
             editMenu.add(new JMenuItem(action));

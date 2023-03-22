@@ -3,6 +3,7 @@ package cosc202.andie;
 import java.util.*;
 import java.awt.event.*;
 import javax.swing.*;
+import cosc202.andie.lang.*;
 
 /**
  * <p>
@@ -23,7 +24,9 @@ import javax.swing.*;
  * @version 1.0
  */
 public class ColourActions {
-    
+    // creating an instance of the LanguageSupport class for Internationalisation
+    private LanguageSupport lang = new LanguageSupport();
+   
     /** A list of actions for the Colour menu. */
     protected ArrayList<Action> actions;
 
@@ -34,7 +37,8 @@ public class ColourActions {
      */
     public ColourActions() {
         actions = new ArrayList<Action>();
-        actions.add(new ConvertToGreyAction("Greyscale", null, "Convert to greyscale", Integer.valueOf(KeyEvent.VK_G)));
+        //note that all the strings call the lang instance
+        actions.add(new ConvertToGreyAction(lang.text("greyscale"), null, lang.text("convtogray"), Integer.valueOf(KeyEvent.VK_G)));
     }
 
     /**
@@ -45,7 +49,8 @@ public class ColourActions {
      * @return The colour menu UI element.
      */
     public JMenu createMenu() {
-        JMenu fileMenu = new JMenu("Colour");
+        // again calling the lang instance
+        JMenu fileMenu = new JMenu(lang.text("colour"));
 
         for(Action action: actions) {
             fileMenu.add(new JMenuItem(action));

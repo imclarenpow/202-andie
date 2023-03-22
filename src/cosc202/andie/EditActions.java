@@ -39,6 +39,7 @@ public class EditActions {
         actions = new ArrayList<Action>();
         actions.add(new UndoAction(lang.text("undo"), null, lang.text("undo"), Integer.valueOf(KeyEvent.VK_Z)));
         actions.add(new RedoAction(lang.text("redo"), null, lang.text("redo"), Integer.valueOf(KeyEvent.VK_Y)));
+        actions.add(new ResizeAction(lang.text("resize"), null, lang.text("resize"), Integer.valueOf(KeyEvent.VK_R)));
     }
 
     /**
@@ -143,4 +144,54 @@ public class EditActions {
         }
     }
 
+    public class ResizeAction extends ImageAction {
+
+        /**
+         * <p>
+         * Create a resize redo action.
+         * </p>
+         * 
+         * @param name The name of the action (ignored if null).
+         * @param icon An icon to use to represent the action (ignored if null).
+         * @param desc A brief description of the action  (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         */
+        ResizeAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+        }
+
+        
+        /**
+         * <p>
+         * Callback for when the redo action is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the RedoAction is triggered.
+         * It redoes the most recently undone operation.
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
+        public void actionPerformed(ActionEvent e) {
+            // Determine the current width and height.
+            int scale = 0;
+
+            // Pop-up dialog box to ask the user for the new width and height values.
+            SpinnerNumberModel scaleModel = new SpinnerNumberModel(0, -100, 100, 1);
+            JSpinner scaleSpinner = new JSpinner(scaleModel);
+            int option = JOptionPane.showOptionDialog(null, scaleSpinner, lang.text("enterscale"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+            // Check the return value from the dialog box.
+            if (option == JOptionPane.CANCEL_OPTION) {
+                return;
+            } else if (option == JOptionPane.OK_OPTION) {
+                scale = scaleModel.getNumber().intValue();
+            }
+
+            target.getImage().apply(new Resize(scale));
+            target.repaint();
+            target.getParent().revalidate();
+        }
+    }
 }

@@ -7,7 +7,7 @@ import cosc202.andie.ImagePanel;
 
 /**
  * <p>
- * A class that uses JUnit 5 to test the method's of Andie's ImagePanel class
+ * A class that uses JUnit 5 to test the method's of Andie's ImagePanel classgiche
  * </p>
  * @author Niamh Avery
  * @version 1.0

@@ -29,6 +29,8 @@ public class FileActions {
     private LanguageSupport lang = new LanguageSupport();
     /** A list of actions for the File menu. */
     protected ArrayList<Action> actions;
+    /** A list of valid extensions for an image file */
+    private ArrayList<String> validImageExtensions = new ArrayList<String>(Arrays.asList("jpg", "png", ".bmp", ".jpeg", ".gif", ".wbmp"));
 
     /**
      * <p>
@@ -41,6 +43,7 @@ public class FileActions {
         actions.add(new FileOpenAction(lang.text("open"), null, lang.text("openafile"), Integer.valueOf(KeyEvent.VK_O)));
         actions.add(new FileSaveAction(lang.text("save"), null, lang.text("savethefile"), Integer.valueOf(KeyEvent.VK_S)));
         actions.add(new FileSaveAsAction(lang.text("saveas"), null, lang.text("savethefile"), Integer.valueOf(KeyEvent.VK_A)));
+        actions.add(new FileExportAction(lang.text("exportas"), null, lang.text("exportthefile"), Integer.valueOf(KeyEvent.VK_E)));
         actions.add(new FileExitAction(lang.text("exit"), null, lang.text("exittheprog"), Integer.valueOf(0)));
     }
 
@@ -196,19 +199,60 @@ public class FileActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
-            JFileChooser fileChooser = new JFileChooser();
-            int result = fileChooser.showSaveDialog(target);
-
-            if (result == JFileChooser.APPROVE_OPTION) {
-                try {
-                    String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
+            try {
+                String imageFilepath = getValidImageFilepath(target);
+                if (!imageFilepath.isEmpty()) {
                     target.getImage().saveAs(imageFilepath);
-                } catch (Exception ex) {
-                    System.exit(1);
                 }
+            } catch (Exception ex) {
+                System.exit(1);
             }
         }
 
+    }
+
+    private String getValidImageFilepath(ImagePanel target) {
+        JFileChooser fileChooser = new JFileChooser();
+        String filePath = "";
+        int result = JFileChooser.APPROVE_OPTION;
+        do {
+            try {
+                result = fileChooser.showSaveDialog(target);
+                String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
+                boolean hasValidExtension = validImageExtensions.contains(imageFilepath.substring(1+imageFilepath.lastIndexOf(".")).toLowerCase());
+                if (hasValidExtension) {
+                    filePath = imageFilepath;
+                } else if (result == JFileChooser.APPROVE_OPTION) {
+                    //Displays an error message - thx https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
+                    JOptionPane.showMessageDialog(null,
+                    "Filename must include a valid image extension from the following set:\n " + validImageExtensions.toString(),
+              "Error saving image",
+                    JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (Exception ex) {
+                System.exit(1);
+            }
+        } while (filePath.equals("") && result == JFileChooser.APPROVE_OPTION);
+        
+        return filePath;
+    }
+
+    public class FileExportAction extends ImageAction {
+
+        FileExportAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            try {
+                String imageFilepath = getValidImageFilepath(target);
+                if (!imageFilepath.isEmpty()) {
+                    target.getImage().exportAs(imageFilepath);
+                }
+            } catch (Exception ex) {
+                System.exit(1);
+            }
+        }
     }
 
     /**

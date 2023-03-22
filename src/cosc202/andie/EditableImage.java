@@ -191,6 +191,21 @@ class EditableImage {
         fileOut.close();
     }
 
+    public void export() throws Exception {
+        if (this.opsFilename == null) {
+            this.opsFilename = this.imageFilename + ".ops";
+        }
+        // Write image file based on file extension
+        String extension = imageFilename.substring(1+imageFilename.lastIndexOf(".")).toLowerCase();
+        ImageIO.write(current, extension, new File(imageFilename));
+        // Write operations file
+        FileOutputStream fileOut = new FileOutputStream(this.opsFilename);
+        ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
+        objOut.writeObject(this.ops);
+        objOut.close();
+        fileOut.close();
+    }
+
 
     /**
      * <p>
@@ -211,6 +226,12 @@ class EditableImage {
         this.imageFilename = imageFilename;
         this.opsFilename = imageFilename + ".ops";
         save();
+    }
+
+    public void exportAs(String imageFilename) throws Exception {
+        this.imageFilename = imageFilename;
+        this.opsFilename = imageFilename + ".ops";
+        export();
     }
 
     /**

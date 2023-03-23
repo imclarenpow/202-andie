@@ -39,6 +39,7 @@ public class ColourActions {
         actions = new ArrayList<Action>();
         //note that all the strings call the lang instance
         actions.add(new ConvertToGreyAction(lang.text("greyscale"), null, lang.text("convtogray"), Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new BrightnessAndContrastAction(lang.text("brightnessandcontrast"), null, lang.text("applybrightnessandcontrast"), Integer.valueOf(KeyEvent.VK_B)));
     }
 
     /**
@@ -100,6 +101,25 @@ public class ColourActions {
             target.getParent().revalidate();
         }
 
+    }
+
+    public class BrightnessAndContrastAction extends ImageAction {
+
+        BrightnessAndContrastAction(String name, ImageIcon icon, String desc, Integer mnemonic){
+            super(name, icon, desc, mnemonic);
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            int brightness = 50;
+            int contrast = 50;
+
+            //will add pop up box to ask for two inputs in UI, using fixed values here for testing
+
+
+            target.getImage().apply(new BrightnessAndContrast(brightness, contrast));
+            target.repaint();
+            target.getParent().revalidate();
+        }
     }
 
 }

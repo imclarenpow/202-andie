@@ -1,6 +1,8 @@
 # ColourActions.java
 greyscale = Tauine hina
 convtogray = Hurihia ki te tauine hina
+brightnessandcontrast = Tirohanga me te Purata
+applybrightnessandcontrast = Hoatuhia te kanapa me te rereke rereke
 colour = Tae
 # EditActions.java
 undo = Wetekina

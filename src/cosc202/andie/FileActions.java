@@ -200,7 +200,7 @@ public class FileActions {
          */
         public void actionPerformed(ActionEvent e) {
             try {
-                String imageFilepath = getValidImageFilepath(target);
+                String imageFilepath = getValidImageFilepath(target, "Save Image");
                 if (!imageFilepath.isEmpty()) {
                     target.getImage().saveAs(imageFilepath);
                 }
@@ -211,43 +211,87 @@ public class FileActions {
 
     }
 
-    private String getValidImageFilepath(ImagePanel target) {
+    /**
+     * <p>
+     * Repeatedly prompts the user for an image filepath until one with a valid extension is returned
+     * </p>
+     * 
+     * <p>
+     * This helper method is used when a valid filepath is needed for saving/exporting an image.
+     * It displays a dialog box prompting the user for an image filepath
+     * If they provide a filepath without a valid extension then a warning is displayed and the user is again prompted for a filepath
+     * </p>
+     * 
+     * @param e The event triggering this callback.
+     */
+    private String getValidImageFilepath(ImagePanel target, String dialogName) {
         JFileChooser fileChooser = new JFileChooser();
         String filePath = "";
-        int result = JFileChooser.APPROVE_OPTION;
-        do {
+        int result = fileChooser.showDialog(target, dialogName);
+        while (filePath.equals("") && result == JFileChooser.APPROVE_OPTION) {
             try {
-                result = fileChooser.showSaveDialog(target);
-                String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
-                boolean hasValidExtension = validImageExtensions.contains(imageFilepath.substring(1+imageFilepath.lastIndexOf(".")).toLowerCase());
-                if (hasValidExtension) {
-                    filePath = imageFilepath;
-                } else if (result == JFileChooser.APPROVE_OPTION) {
-                    //Displays an error message - thx https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
-                    JOptionPane.showMessageDialog(null,
-                    "Filename must include a valid image extension from the following set:\n " + validImageExtensions.toString(),
-              "Error saving image",
-                    JOptionPane.WARNING_MESSAGE);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
+                    boolean hasValidExtension = validImageExtensions.contains(imageFilepath.substring(1+imageFilepath.lastIndexOf(".")).toLowerCase());
+                    if (hasValidExtension) {
+                        filePath = imageFilepath;
+                    } else {
+                        throw new Exception("Invalid image filepath");
+                    }
                 }
             } catch (Exception ex) {
-                System.exit(1);
+                //Displays an error message - thx https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
+                JOptionPane.showMessageDialog(null,
+                "Filename must be valid and include an image extension from the following set:\n " + validImageExtensions.toString(),
+          "Invalid filename",
+                JOptionPane.WARNING_MESSAGE);
+                result = fileChooser.showSaveDialog(target);
             }
-        } while (filePath.equals("") && result == JFileChooser.APPROVE_OPTION);
+        } 
         
         return filePath;
     }
 
+    /**
+     * <p>
+     * Action to export an edited image to a new file location.
+     * </p>
+     * 
+     * @see EditableImage#exportAs(String)
+     */
     public class FileExportAction extends ImageAction {
 
+        /**
+         * <p>
+         * Create a new file-export action.
+         * </p>
+         * 
+         * @param name The name of the action (ignored if null).
+         * @param icon An icon to use to represent the action (ignored if null).
+         * @param desc A brief description of the action (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         */
         FileExportAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
         }
 
+        /**
+         * <p>
+         * Callback for when the file-export action is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the FileExportAction is triggered.
+         * It prompts the user to select a file and exports the edited image to it.
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
         public void actionPerformed(ActionEvent e) {
             try {
-                String imageFilepath = getValidImageFilepath(target);
-                if (!imageFilepath.isEmpty()) {
-                    target.getImage().exportAs(imageFilepath);
+                String imageExportFilepath = getValidImageFilepath(target, "Export image");
+                if (!imageExportFilepath.isEmpty()) {
+                    target.getImage().exportAs(imageExportFilepath);
                 }
             } catch (Exception ex) {
                 System.exit(1);

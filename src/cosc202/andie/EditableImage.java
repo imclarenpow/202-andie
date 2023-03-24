@@ -164,7 +164,7 @@ class EditableImage {
 
     /**
      * <p>
-     * Save an image to file.
+     * Save an image to a file.
      * </p>
      * 
      * <p>
@@ -191,25 +191,9 @@ class EditableImage {
         fileOut.close();
     }
 
-    public void export() throws Exception {
-        if (this.opsFilename == null) {
-            this.opsFilename = this.imageFilename + ".ops";
-        }
-        // Write image file based on file extension
-        String extension = imageFilename.substring(1+imageFilename.lastIndexOf(".")).toLowerCase();
-        ImageIO.write(current, extension, new File(imageFilename));
-        // Write operations file
-        FileOutputStream fileOut = new FileOutputStream(this.opsFilename);
-        ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
-        objOut.writeObject(this.ops);
-        objOut.close();
-        fileOut.close();
-    }
-
-
     /**
      * <p>
-     * Save an image to a speficied file.
+     * Save an image to a specified file.
      * </p>
      * 
      * <p>
@@ -228,10 +212,21 @@ class EditableImage {
         save();
     }
 
-    public void exportAs(String imageFilename) throws Exception {
-        this.imageFilename = imageFilename;
-        this.opsFilename = imageFilename + ".ops";
-        export();
+    /**
+     * <p>
+     * Exports an image to a specified file.
+     * </p>
+     * 
+     * <p>
+     * Exports an edited image to the file provided as a parameter.
+     * </p>
+     * 
+     * @param imageFilename The file location to save the image to.
+     * @throws Exception If something goes wrong.
+     */
+    public void exportAs(String imageExportFilename) throws Exception {
+        String extension = imageExportFilename.substring(1+imageExportFilename.lastIndexOf(".")).toLowerCase();
+        ImageIO.write(current, extension, new File(imageExportFilename));
     }
 
     /**

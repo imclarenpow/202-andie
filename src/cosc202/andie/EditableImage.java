@@ -221,7 +221,7 @@ class EditableImage {
      * Exports an edited image to the file provided as a parameter.
      * </p>
      * 
-     * @param imageFilename The file location to save the image to.
+     * @param imageFilename The file location to export the image to.
      * @throws Exception If something goes wrong.
      */
     public void exportAs(String imageExportFilename) throws Exception {

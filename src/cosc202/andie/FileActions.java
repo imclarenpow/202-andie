@@ -230,14 +230,12 @@ public class FileActions {
         int result = fileChooser.showDialog(target, dialogName);
         while (filePath.equals("") && result == JFileChooser.APPROVE_OPTION) {
             try {
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
-                    boolean hasValidExtension = validImageExtensions.contains(imageFilepath.substring(1+imageFilepath.lastIndexOf(".")).toLowerCase());
-                    if (hasValidExtension) {
-                        filePath = imageFilepath;
-                    } else {
-                        throw new Exception("Invalid image filepath");
-                    }
+                String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
+                boolean hasValidExtension = validImageExtensions.contains(imageFilepath.substring(1+imageFilepath.lastIndexOf(".")).toLowerCase());
+                if (hasValidExtension) {
+                    filePath = imageFilepath;
+                } else {
+                    throw new Exception("Invalid image filepath");
                 }
             } catch (Exception ex) {
                 //Displays an error message - thx https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html

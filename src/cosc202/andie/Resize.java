@@ -23,10 +23,10 @@ public class Resize implements ImageOperation, java.io.Serializable {
         height = (int)Math.round((double)height * adjustedScale);
         Image scaledImage = input.getScaledInstance(width, height, 0);
         
-
+        //thx http://underpop.online.fr/j/java/help/java-converting-an-image-to-a-bufferedimage.html.gz
         BufferedImage output = new BufferedImage(width, height, input.getType());
-        Graphics2D outputGraphics = output.createGraphics();
-        outputGraphics.drawImage(scaledImage, 0, 0, null);
+        Graphics2D g2 = output.createGraphics();
+        g2.drawImage(scaledImage, 0, 0, null);
         return output;
     }
 }

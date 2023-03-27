@@ -28,6 +28,7 @@ import javax.imageio.*;
  */
 public class Andie {
     private static JFrame f;
+    
     /**
      * <p>
      * Launches the main GUI for the ANDIE program.
@@ -100,6 +101,16 @@ public class Andie {
         frame.setJMenuBar(menuBar);
         frame.pack();
         frame.setVisible(true);
+    }
+
+    public static void resizeWindowToImage(Dimension size) {
+        frame.setSize(size);
+    }
+
+    public static Dimension getFrameSize() {//here
+        double width = frame.getContentPane().getWidth() - frame.getJMenuBar().getHeight();
+        double height = frame.getContentPane().getHeight() - frame.getJMenuBar().getHeight();
+        return new Dimension((int)Math.round(width), (int)Math.round(height));
     }
 
     /**

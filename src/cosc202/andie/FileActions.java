@@ -1,6 +1,7 @@
 package cosc202.andie;
 
 import java.util.*;
+import java.awt.Dimension;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -107,6 +108,9 @@ public class FileActions {
                 try {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().open(imageFilepath);
+                    
+                    //Sets image size according to window size
+                    target.setZoomToImageSize();
                 } catch (Exception ex) {
                     System.exit(1);
                 }

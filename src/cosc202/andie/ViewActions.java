@@ -41,8 +41,10 @@ public class ViewActions {
         actions = new ArrayList<Action>();
         actions.add(new ZoomInAction(lang.text("zoomin"), null, lang.text("zoomin"), Integer.valueOf(KeyEvent.VK_PLUS)));
         actions.add(new ZoomOutAction(lang.text("zoomout"), null, lang.text("zoomout"), Integer.valueOf(KeyEvent.VK_MINUS)));
+        actions.add(new ZoomToWindowAction(lang.text("zoomtowindow"), null, lang.text("zoomtowindow"), Integer.valueOf(KeyEvent.VK_SPACE)));
         actions.add(new ZoomFullAction(lang.text("zoomfull"), null, lang.text("zoomfull"), Integer.valueOf(KeyEvent.VK_1)));
         actions.add(new LanguageAction(lang.text("language"), null, lang.text("language"), Integer.valueOf(KeyEvent.VK_1)));
+        actions.add(new ResizeWindowAction(lang.text("resizewindow"), null, lang.text("resizewindow"), Integer.valueOf(KeyEvent.VK_MINUS)));
     }
 
     /**
@@ -147,6 +149,48 @@ public class ViewActions {
 
     /**
      * <p>
+     * Action to zoom in on an image.
+     * </p>
+     * 
+     * <p>
+     * Note that this action only affects the way the image is displayed, not its actual contents.
+     * </p>
+     */
+    public class ResizeWindowAction extends ImageAction {
+
+        /**
+         * <p>
+         * Create a new zoom-in action.
+         * </p>
+         * 
+         * @param name The name of the action (ignored if null).
+         * @param icon An icon to use to represent the action (ignored if null).
+         * @param desc A brief description of the action  (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         */
+        ResizeWindowAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+        }
+
+        /**
+         * <p>
+         * Callback for when the zoom-in action is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the ZoomInAction is triggered.
+         * It increases the zoom level by 10%, to a maximum of 200%.
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
+        public void actionPerformed(ActionEvent e) {
+            Andie.resizeWindowToImage(target.getPreferredSize());
+        }
+    }
+
+    /**
+     * <p>
      * Action to zoom out of an image.
      * </p>
      * 
@@ -184,6 +228,51 @@ public class ViewActions {
          */
         public void actionPerformed(ActionEvent e) {
             target.setZoom(target.getZoom()-10);
+            target.repaint();
+            target.getParent().revalidate();
+        }
+
+    }
+
+    /**
+     * <p>
+     * Action to zoom out of an image.
+     * </p>
+     * 
+     * <p>
+     * Note that this action only affects the way the image is displayed, not its actual contents.
+     * </p>
+     */
+    public class ZoomToWindowAction extends ImageAction {
+
+        /**
+         * <p>
+         * Create a new zoom-out action.
+         * </p>
+         * 
+         * @param name The name of the action (ignored if null).
+         * @param icon An icon to use to represent the action (ignored if null).
+         * @param desc A brief description of the action  (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         */
+        ZoomToWindowAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+        }
+
+        /**
+         * <p>
+         * Callback for when the zoom-iout action is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the ZoomOutAction is triggered.
+         * It decreases the zoom level by 10%, to a minimum of 50%.
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
+        public void actionPerformed(ActionEvent e) {
+            target.setZoomToImageSize();
             target.repaint();
             target.getParent().revalidate();
         }

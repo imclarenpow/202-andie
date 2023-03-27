@@ -78,6 +78,14 @@ public class ImagePanel extends JPanel {
         return 100*scale;
     }
 
+    public void setZoomToImageSize() {
+        if (image.hasImage()) {
+            double widthRatio = image.getCurrentImage().getWidth() / Andie.getFrameSize().getWidth();
+            double heightRatio = image.getCurrentImage().getHeight() / Andie.getFrameSize().getWidth();
+            scale = 1.0 / Math.max(widthRatio, heightRatio);
+        }
+    }
+
     /**
      * <p>
      * Set the current zoom level as a percentage.
@@ -114,10 +122,12 @@ public class ImagePanel extends JPanel {
     @Override
     public Dimension getPreferredSize() {
         if (image.hasImage()) {
-            return new Dimension((int) Math.round(image.getCurrentImage().getWidth()*scale), 
-                                 (int) Math.round(image.getCurrentImage().getHeight()*scale));
+            return new Dimension((int)Math.round(image.getCurrentImage().getWidth()*scale), 
+                                 (int)Math.round(image.getCurrentImage().getHeight()*scale));
         } else {
-            return new Dimension(450, 450);
+            //thx https://stackoverflow.com/questions/3680221/how-can-i-get-screen-resolution-in-java
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            return new Dimension((int)Math.round(screenSize.getWidth() / 2.0), (int)Math.round(screenSize.getHeight() / 2.0));
         }
     }
 
@@ -132,6 +142,7 @@ public class ImagePanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (image.hasImage()) {
+            this.setSize(getPreferredSize());
             Graphics2D g2  = (Graphics2D) g.create();
             g2.scale(scale, scale);
             g2.drawImage(image.getCurrentImage(), null, 0, 0);

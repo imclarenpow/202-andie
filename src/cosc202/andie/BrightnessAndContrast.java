@@ -1,8 +1,6 @@
 package cosc202.andie;
 
-import java.awt.Image.*;
 import java.awt.image.BufferedImage;
-import java.nio.Buffer;
 
 public class BrightnessAndContrast implements ImageOperation, java.io.Serializable{
 

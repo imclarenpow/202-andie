@@ -61,7 +61,7 @@ public class FilterActions {
     }
 /**
  * @author Isaac
- * WIP modelled off of MeanFilter class, currently buggy, no output to be worked on.
+ * Working, uses a spinner, want to update to use a slider when applying polish
  */
     public class GaussianFilterAction extends ImageAction{
         GaussianFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic){
@@ -74,7 +74,7 @@ public class FilterActions {
 
             // Pop-up dialog box to ask for the radius value.
             // problem is here
-            SpinnerNumberModel radiusModel = new SpinnerNumberModel(0.1, 0, 1, 0.1);
+            SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 0, 25, 1);
             JSpinner radiusSpinner = new JSpinner(radiusModel);
             int option = JOptionPane.showOptionDialog(null, radiusSpinner, lang.text("enterfiltrad"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 

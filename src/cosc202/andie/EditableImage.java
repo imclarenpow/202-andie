@@ -164,7 +164,7 @@ class EditableImage {
 
     /**
      * <p>
-     * Save an image to file.
+     * Save an image to a file.
      * </p>
      * 
      * <p>
@@ -191,10 +191,9 @@ class EditableImage {
         fileOut.close();
     }
 
-
     /**
      * <p>
-     * Save an image to a speficied file.
+     * Save an image to a specified file.
      * </p>
      * 
      * <p>
@@ -211,6 +210,23 @@ class EditableImage {
         this.imageFilename = imageFilename;
         this.opsFilename = imageFilename + ".ops";
         save();
+    }
+
+    /**
+     * <p>
+     * Exports an image to a specified file.
+     * </p>
+     * 
+     * <p>
+     * Exports an edited image to the file provided as a parameter.
+     * </p>
+     * 
+     * @param imageFilename The file location to export the image to.
+     * @throws Exception If something goes wrong.
+     */
+    public void exportAs(String imageExportFilename) throws Exception {
+        String extension = imageExportFilename.substring(1+imageExportFilename.lastIndexOf(".")).toLowerCase();
+        ImageIO.write(current, extension, new File(imageExportFilename));
     }
 
     /**

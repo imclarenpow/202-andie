@@ -120,13 +120,8 @@ public class FilterActions {
 
         /**
          * <p>
-         * Create a new sharpen-filter action.
+         * Creates a new action for the sharpen-filter.
          * </p>
-         * 
-         * @param name The name of the action (ignored if null).
-         * @param icon An icon to use to represent the action (ignored if null).
-         * @param desc A brief description of the action  (ignored if null).
-         * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
          */
         SharpenFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
@@ -134,38 +129,11 @@ public class FilterActions {
 
         /**
          * <p>
-         * Callback for when the convert-to-grey action is triggered.
+         * Whenever the Sharpnes-Filter is activated, this method is called.
          * </p>
-         * 
-         * <p>
-         * This method is called whenever the SharpnessFilterAction is triggered.
-         * It prompts the user for a filter radius, then applys an appropriately sized {@link SharpenFilter}.
-         * </p>
-         * 
-         * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
 
-            // Determine the radius - ask the user.
-            int radius = 0;
-
-            // Pop-up dialog box to ask for the radius value.
-            SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 10, 1);
-            JSpinner radiusSpinner = new JSpinner(radiusModel);
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, "Enter filter radius", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-            System.out.println(option);
-
-            // Check the return value from the dialog box.
-            if (option == JOptionPane.CANCEL_OPTION) {
-                System.out.println(option);
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
-                radius = radiusModel.getNumber().intValue();
-                System.out.println(option);
-            }
-
-            // Create and apply the filter
-            //target.getImage().apply(new SharpenFilter(radius));
             target.getImage().apply(new SharpenFilter());
             target.repaint();
             target.getParent().revalidate();

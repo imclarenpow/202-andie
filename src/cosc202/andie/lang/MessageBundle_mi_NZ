@@ -3,6 +3,9 @@ greyscale = Tauine hina
 convtogray = Hurihia ki te tauine hina
 brightnessandcontrast = Tirohanga me te Purata
 applybrightnessandcontrast = Hoatuhia te kanapa me te rereke rereke
+brightnesslabel = Kanapa:
+contrastlabel = Rereke Rereke:
+dispbrightcont = Whakaritea te kanapa me te rereke
 colour = Tae
 # EditActions.java
 undo = Wetekina

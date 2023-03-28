@@ -4,6 +4,8 @@ import java.util.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import cosc202.andie.lang.*;
+
 /**Test test
  * 
  * <p>
@@ -22,7 +24,8 @@ import javax.swing.*;
  * @version 1.0
  */
 public class ViewActions {
-    
+    // creating an instance of the LanguageSupport class for Internationalisation
+    private LanguageSupport lang = new LanguageSupport();
     /**
      * A list of actions for the View menu.
      */
@@ -34,10 +37,12 @@ public class ViewActions {
      * </p>
      */
     public ViewActions() {
+        //string values call lang
         actions = new ArrayList<Action>();
-        actions.add(new ZoomInAction("Zoom In", null, "Zoom In", Integer.valueOf(KeyEvent.VK_PLUS)));
-        actions.add(new ZoomOutAction("Zoom Out", null, "Zoom Out", Integer.valueOf(KeyEvent.VK_MINUS)));
-        actions.add(new ZoomFullAction("Zoom Full", null, "Zoom Full", Integer.valueOf(KeyEvent.VK_1)));
+        actions.add(new ZoomInAction(lang.text("zoomin"), null, lang.text("zoomin"), Integer.valueOf(KeyEvent.VK_PLUS)));
+        actions.add(new ZoomOutAction(lang.text("zoomout"), null, lang.text("zoomout"), Integer.valueOf(KeyEvent.VK_MINUS)));
+        actions.add(new ZoomFullAction(lang.text("zoomfull"), null, lang.text("zoomfull"), Integer.valueOf(KeyEvent.VK_1)));
+        actions.add(new LanguageAction("Language", null, "Language", Integer.valueOf(KeyEvent.VK_1)));
     }
 
     /**
@@ -48,7 +53,7 @@ public class ViewActions {
      * @return The view menu UI element.
      */
     public JMenu createMenu() {
-        JMenu viewMenu = new JMenu("View");
+        JMenu viewMenu = new JMenu(lang.text("view"));
 
         for (Action action: actions) {
             viewMenu.add(new JMenuItem(action));
@@ -56,6 +61,40 @@ public class ViewActions {
 
         return viewMenu;
     }
+    public JMenu reset(){
+        return createMenu();
+    }
+    /** Allows the user to change the language of the */
+    public class LanguageAction extends ImageAction{
+    // need to implement the lang calling for each string value    
+        LanguageAction(String name, ImageIcon icon, String desc, Integer mnemonic){
+            super(name, icon, desc, mnemonic);
+            String[] options = {"English", "Maori", "Other"};
+            JComboBox<String> dropdown = new JComboBox<>(options);
+            JPanel panel = new JPanel();
+            panel.add(dropdown);
+        }
+
+                public void actionPerformed(ActionEvent e) {
+                    // have to reference indirectly as static by extension
+                    LanguageSupport l = new LanguageSupport();
+                    String[] options = {"English", "Maori", "Coming Soon"};
+                    JComboBox<String> dropdown = new JComboBox<>(options);
+                    JPanel panel = new JPanel();
+                    panel.add(dropdown);
+                    int result = JOptionPane.showConfirmDialog(null, panel,
+                            "Select an option", JOptionPane.OK_CANCEL_OPTION,
+                            JOptionPane.PLAIN_MESSAGE);
+                    if (result == JOptionPane.OK_OPTION) {
+                        String selectedOption = (String) dropdown.getSelectedItem();
+                        if(selectedOption == "English"){
+                            l.setLanguage("en", "NZ");
+                        }else if(selectedOption == "Maori"){
+                            l.setLanguage("mi", "NZ");
+                        }
+                    }
+                }
+        }
 
     /**
      * <p>
@@ -99,6 +138,7 @@ public class ViewActions {
             target.repaint();
             target.getParent().revalidate();
         }
+        
 
     }
 

@@ -2,6 +2,9 @@ package cosc202.andie;
 
 import java.awt.*;
 import javax.swing.*;
+
+import org.junit.internal.ExactComparisonCriteria;
+
 import javax.imageio.*;
 
 /**
@@ -46,6 +49,14 @@ public class Andie {
      * 
      * @throws Exception if something goes wrong.
      */
+    //currently not in use, may need to be used in the future, may not
+    public static void langSet(){
+        try{
+            createAndShowGUI();
+        }catch(Exception ex){
+            System.out.println("Error while running langSet");
+        }
+    }
     private static void createAndShowGUI() throws Exception {
         // Set up the main GUI frame
         JFrame frame = new JFrame("ANDIE");

@@ -110,11 +110,39 @@ public class ColourActions {
         }
 
         public void actionPerformed(ActionEvent e) {
-            int brightness = 50;
-            int contrast = 50;
+            int brightness = 0;
+            int contrast = 0;
+            // Create the sliders for brightness and contrast
+            JSlider brightnessSlider = new JSlider(-100, 100, 0);
+            JSlider contrastSlider = new JSlider(-100, 100, 0);
 
-            //will add pop up box to ask for two inputs in UI, using fixed values here for testing
+            // Configure the sliders
+            brightnessSlider.setMajorTickSpacing(50);
+            brightnessSlider.setMinorTickSpacing(10);
+            brightnessSlider.setPaintTicks(true);
+            brightnessSlider.setPaintLabels(true);
 
+            contrastSlider.setMajorTickSpacing(50);
+            contrastSlider.setMinorTickSpacing(10);
+            contrastSlider.setPaintTicks(true);
+            contrastSlider.setPaintLabels(true);
+
+            // Create the message to display in the option dialog
+            Object[] message = {
+                    lang.text("brightnesslabel"), brightnessSlider,
+                    lang.text("contrastlabel"), contrastSlider
+            };
+
+            // Show the option dialog and get the user's response
+            int option = JOptionPane.showConfirmDialog(null, message, lang.text("dispbrightcont"), JOptionPane.OK_CANCEL_OPTION);
+
+            // Check the return value from the dialog box.
+            if (option == JOptionPane.CANCEL_OPTION) {
+                return;
+            } else if (option == JOptionPane.OK_OPTION) {
+                brightness = brightnessSlider.getValue();
+                contrast = contrastSlider.getValue();
+            }
 
             target.getImage().apply(new BrightnessAndContrast(brightness, contrast));
             target.repaint();

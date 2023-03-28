@@ -4,16 +4,6 @@ import java.awt.image.*;
 
 public class SharpenFilter implements ImageOperation, java.io.Serializable {
 
-    //private int radius;
-
-    //SharpenFilter(int radius) {
-    //    this.radius = radius;
-    //}
-
-    //SharpenFilter() {
-    //    this(1);
-    //}
-
     SharpenFilter(){}
 
     public BufferedImage apply(BufferedImage input){

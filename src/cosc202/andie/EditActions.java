@@ -29,6 +29,9 @@ public class EditActions {
     /** A list of actions for the Edit menu. */
     protected ArrayList<Action> actions;
 
+    // Sets the maximum dimension of images for resize - based on the limit used by Adobe Photoshop (https://helpx.adobe.com/nz/photoshop-elements/kb/maximum-image-size-limits-photoshop.html)
+    private final double MAX_DIMENSION_LIMIT = 30000;
+
     /**
      * <p>
      * Create a set of Edit menu actions.
@@ -175,18 +178,31 @@ public class EditActions {
          */
         public void actionPerformed(ActionEvent e) {
             // Determine the current width and height.
-            int scale = 0;
+            double scale = 0;
 
+            // Finds the minimum and maximum scales for resizing
+            double largestDimension = Math.max(target.getImage().getCurrentImage().getWidth(), target.getImage().getCurrentImage().getHeight());
+            double smallestDimension = Math.min(target.getImage().getCurrentImage().getWidth(), target.getImage().getCurrentImage().getHeight());
+            double minScale = Math.ceil(100 / smallestDimension + 0.01) / 100; // ensures image dimensions will not fall below 0
+            double maxScale = Math.floor(100 * MAX_DIMENSION_LIMIT / largestDimension) / 100;
+            
             // Pop-up dialog box to ask the user for the new width and height values.
-            SpinnerNumberModel scaleModel = new SpinnerNumberModel(0, -100, 100, 1);
+            SpinnerNumberModel scaleModel = new SpinnerNumberModel(1, minScale, maxScale, 0.01);
             JSpinner scaleSpinner = new JSpinner(scaleModel);
-            int option = JOptionPane.showOptionDialog(null, scaleSpinner, lang.text("enterscale"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+            String optionDialogText = lang.text("enterscale") + ": " + minScale + " -> " + maxScale;
+            int option = JOptionPane.showOptionDialog(null, scaleSpinner, optionDialogText, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
-            // Check the return value from the dialog box.
+            // Checks the return value from the dialog box
             if (option == JOptionPane.CANCEL_OPTION) {
                 return;
             } else if (option == JOptionPane.OK_OPTION) {
-                scale = scaleModel.getNumber().intValue();
+                scale = scaleModel.getNumber().doubleValue();
+                if (scale == 1) {
+                    // Warning dialog for when no changes have been made
+                    JOptionPane.showMessageDialog(null, lang.text("resizescalewarning"),
+                    lang.text("invalidscale"),
+                    JOptionPane.WARNING_MESSAGE);
+                }
             }
 
             target.getImage().apply(new Resize(scale));

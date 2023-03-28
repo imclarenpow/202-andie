@@ -125,7 +125,8 @@ public class ImagePanel extends JPanel {
             return new Dimension((int)Math.round(image.getCurrentImage().getWidth()*scale), 
                                  (int)Math.round(image.getCurrentImage().getHeight()*scale));
         } else {
-            //thx https://stackoverflow.com/questions/3680221/how-can-i-get-screen-resolution-in-java
+            // Sets the default Dimension to half the screen size
+            // Adapted from https://stackoverflow.com/questions/3680221/how-can-i-get-screen-resolution-in-java
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             return new Dimension((int)Math.round(screenSize.getWidth() / 2.0), (int)Math.round(screenSize.getHeight() / 2.0));
         }

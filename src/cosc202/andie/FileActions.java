@@ -242,10 +242,11 @@ public class FileActions {
                     throw new Exception("Invalid image filepath");
                 }
             } catch (Exception ex) {
-                //Displays an error message - thx https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
-                JOptionPane.showMessageDialog(null,
-                "Filename must be valid and include an image extension from the following set:\n " + validImageExtensions.toString(),
-          "Invalid filename",
+                // Displays an error message when an invalid filename is presented
+                // Adapted from https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
+                JOptionPane.showMessageDialog(null, lang.text("filenamewarning") + "\n" +
+                validImageExtensions.toString(),
+                lang.text("invalidfilename"),
                 JOptionPane.WARNING_MESSAGE);
                 result = fileChooser.showSaveDialog(target);
             }

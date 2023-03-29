@@ -90,9 +90,13 @@ public class ViewActions {
                 JComboBox<String> dropdown = new JComboBox<>(options);
                 JPanel panel = new JPanel();
                 panel.add(dropdown);
-                int result = JOptionPane.showConfirmDialog(null, panel,
-                        lang.text("select"), JOptionPane.OK_CANCEL_OPTION,
-                        JOptionPane.PLAIN_MESSAGE);
+                int result = JOptionPane.showOptionDialog(null, panel, l.text("select"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, // icon
+                            // internationalisationing the buttons                
+                                new Object[] {
+                                    l.text("ok"),
+                                    l.text("cancel")
+                                },
+                                lang.text("cancel")); //default selection (if window is closed)
                 if (result == JOptionPane.OK_OPTION) {
                     String selectedOption = (String) dropdown.getSelectedItem();
                     if(selectedOption == "English"){

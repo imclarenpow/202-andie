@@ -180,6 +180,7 @@ public class GaussianFilterAction extends ImageAction{
             target.getImage().apply(new SharpenFilter());
             target.repaint();
             target.getParent().revalidate();
+            JOptionPane.showMessageDialog(null, lang.text("sharpfiltrun"));
         }
 
     }
@@ -250,6 +251,7 @@ public class GaussianFilterAction extends ImageAction{
                 target.getImage().apply(new SoftBlur());
                 target.repaint();
                 target.getParent().revalidate();
+                JOptionPane.showMessageDialog(null, lang.text("softblurrun"));
             }
         }
 }

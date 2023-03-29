@@ -42,7 +42,7 @@ public class ViewActions {
         actions.add(new ZoomInAction(lang.text("zoomin"), null, lang.text("zoomin"), Integer.valueOf(KeyEvent.VK_PLUS)));
         actions.add(new ZoomOutAction(lang.text("zoomout"), null, lang.text("zoomout"), Integer.valueOf(KeyEvent.VK_MINUS)));
         actions.add(new ZoomFullAction(lang.text("zoomfull"), null, lang.text("zoomfull"), Integer.valueOf(KeyEvent.VK_1)));
-        actions.add(new LanguageAction("Language", null, "Language", Integer.valueOf(KeyEvent.VK_1)));
+        actions.add(new LanguageAction(lang.text("language"), null, lang.text("language"), Integer.valueOf(KeyEvent.VK_1)));
     }
 
     /**
@@ -64,12 +64,15 @@ public class ViewActions {
     public JMenu reset(){
         return createMenu();
     }
-    /** Allows the user to change the language of the */
+    /** Allows the user to change the language of the program
+     * @author Isaac with assistance from ChatGPT
+     */
     public class LanguageAction extends ImageAction{
     // need to implement the lang calling for each string value    
         LanguageAction(String name, ImageIcon icon, String desc, Integer mnemonic){
             super(name, icon, desc, mnemonic);
-            String[] options = {"English", "Maori", "Other"};
+            //Options for the dropdown menu
+            String[] options = {lang.text("english"), lang.text("maori"), "Other"};
             JComboBox<String> dropdown = new JComboBox<>(options);
             JPanel panel = new JPanel();
             panel.add(dropdown);
@@ -83,14 +86,14 @@ public class ViewActions {
                     JPanel panel = new JPanel();
                     panel.add(dropdown);
                     int result = JOptionPane.showConfirmDialog(null, panel,
-                            "Select an option", JOptionPane.OK_CANCEL_OPTION,
+                            lang.text("select"), JOptionPane.OK_CANCEL_OPTION,
                             JOptionPane.PLAIN_MESSAGE);
                     if (result == JOptionPane.OK_OPTION) {
                         String selectedOption = (String) dropdown.getSelectedItem();
                         if(selectedOption == "English"){
-                            l.setLanguage("en", "NZ");
+                            l.setDefaultLanguage("en", "NZ");
                         }else if(selectedOption == "Maori"){
-                            l.setLanguage("mi", "NZ");
+                            l.setDefaultLanguage("mi", "NZ");
                         }
                     }
                 }

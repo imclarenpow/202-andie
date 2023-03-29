@@ -5,6 +5,8 @@ import javax.swing.*;
 
 import org.junit.internal.ExactComparisonCriteria;
 
+import cosc202.andie.lang.*;
+
 import javax.imageio.*;
 
 /**
@@ -25,7 +27,7 @@ import javax.imageio.*;
  * @version 1.0
  */
 public class Andie {
-
+    private static JFrame f;
     /**
      * <p>
      * Launches the main GUI for the ANDIE program.
@@ -50,7 +52,8 @@ public class Andie {
      * @throws Exception if something goes wrong.
      */
     //currently not in use, may need to be used in the future, may not
-    public static void langSet(){
+    public void langSet(){
+        f.dispose();
         try{
             createAndShowGUI();
         }catch(Exception ex){
@@ -60,7 +63,7 @@ public class Andie {
     private static void createAndShowGUI() throws Exception {
         // Set up the main GUI frame
         JFrame frame = new JFrame("ANDIE");
-
+        f = frame;
         Image image = ImageIO.read(Andie.class.getClassLoader().getResource("icon.png"));
         frame.setIconImage(image);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -114,6 +117,8 @@ public class Andie {
      * @see #createAndShowGUI()
      */
     public static void main(String[] args) throws Exception {
+        LanguageSupport lang = new LanguageSupport();
+        lang.loadDefaultLanguage();
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 try {

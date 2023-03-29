@@ -13,6 +13,8 @@ import cosc202.andie.Andie;
 
  /** Class that allows the implementation of different languages into ANDIE */
  public class LanguageSupport {
+
+    private String defLang = "language.txt";
     private ResourceBundle bundle = ResourceBundle.getBundle("cosc202.andie.lang.MessageBundle");
     
     /** Constructor that sets default (currently not working) language string overrides */
@@ -39,7 +41,7 @@ import cosc202.andie.Andie;
     /** Runs when ANDIE Starts, this checks what the current default is */
     public void loadDefaultLanguage() {
         // Load the language preference from the file
-        try (Scanner sc = new Scanner(new File("cosc202.andie.lang.language.txt"))) {
+        try (Scanner sc = new Scanner(new File(defLang))) {
             String languageCode = sc.nextLine();
             String countryCode = sc.nextLine();
             Locale newLocale = new Locale(languageCode, countryCode);
@@ -52,7 +54,7 @@ import cosc202.andie.Andie;
     //default write script
     public void write() {
         // makes english the language if no default file is found
-        try (PrintWriter fr = new PrintWriter("cosc202.andie.lang.language.txt")) {
+        try (PrintWriter fr = new PrintWriter(defLang)) {
             fr.println("en");
             fr.println("NZ");
         } catch (IOException e) {
@@ -65,7 +67,7 @@ import cosc202.andie.Andie;
     //specified write script
     public void write(String languageCode, String countryCode) {
         // makes english the language if no default file is found
-        try (PrintWriter fr = new PrintWriter("cosc202.andie.lang.language.txt")) {
+        try (PrintWriter fr = new PrintWriter(defLang)) {
             fr.println(languageCode);
             fr.println(countryCode);
         } catch (IOException e) {

@@ -69,37 +69,42 @@ public class ViewActions {
     /** Allows the user to change the language of the program
      * @author Isaac with assistance from ChatGPT
      */
+    /** Allows the user to change the language of the program
+     * @author Isaac with assistance from ChatGPT
+     */
     public class LanguageAction extends ImageAction{
-    // need to implement the lang calling for each string value    
+       
         LanguageAction(String name, ImageIcon icon, String desc, Integer mnemonic){
             super(name, icon, desc, mnemonic);
             //Options for the dropdown menu
-            String[] options = {lang.text("english"), lang.text("maori"), "Other"};
+            String[] options = {lang.text("english"), lang.text("maori"), lang.text("japanese")};
             JComboBox<String> dropdown = new JComboBox<>(options);
             JPanel panel = new JPanel();
             panel.add(dropdown);
         }
 
-                public void actionPerformed(ActionEvent e) {
-                    // have to reference indirectly as static by extension
-                    LanguageSupport l = new LanguageSupport();
-                    String[] options = {"English", "Maori", "Coming Soon"};
-                    JComboBox<String> dropdown = new JComboBox<>(options);
-                    JPanel panel = new JPanel();
-                    panel.add(dropdown);
-                    int result = JOptionPane.showConfirmDialog(null, panel,
-                            lang.text("select"), JOptionPane.OK_CANCEL_OPTION,
-                            JOptionPane.PLAIN_MESSAGE);
-                    if (result == JOptionPane.OK_OPTION) {
-                        String selectedOption = (String) dropdown.getSelectedItem();
-                        if(selectedOption == "English"){
-                            l.setDefaultLanguage("en", "NZ");
-                        }else if(selectedOption == "Maori"){
-                            l.setDefaultLanguage("mi", "NZ");
-                        }
+            public void actionPerformed(ActionEvent e) {
+                // have to reference indirectly as static by extension
+                LanguageSupport l = new LanguageSupport();
+                String[] options = {"English", "Maori", "Japanese"};
+                JComboBox<String> dropdown = new JComboBox<>(options);
+                JPanel panel = new JPanel();
+                panel.add(dropdown);
+                int result = JOptionPane.showConfirmDialog(null, panel,
+                        lang.text("select"), JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.PLAIN_MESSAGE);
+                if (result == JOptionPane.OK_OPTION) {
+                    String selectedOption = (String) dropdown.getSelectedItem();
+                    if(selectedOption == "English"){
+                        l.setDefaultLanguage("en", "NZ");
+                    }else if(selectedOption == "Maori"){
+                        l.setDefaultLanguage("mi", "NZ");
+                    }else if(selectedOption == "Japanese"){
+                        l.setDefaultLanguage("ja", "JP");
+                    }
                     }
                 }
-        }
+            }
 
     /**
      * <p>

@@ -120,7 +120,7 @@ public class Andie {
         if (size.width > Toolkit.getDefaultToolkit().getScreenSize().getWidth() || size.height > Toolkit.getDefaultToolkit().getScreenSize().getHeight()) {
             size = Toolkit.getDefaultToolkit().getScreenSize();
         }
-        frame.setSize(size);
+        f.setSize(size);
     }
 
     /**
@@ -138,8 +138,8 @@ public class Andie {
      * @return A Dimension representing the size of the frame (includes width and height)
      */
     public static Dimension getFrameSize() {
-        double width = frame.getContentPane().getWidth() - frame.getJMenuBar().getHeight();
-        double height = frame.getContentPane().getHeight() - frame.getJMenuBar().getHeight();
+        double width = f.getContentPane().getWidth() - f.getJMenuBar().getHeight();
+        double height = f.getContentPane().getHeight() - f.getJMenuBar().getHeight();
         return new Dimension((int)Math.round(width), (int)Math.round(height));
     }
 

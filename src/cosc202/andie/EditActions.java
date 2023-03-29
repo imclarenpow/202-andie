@@ -147,6 +147,13 @@ public class EditActions {
         }
     }
 
+    /**
+     * <p>
+     * Action to resize an image according to a scale retrieved from the user.
+     * </p>
+     * 
+     * @see Resize
+     */
     public class ResizeAction extends ImageAction {
 
         /**
@@ -166,12 +173,14 @@ public class EditActions {
         
         /**
          * <p>
-         * Callback for when the redo action is triggered.
+         * Callback for when the resize action is triggered.
          * </p>
          * 
          * <p>
-         * This method is called whenever the RedoAction is triggered.
-         * It redoes the most recently undone operation.
+         * This method is called whenever the ResizeAction is triggered.
+         * It obtains a scale from the user via a pop-up box and
+         * it then resizes the currently displayed image according
+         * to this scale.
          * </p>
          * 
          * @param e The event triggering this callback.

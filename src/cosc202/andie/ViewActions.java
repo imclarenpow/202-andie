@@ -149,7 +149,7 @@ public class ViewActions {
 
     /**
      * <p>
-     * Action to zoom in on an image.
+     * Action to resize ANDIE's window according to the size of an image.
      * </p>
      * 
      * <p>
@@ -160,7 +160,7 @@ public class ViewActions {
 
         /**
          * <p>
-         * Create a new zoom-in action.
+         * Create a new ResizeWindow action.
          * </p>
          * 
          * @param name The name of the action (ignored if null).
@@ -174,12 +174,12 @@ public class ViewActions {
 
         /**
          * <p>
-         * Callback for when the zoom-in action is triggered.
+         * Callback for when the resize-window action is triggered.
          * </p>
          * 
          * <p>
-         * This method is called whenever the ZoomInAction is triggered.
-         * It increases the zoom level by 10%, to a maximum of 200%.
+         * This method is called whenever the ResizeWindowAction is triggered.
+         * It resizes ANDIE's current window according to the size of the currently-displayed image.
          * </p>
          * 
          * @param e The event triggering this callback.
@@ -216,7 +216,7 @@ public class ViewActions {
 
         /**
          * <p>
-         * Callback for when the zoom-iout action is triggered.
+         * Callback for when the zoom-out action is triggered.
          * </p>
          * 
          * <p>
@@ -236,7 +236,7 @@ public class ViewActions {
 
     /**
      * <p>
-     * Action to zoom out of an image.
+     * Action to zoom in or out of an image so that it fills ANDIE's current window
      * </p>
      * 
      * <p>
@@ -247,7 +247,7 @@ public class ViewActions {
 
         /**
          * <p>
-         * Create a new zoom-out action.
+         * Create a new zoom-to-window action.
          * </p>
          * 
          * @param name The name of the action (ignored if null).
@@ -261,12 +261,12 @@ public class ViewActions {
 
         /**
          * <p>
-         * Callback for when the zoom-iout action is triggered.
+         * Callback for when the zoom-to-window action is triggered.
          * </p>
          * 
          * <p>
-         * This method is called whenever the ZoomOutAction is triggered.
-         * It decreases the zoom level by 10%, to a minimum of 50%.
+         * This method is called whenever the ZoomToWindow is triggered.
+         * It zooms in/out of the current image so it fills ANDIE's window
          * </p>
          * 
          * @param e The event triggering this callback.

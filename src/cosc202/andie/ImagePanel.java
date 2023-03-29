@@ -78,6 +78,17 @@ public class ImagePanel extends JPanel {
         return 100*scale;
     }
 
+    /**
+     * <p>
+     * Sets the current zoom level according to the size of the current image
+     * </p>
+     * 
+     * <p>
+     * The method retrieves the current width and height of the image,
+     * computes a ratio of these to the size of ANDIE's current window,
+     * and adjusts the zoom accordingly so the image fills the window
+     * </p>
+     */
     public void setZoomToImageSize() {
         if (image.hasImage()) {
             double widthRatio = image.getCurrentImage().getWidth() / Andie.getFrameSize().getWidth();

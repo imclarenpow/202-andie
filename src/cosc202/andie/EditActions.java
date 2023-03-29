@@ -29,6 +29,9 @@ public class EditActions {
     /** A list of actions for the Edit menu. */
     protected ArrayList<Action> actions;
 
+    // Sets the maximum dimension of images for resize - based on the limit used by Adobe Photoshop (https://helpx.adobe.com/nz/photoshop-elements/kb/maximum-image-size-limits-photoshop.html)
+    private final double MAX_DIMENSION_LIMIT = 30000;
+
     /**
      * <p>
      * Create a set of Edit menu actions.
@@ -39,6 +42,7 @@ public class EditActions {
         actions = new ArrayList<Action>();
         actions.add(new UndoAction(lang.text("undo"), null, lang.text("undo"), Integer.valueOf(KeyEvent.VK_Z)));
         actions.add(new RedoAction(lang.text("redo"), null, lang.text("redo"), Integer.valueOf(KeyEvent.VK_Y)));
+        actions.add(new ResizeAction(lang.text("resize"), null, lang.text("resize"), Integer.valueOf(KeyEvent.VK_R)));
     }
 
     /**
@@ -143,4 +147,76 @@ public class EditActions {
         }
     }
 
+    /**
+     * <p>
+     * Action to resize an image according to a scale retrieved from the user.
+     * </p>
+     * 
+     * @see Resize
+     */
+    public class ResizeAction extends ImageAction {
+
+        /**
+         * <p>
+         * Create a resize redo action.
+         * </p>
+         * 
+         * @param name The name of the action (ignored if null).
+         * @param icon An icon to use to represent the action (ignored if null).
+         * @param desc A brief description of the action  (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         */
+        ResizeAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+        }
+
+        
+        /**
+         * <p>
+         * Callback for when the resize action is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the ResizeAction is triggered.
+         * It obtains a scale from the user via a pop-up box and
+         * it then resizes the currently displayed image according
+         * to this scale.
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
+        public void actionPerformed(ActionEvent e) {
+            // Determine the current width and height.
+            double scale = 0;
+
+            // Finds the minimum and maximum scales for resizing
+            double largestDimension = Math.max(target.getImage().getCurrentImage().getWidth(), target.getImage().getCurrentImage().getHeight());
+            double smallestDimension = Math.min(target.getImage().getCurrentImage().getWidth(), target.getImage().getCurrentImage().getHeight());
+            double minScale = Math.ceil(100 / smallestDimension + 0.01) / 100; // ensures image dimensions will not fall below 0
+            double maxScale = Math.floor(100 * MAX_DIMENSION_LIMIT / largestDimension) / 100;
+            
+            // Pop-up dialog box to ask the user for the new width and height values.
+            SpinnerNumberModel scaleModel = new SpinnerNumberModel(1, minScale, maxScale, 0.01);
+            JSpinner scaleSpinner = new JSpinner(scaleModel);
+            String optionDialogText = lang.text("enterscale") + ": " + minScale + " -> " + maxScale;
+            int option = JOptionPane.showOptionDialog(null, scaleSpinner, optionDialogText, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+            // Checks the return value from the dialog box
+            if (option == JOptionPane.CANCEL_OPTION) {
+                return;
+            } else if (option == JOptionPane.OK_OPTION) {
+                scale = scaleModel.getNumber().doubleValue();
+                if (scale == 1) {
+                    // Warning dialog for when no changes have been made
+                    JOptionPane.showMessageDialog(null, lang.text("resizescalewarning"),
+                    lang.text("invalidscale"),
+                    JOptionPane.WARNING_MESSAGE);
+                }
+            }
+
+            target.getImage().apply(new Resize(scale));
+            target.repaint();
+            target.getParent().revalidate();
+        }
+    }
 }

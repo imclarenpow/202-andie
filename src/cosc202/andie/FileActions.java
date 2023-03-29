@@ -1,6 +1,7 @@
 package cosc202.andie;
 
 import java.util.*;
+import java.awt.Dimension;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -107,6 +108,9 @@ public class FileActions {
                 try {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().open(imageFilepath);
+                    
+                    //Sets image size according to window size
+                    target.setZoomToImageSize();
                 } catch (Exception ex) {
                     System.exit(1);
                 }
@@ -238,10 +242,11 @@ public class FileActions {
                     throw new Exception("Invalid image filepath");
                 }
             } catch (Exception ex) {
-                //Displays an error message - thx https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
-                JOptionPane.showMessageDialog(null,
-                "Filename must be valid and include an image extension from the following set:\n " + validImageExtensions.toString(),
-          "Invalid filename",
+                // Displays an error message when an invalid filename is presented
+                // Adapted from https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
+                JOptionPane.showMessageDialog(null, lang.text("filenamewarning") + "\n" +
+                validImageExtensions.toString(),
+                lang.text("invalidfilename"),
                 JOptionPane.WARNING_MESSAGE);
                 result = fileChooser.showSaveDialog(target);
             }

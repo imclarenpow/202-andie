@@ -28,6 +28,7 @@ import javax.imageio.*;
  */
 public class Andie {
     private static JFrame f;
+    
     /**
      * <p>
      * Launches the main GUI for the ANDIE program.
@@ -100,6 +101,46 @@ public class Andie {
         frame.setJMenuBar(menuBar);
         frame.pack();
         frame.setVisible(true);
+    }
+
+    /**
+     * <p>
+     * Fits ANDIE's window size to the current image size
+     * </p>
+     * 
+     * <p>
+     * Updates the dimensions JFrame representing the window of the active ANDIE instance
+     * according to the dimensions of the current image being displayed.
+     * If the image is too large, the window will instead be set to the maximum size (the computer's screen resolution).
+     * </p>
+     * 
+     * @param size the size of the image
+     */
+    public static void resizeWindowToImage(Dimension size) {
+        if (size.width > Toolkit.getDefaultToolkit().getScreenSize().getWidth() || size.height > Toolkit.getDefaultToolkit().getScreenSize().getHeight()) {
+            size = Toolkit.getDefaultToolkit().getScreenSize();
+        }
+        f.setSize(size);
+    }
+
+    /**
+     * <p>
+     * Returns the dimensions of ANDIE's current window
+     * </p>
+     * 
+     * <p>
+     * A method to retrieve the width and height of the JFrame containing the
+     * current ANDIE instance, i.e. the dimensions of the window currently
+     * being used for ANDIE. The method returns the resulting dimensions as
+     * a new Dimension object.
+     * </p>
+     * 
+     * @return A Dimension representing the size of the frame (includes width and height)
+     */
+    public static Dimension getFrameSize() {
+        double width = f.getContentPane().getWidth() - f.getJMenuBar().getHeight();
+        double height = f.getContentPane().getHeight() - f.getJMenuBar().getHeight();
+        return new Dimension((int)Math.round(width), (int)Math.round(height));
     }
 
     /**

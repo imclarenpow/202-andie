@@ -15,6 +15,12 @@ public class MedianFilter {
     }
 
     public BufferedImage apply(BufferedImage input){
+        //calls no file selected popup
+        if(input == null){
+            NoFileSelectedPopup nfs = new NoFileSelectedPopup();
+            nfs.window();
+        }
+        
         float[] array = {0      , -1/2.0f, 0      ,
                          -1/2.0f, 3      , -1/2.0f,
                          0      , -1/2.0f, 0       };

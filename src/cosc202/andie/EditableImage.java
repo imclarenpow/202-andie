@@ -5,6 +5,8 @@ import java.io.*;
 import java.awt.image.*;
 import javax.imageio.*;
 
+import cosc202.andie.lang.LanguageSupport;
+
 /**
  * <p>
  * An image with a set of operations applied to it.

@@ -38,12 +38,9 @@ public class FilterActions {
     public FilterActions() {
         //string values call lang
         actions = new ArrayList<Action>();
-<<<<<<< src/cosc202/andie/FilterActions.java
 
         actions.add(new SharpenFilterAction("Sharpen filter", null, "Apply a sharpen filter", Integer.valueOf(KeyEvent.VK_M)));
         actions.add(new MedianFilterAction("Median filter", null, "Apply a Median filter", Integer.valueOf(KeyEvent.VK_M)));
-=======
->>>>>>> src/cosc202/andie/FilterActions.java
         actions.add(new MeanFilterAction(lang.text("meanfilter"), null, lang.text("applymean"), Integer.valueOf(KeyEvent.VK_M)));
         actions.add(new SoftBlurAction(lang.text("softblur"), null, lang.text("applysoftblur"), Integer.valueOf(KeyEvent.VK_S)));
         actions.add(new GaussianFilterAction(lang.text("gaussian"), null, lang.text("applygaussian"), Integer.valueOf(KeyEvent.VK_G)));
@@ -74,7 +71,6 @@ public class FilterActions {
             super(name, icon, desc, mnemonic);
         }
         public void actionPerformed(ActionEvent e) {
-<<<<<<< src/cosc202/andie/FilterActions.java
 
             // Determine the radius - ask the user.
             int radius = 1;
@@ -92,25 +88,6 @@ public class FilterActions {
                 radius = radiusModel.getNumber().intValue();
             }
 
-=======
-
-            // Determine the radius - ask the user.
-            int radius = 1;
-
-            // Pop-up dialog box to ask for the radius value.
-            // problem is here
-            SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 0, 25, 1);
-            JSpinner radiusSpinner = new JSpinner(radiusModel);
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, lang.text("enterfiltrad"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-
-            // Check the return value from the dialog box.
-            if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
-                radius = radiusModel.getNumber().intValue();
-            }
-
->>>>>>> src/cosc202/andie/FilterActions.java
             // Create and apply the filter
             target.getImage().apply(new GaussianBlur(radius));
             target.repaint();
@@ -177,7 +154,6 @@ public class FilterActions {
 
     }
 
-<<<<<<< src/cosc202/andie/FilterActions.java
     public class SharpenFilterAction extends ImageAction {
 
         /**
@@ -256,24 +232,19 @@ public class FilterActions {
             target.repaint();
             target.getParent().revalidate();
         }
-
-=======
->>>>>>> src/cosc202/andie/FilterActions.java
-    public class SoftBlurAction extends ImageAction {
-
-        SoftBlurAction(String name, ImageIcon icon, 
-                        String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            target.getImage().apply(new SoftBlur());
-            target.repaint();
-            target.getParent().revalidate();
-        }
     }
-<<<<<<< src/cosc202/andie/FilterActions.java
-}
-=======
->>>>>>> src/cosc202/andie/FilterActions.java
+
+        public class SoftBlurAction extends ImageAction {
+
+            SoftBlurAction(String name, ImageIcon icon, 
+                            String desc, Integer mnemonic) {
+                super(name, icon, desc, mnemonic);
+            }
+
+            public void actionPerformed(ActionEvent e) {
+                target.getImage().apply(new SoftBlur());
+                target.repaint();
+                target.getParent().revalidate();
+            }
+        }
 }

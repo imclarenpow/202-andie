@@ -220,7 +220,7 @@ public class GaussianFilterAction extends ImageAction{
         
             // Create a panel to hold the slider
             JPanel panel = new JPanel();
-            JSlider medianSlider = new JSlider(1, 10, 1);
+            JSlider medianSlider = new JSlider(0, 10, 0);
             medianSlider.setMajorTickSpacing(5);
             medianSlider.setMinorTickSpacing(1);
             medianSlider.setPaintTicks(true);

@@ -4,6 +4,7 @@ import java.util.*;
 import java.io.*;
 import java.awt.image.*;
 import javax.imageio.*;
+import javax.swing.JOptionPane;
 
 import cosc202.andie.lang.LanguageSupport;
 
@@ -47,6 +48,8 @@ class EditableImage {
     private String imageFilename;
     /** The file where the operation sequence is stored. */
     private String opsFilename;
+    /** Provides support for multiple languages */
+    private LanguageSupport lang = new LanguageSupport();
 
     /**
      * <p>
@@ -236,11 +239,33 @@ class EditableImage {
      * Apply an {@link ImageOperation} to this image.
      * </p>
      * 
+     * <p>
+     * If the image is null no changes are applied and a popup warns the user that no operations have been applied
+     * </p>
+     * 
      * @param op The operation to apply.
      */
-    public void apply(ImageOperation op) {
-        current = op.apply(current);
-        ops.add(op);
+    public boolean apply(ImageOperation op) {
+        if (current != null) {
+            current = op.apply(current);
+            ops.add(op);
+            return true;
+        } else {
+            ShowNoImageError();
+            return false;
+        }
+        
+    }
+
+    /**
+     * <p>
+     * Warns the user that they have tried to edit an image when there is no image present
+     * </p>
+     */
+    private void ShowNoImageError() {
+        JOptionPane.showMessageDialog(null, lang.text("noimagewarning"),
+        lang.text("noimage"),
+        JOptionPane.WARNING_MESSAGE);
     }
 
     /**
@@ -249,8 +274,12 @@ class EditableImage {
      * </p>
      */
     public void undo() {
-        redoOps.push(ops.pop());
-        refresh();
+        if (current != null) {
+            redoOps.push(ops.pop());
+            refresh();
+        } else {
+            ShowNoImageError();
+        }
     }
 
     /**
@@ -259,7 +288,11 @@ class EditableImage {
      * </p>
      */
     public void redo()  {
-        apply(redoOps.pop());
+        if (current != null) {
+            apply(redoOps.pop());
+        } else {
+            ShowNoImageError();
+        }
     }
 
     /**

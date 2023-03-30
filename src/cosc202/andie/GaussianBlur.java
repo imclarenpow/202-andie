@@ -19,10 +19,6 @@ public class GaussianBlur implements ImageOperation, java.io.Serializable{
     
         public BufferedImage apply(BufferedImage input) {
             //calls no file selected popup
-            if(input == null){
-                NoFileSelectedPopup nfs = new NoFileSelectedPopup();
-                nfs.window();
-            }
             System.out.println("GaussianBlur op started");
             //get the dimensions of the image inputted
             BufferedImage output = new BufferedImage(input.getWidth(), input.getHeight(), BufferedImage.TYPE_INT_RGB);

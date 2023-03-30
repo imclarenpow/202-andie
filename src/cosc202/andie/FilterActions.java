@@ -177,10 +177,12 @@ public class GaussianFilterAction extends ImageAction{
          */
         public void actionPerformed(ActionEvent e) {
 
-            target.getImage().apply(new SharpenFilter());
+            boolean success = target.getImage().apply(new SharpenFilter());
             target.repaint();
             target.getParent().revalidate();
-            JOptionPane.showMessageDialog(null, lang.text("sharpfiltrun"));
+            if (success) {
+                JOptionPane.showMessageDialog(null, lang.text("sharpfiltrun"));
+            }
         }
 
     }
@@ -253,10 +255,12 @@ public class GaussianFilterAction extends ImageAction{
             }
 
             public void actionPerformed(ActionEvent e) {
-                target.getImage().apply(new SoftBlur());
+                boolean success = target.getImage().apply(new SoftBlur());
                 target.repaint();
                 target.getParent().revalidate();
-                JOptionPane.showMessageDialog(null, lang.text("softblurrun"));
+                if (success) {
+                    JOptionPane.showMessageDialog(null, lang.text("softblurrun"));
+                }
             }
         }
 }

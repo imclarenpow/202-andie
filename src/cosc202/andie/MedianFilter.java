@@ -72,5 +72,6 @@ public BufferedImage apply(BufferedImage input) {
             output.setRGB(j, i, rgb);
         }
     }
-    
+    return output;
+}
 }

@@ -38,9 +38,9 @@ public class FilterActions {
     public FilterActions() {
         //string values call lang
         actions = new ArrayList<Action>();
-
-        actions.add(new SharpenFilterAction("Sharpen filter", null, "Apply a sharpen filter", Integer.valueOf(KeyEvent.VK_M)));
-        actions.add(new MedianFilterAction("Median filter", null, "Apply a Median filter", Integer.valueOf(KeyEvent.VK_M)));
+        
+        actions.add(new SharpenFilterAction(lang.text("sharpenfilter"), null, lang.text("applysharpen"), Integer.valueOf(KeyEvent.VK_P)));
+        actions.add(new MedianFilterAction(lang.text("medianfilter"), null, lang.text("applymedian"), Integer.valueOf(KeyEvent.VK_O)));
         actions.add(new MeanFilterAction(lang.text("meanfilter"), null, lang.text("applymean"), Integer.valueOf(KeyEvent.VK_M)));
         actions.add(new SoftBlurAction(lang.text("softblur"), null, lang.text("applysoftblur"), Integer.valueOf(KeyEvent.VK_S)));
         actions.add(new GaussianFilterAction(lang.text("gaussian"), null, lang.text("applygaussian"), Integer.valueOf(KeyEvent.VK_G)));
@@ -215,32 +215,28 @@ public class GaussianFilterAction extends ImageAction{
          */
         public void actionPerformed(ActionEvent e) {
 
-            // Determine the radius - ask the user.
-            //int radius = 1;
+            //Determine the radius - ask the user.
+            int radius = 1;
 
             // Pop-up dialog box to ask for the radius value.
             SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 10, 1);
             JSpinner radiusSpinner = new JSpinner(radiusModel);
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, "Enter filter radius", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-            System.out.println(option);
+            int option = JOptionPane.showOptionDialog(null, radiusSpinner, lang.text("enterfiltrad"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
             if (option == JOptionPane.CANCEL_OPTION) {
-                System.out.println(option);
                 return;
             } else if (option == JOptionPane.OK_OPTION) {
-                //radius = radiusModel.getNumber().intValue();
-                System.out.println(option);
+                radius = radiusModel.getNumber().intValue();
             }
 
             // Create and apply the filter
-            //target.getImage().apply(new MedianFilter(radius));
+            target.getImage().apply(new MedianFilter(radius));
             target.repaint();
             target.getParent().revalidate();
         }
-    }
 
-        public class SoftBlurAction extends ImageAction {
+    public class SoftBlurAction extends ImageAction {
 
             SoftBlurAction(String name, ImageIcon icon, 
                             String desc, Integer mnemonic) {

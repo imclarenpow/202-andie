@@ -251,3 +251,4 @@ public class GaussianFilterAction extends ImageAction{
             }
         }
 }
+}

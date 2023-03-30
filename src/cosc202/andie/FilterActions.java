@@ -42,7 +42,7 @@ public class FilterActions {
         actions.add(new SharpenFilterAction(lang.text("sharpenfilter"), null, lang.text("applysharpen"), Integer.valueOf(KeyEvent.VK_P)));
         actions.add(new MedianFilterAction(lang.text("medianfilter"), null, lang.text("applymedian"), Integer.valueOf(KeyEvent.VK_O)));
         actions.add(new MeanFilterAction(lang.text("meanfilter"), null, lang.text("applymean"), Integer.valueOf(KeyEvent.VK_M)));
-        actions.add(new SoftBlurAction(lang.text("softblur"), null, lang.text("applysoftblur"), Integer.valueOf(KeyEvent.VK_S)));
+        //actions.add(new SoftBlurAction(lang.text("softblur"), null, lang.text("applysoftblur"), Integer.valueOf(KeyEvent.VK_S)));
         actions.add(new GaussianFilterAction(lang.text("gaussian"), null, lang.text("applygaussian"), Integer.valueOf(KeyEvent.VK_G)));
     }
 
@@ -215,26 +215,35 @@ public class GaussianFilterAction extends ImageAction{
          */
         public void actionPerformed(ActionEvent e) {
 
-            //Determine the radius - ask the user.
+            // Determine the radius - ask the user.
             int radius = 1;
+        
+            // Create a panel to hold the slider
+            JPanel panel = new JPanel();
+            JSlider medianSlider = new JSlider(1, 10, 1);
+            medianSlider.setMajorTickSpacing(5);
+            medianSlider.setMinorTickSpacing(1);
+            medianSlider.setPaintTicks(true);
+            panel.add(medianSlider);
+        
+            Object[] message = { lang.text("enterfiltrad"), panel };
+            int option = JOptionPane.showConfirmDialog(null, message, lang.text("medianfilter"), JOptionPane.OK_CANCEL_OPTION);
 
-            // Pop-up dialog box to ask for the radius value.
-            SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 10, 1);
-            JSpinner radiusSpinner = new JSpinner(radiusModel);
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, lang.text("enterfiltrad"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-
+        
             // Check the return value from the dialog box.
             if (option == JOptionPane.CANCEL_OPTION) {
                 return;
             } else if (option == JOptionPane.OK_OPTION) {
-                radius = radiusModel.getNumber().intValue();
+                radius = medianSlider.getValue();
             }
-
+        
             // Create and apply the filter
             target.getImage().apply(new MedianFilter(radius));
             target.repaint();
             target.getParent().revalidate();
         }
+        
+        
 
     public class SoftBlurAction extends ImageAction {
 

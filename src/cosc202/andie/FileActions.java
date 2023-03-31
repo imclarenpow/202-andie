@@ -3,7 +3,6 @@ package cosc202.andie;
 import java.util.*;
 import java.awt.Dimension;
 import java.awt.event.*;
-import java.io.FileNotFoundException;
 
 import javax.imageio.IIOException;
 import javax.swing.*;
@@ -116,7 +115,7 @@ public class FileActions {
                     Andie.resizeWindowToImage(target.getPreferredSize());
                 } catch (IIOException noFile) {
                     JOptionPane.showMessageDialog(null, lang.text("invalidfilename"),
-                    lang.text("filenamewarning"),
+                    lang.text("openfilenamewarning"),
                     JOptionPane.WARNING_MESSAGE);
                 } catch (Exception ex) {
                     System.out.println(ex);

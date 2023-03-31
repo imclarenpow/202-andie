@@ -112,8 +112,8 @@ public class FileActions {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().open(imageFilepath);
                     
-                    //Sets image size according to window size
-                    target.setZoomToImageSize();
+                    //Sets window size according to image size
+                    Andie.resizeWindowToImage(target.getPreferredSize());
                 } catch (IIOException noFile) {
                     JOptionPane.showMessageDialog(null, lang.text("invalidfilename"),
                     lang.text("filenamewarning"),

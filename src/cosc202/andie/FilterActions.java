@@ -42,7 +42,7 @@ public class FilterActions {
         actions.add(new SharpenFilterAction(lang.text("sharpenfilter"), null, lang.text("applysharpen"), Integer.valueOf(KeyEvent.VK_P)));
         actions.add(new MedianFilterAction(lang.text("medianfilter"), null, lang.text("applymedian"), Integer.valueOf(KeyEvent.VK_O)));
         actions.add(new MeanFilterAction(lang.text("meanfilter"), null, lang.text("applymean"), Integer.valueOf(KeyEvent.VK_M)));
-        //actions.add(new SoftBlurAction(lang.text("softblur"), null, lang.text("applysoftblur"), Integer.valueOf(KeyEvent.VK_S)));
+        actions.add(new SoftBlurAction(lang.text("softblur"), null, lang.text("applysoftblur"), Integer.valueOf(KeyEvent.VK_S)));
         actions.add(new GaussianFilterAction(lang.text("gaussian"), null, lang.text("applygaussian"), Integer.valueOf(KeyEvent.VK_G)));
     }
 
@@ -245,7 +245,7 @@ public class GaussianFilterAction extends ImageAction{
             target.getParent().revalidate();
         }
         
-        
+    }
 
     public class SoftBlurAction extends ImageAction {
 
@@ -263,5 +263,4 @@ public class GaussianFilterAction extends ImageAction{
                 }
             }
         }
-}
 }

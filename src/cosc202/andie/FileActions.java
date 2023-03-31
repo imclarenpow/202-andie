@@ -1,7 +1,6 @@
 package cosc202.andie;
 
 import java.util.*;
-import java.awt.Dimension;
 import java.awt.event.*;
 
 import javax.imageio.IIOException;
@@ -267,6 +266,7 @@ public class FileActions {
      * Action to export an edited image to a new file location.
      * </p>
      * 
+     * @author Niamh Avery
      * @see EditableImage#exportAs(String)
      */
     public class FileExportAction extends ImageAction {

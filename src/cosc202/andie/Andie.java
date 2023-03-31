@@ -3,8 +3,6 @@ package cosc202.andie;
 import java.awt.*;
 import javax.swing.*;
 
-import org.junit.internal.ExactComparisonCriteria;
-
 import cosc202.andie.lang.*;
 
 import javax.imageio.*;

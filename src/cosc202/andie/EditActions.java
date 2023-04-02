@@ -43,6 +43,13 @@ public class EditActions {
         actions.add(new UndoAction(lang.text("undo"), null, lang.text("undo"), Integer.valueOf(KeyEvent.VK_Z)));
         actions.add(new RedoAction(lang.text("redo"), null, lang.text("redo"), Integer.valueOf(KeyEvent.VK_Y)));
         actions.add(new ResizeAction(lang.text("resize"), null, lang.text("resize"), Integer.valueOf(KeyEvent.VK_R)));
+
+        actions.add(new FlipHorizontalAction("Flip Horizontal", null, "Flip Horizontal", Integer.valueOf(KeyEvent.VK_H)));
+        actions.add(new FlipVericalAction("Flip Vertical", null, "Flip Vertical", Integer.valueOf(KeyEvent.VK_V)));
+
+        actions.add(new RotateClockwiseAction("Rotate 90° Right", null, "Rotate 90° Clockwise", Integer.valueOf(KeyEvent.VK_R)));
+        actions.add(new RotateAntiClockwiseAction("Rotate 90° Left", null, "Rotate 90° Anti-Clockwise", Integer.valueOf(KeyEvent.VK_L)));
+        actions.add(new Rotate180Action("Rotate 180°", null, "Rotate 180°", Integer.valueOf(KeyEvent.VK_D)));
     }
 
     /**
@@ -185,6 +192,8 @@ public class EditActions {
          * 
          * @param e The event triggering this callback.
          */
+
+         
         public void actionPerformed(ActionEvent e) {
             // Determine the current width and height.
             double scale = 0;
@@ -218,5 +227,209 @@ public class EditActions {
             target.repaint();
             target.getParent().revalidate();
         }
+    }
+
+    /**
+     * <p>
+     * Action to flip the input image horizontally.
+     * </p>
+     * 
+     * @see Flip
+     */  
+    public class FlipHorizontalAction extends ImageAction{
+        /**
+         * <p>
+         * Create a flip horizontal action.
+         * </p>
+         * 
+         * @param name The name of the action (ignored if null).
+         * @param icon An icon to use to represent the action (ignored if null).
+         * @param desc A brief description of the action  (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         */
+        FlipHorizontalAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+        }
+
+        /**
+         * <p>
+         * Callback for when the Flip Horizontal action is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the FlipHorizontalAction is triggered.
+         * It flips the image.
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
+        public void actionPerformed(ActionEvent e) {
+            target.getImage().apply(new Flip("Horizontal"));
+            target.repaint();
+            target.getParent().revalidate();
+        }
+
+    }
+
+    /**
+     * <p>
+     * Action to flip the input image Vertically.
+     * </p>
+     * 
+     * @see Flip
+     */  
+    public class FlipVericalAction extends ImageAction{
+        /**
+         * <p>
+         * Create a flip Vertically action.
+         * </p>
+         * 
+         * @param name The name of the action (ignored if null).
+         * @param icon An icon to use to represent the action (ignored if null).
+         * @param desc A brief description of the action  (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         */
+        FlipVericalAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+        }
+        /**
+         * <p>
+         * Callback for when the flip vertical action is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the FlipVericalAction is triggered.
+         * It flips the image.
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
+        public void actionPerformed(ActionEvent e) {
+            target.getImage().apply(new Flip("Vertical"));
+            target.repaint();
+            target.getParent().revalidate();
+        }
+
+    }
+
+    /**
+     * <p>
+     * Action to rotate the input image 90 degrees right/clockwise.
+     * </p>
+     * 
+     * @see Rotate
+     */  
+    public class RotateClockwiseAction extends ImageAction{
+        /**
+         * <p>
+         * Create a rotate 90 degrees clockwise action.
+         * </p>
+         * 
+         * @param name The name of the action (ignored if null).
+         * @param icon An icon to use to represent the action (ignored if null).
+         * @param desc A brief description of the action  (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         */
+        RotateClockwiseAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+        }
+        /**
+         * <p>
+         * Callback for when the rotate 90 degrees clockwise action is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the RotateClockwiseAction is triggered.
+         * It flips the image.
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
+        public void actionPerformed(ActionEvent e) {
+            target.getImage().apply(new Rotate("ClockwiseNinety"));
+            target.repaint();
+            target.getParent().revalidate();
+        }
+
+    }
+    /**
+     * <p>
+     * Action to rotate the input image 90 degrees left/anti-clockwise.
+     * </p>
+     * 
+     * @see Rotate
+     */
+    public class RotateAntiClockwiseAction extends ImageAction{
+        /**
+         * <p>
+         * Create a rotate anti-clockwise action.
+         * </p>
+         * 
+         * @param name The name of the action (ignored if null).
+         * @param icon An icon to use to represent the action (ignored if null).
+         * @param desc A brief description of the action  (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         */
+        RotateAntiClockwiseAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+        }
+        /**
+         * <p>
+         * Callback for when the rotate 90 degrees anti-clocwise action is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the RotateAntiClockwiseAction is triggered.
+         * It flips the image.
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
+        public void actionPerformed(ActionEvent e) {
+            target.getImage().apply(new Rotate("AntiClockwiseNinety"));
+            target.repaint();
+            target.getParent().revalidate();
+        }
+
+    }
+    /**
+     * <p>
+     * Action to rotate the input image 180 degrees.
+     * </p>
+     * 
+     * @see Rotate
+     */
+    public class Rotate180Action extends ImageAction{
+        /**
+         * <p>
+         * Create a rotate 180 degrees action.
+         * </p>
+         * 
+         * @param name The name of the action (ignored if null).
+         * @param icon An icon to use to represent the action (ignored if null).
+         * @param desc A brief description of the action  (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         */
+        Rotate180Action(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+        }
+        /**
+         * <p>
+         * Callback for when the rotate 180 degrees action is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the Rotate180Action is triggered.
+         * It flips the image.
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
+        public void actionPerformed(ActionEvent e) {
+            target.getImage().apply(new Rotate("HundredEighty"));
+            target.repaint();
+            target.getParent().revalidate();
+        }
+
     }
 }

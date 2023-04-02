@@ -57,14 +57,12 @@ class EditableImage {
      * </p>
      * 
      * <p>
-     * A new EditableImage has no image (it is a null reference), and an empty stack of operations.
+     * A new EditableImage has no image (it is a null reference).
      * </p>
      */
     public EditableImage() {
         original = null;
         current = null;
-        ops = new Stack<ImageOperation>();
-        redoOps = new Stack<ImageOperation>();
         imageFilename = null;
         opsFilename = null;
     }
@@ -128,7 +126,7 @@ class EditableImage {
      * </p>
      * 
      * <p>
-     * Opens an image from the specified file.
+     * Opens an image from the specified file and resets the operations/redo operations stacks.
      * Also tries to open a set of operations from the file with <code>.ops</code> added.
      * So if you open <code>some/path/to/image.png</code>, this method will also try to
      * read the operations from <code>some/path/to/image.png.ops</code>.
@@ -144,6 +142,7 @@ class EditableImage {
         original = ImageIO.read(imageFile);
         current = deepCopy(original);
         ops = new Stack<ImageOperation>();
+        redoOps = new Stack<ImageOperation>();
         try {
             FileInputStream fileIn = new FileInputStream(this.opsFilename);
             ObjectInputStream objIn = new ObjectInputStream(fileIn);

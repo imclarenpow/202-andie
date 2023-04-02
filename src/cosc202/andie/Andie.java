@@ -3,8 +3,6 @@ package cosc202.andie;
 import java.awt.*;
 import javax.swing.*;
 
-import org.junit.internal.ExactComparisonCriteria;
-
 import cosc202.andie.lang.*;
 
 import javax.imageio.*;
@@ -98,6 +96,10 @@ public class Andie {
         ColourActions colourActions = new ColourActions();
         menuBar.add(colourActions.createMenu());
         
+        // Sets the minimum size for warning messages
+        // Adapted from https://stackoverflow.com/questions/14299741/setting-size-of-jpanel-or-joptionpane
+        UIManager.put("OptionPane.minimumSize",new Dimension(500, 100)); 
+
         frame.setJMenuBar(menuBar);
         frame.pack();
         frame.setVisible(true);

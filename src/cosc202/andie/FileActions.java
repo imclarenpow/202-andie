@@ -1,9 +1,7 @@
 package cosc202.andie;
 
 import java.util.*;
-import java.awt.Dimension;
 import java.awt.event.*;
-import java.io.FileNotFoundException;
 
 import javax.imageio.IIOException;
 import javax.swing.*;
@@ -112,11 +110,11 @@ public class FileActions {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().open(imageFilepath);
                     
-                    //Sets image size according to window size
-                    target.setZoomToImageSize();
+                    //Sets window size according to image size
+                    Andie.resizeWindowToImage(target.getPreferredSize());
                 } catch (IIOException noFile) {
                     JOptionPane.showMessageDialog(null, lang.text("invalidfilename"),
-                    lang.text("filenamewarning"),
+                    lang.text("openfilenamewarning"),
                     JOptionPane.WARNING_MESSAGE);
                 } catch (Exception ex) {
                     System.out.println(ex);
@@ -268,6 +266,7 @@ public class FileActions {
      * Action to export an edited image to a new file location.
      * </p>
      * 
+     * @author Niamh Avery
      * @see EditableImage#exportAs(String)
      */
     public class FileExportAction extends ImageAction {

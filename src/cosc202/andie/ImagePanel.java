@@ -93,7 +93,7 @@ public class ImagePanel extends JPanel {
         if (image.hasImage()) {
             double widthRatio = image.getCurrentImage().getWidth() / Andie.getFrameSize().getWidth();
             double heightRatio = image.getCurrentImage().getHeight() / Andie.getFrameSize().getWidth();
-            scale = 1.0 / Math.max(widthRatio, heightRatio);
+            scale = 1.0 / (Math.max(widthRatio, heightRatio));
         }
     }
 

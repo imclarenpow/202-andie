@@ -7,6 +7,11 @@ public class BrightnessAndContrast implements ImageOperation, java.io.Serializab
     private double brightness;
     private double contrast;
 
+    /**
+     * A constructor for the BrightnessAndContrast class
+     * @param brightness the new brightness value
+     * @param contrast the new contrast value
+     */
     public BrightnessAndContrast(int brightness, int contrast){
         this.brightness = brightness;
         this.contrast = contrast;

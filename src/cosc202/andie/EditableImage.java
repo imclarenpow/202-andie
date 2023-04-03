@@ -269,13 +269,40 @@ class EditableImage {
 
     /**
      * <p>
+     * Warns the user that they have tried redo operations when there are none to redo
+     * </p>
+     */
+    private void ShowNoRedoOperationsError() {
+        JOptionPane.showMessageDialog(null, lang.text("noredooperationswarning"),
+        lang.text("noredooperation"),
+        JOptionPane.WARNING_MESSAGE);
+    }
+
+    /**
+     * <p>
+     * Warns the user that they have tried undo operations when there are none to undo
+     * </p>
+     */
+    private void ShowNoUndoOperationsError() {
+        JOptionPane.showMessageDialog(null, lang.text("noundooperationswarning"),
+        lang.text("noundooperation"),
+        JOptionPane.WARNING_MESSAGE);
+    }
+
+    /**
+     * <p>
      * Undo the last {@link ImageOperation} applied to the image.
      * </p>
      */
     public void undo() {
         if (current != null) {
-            redoOps.push(ops.pop());
-            refresh();
+            if (ops.size() != 0) {
+                redoOps.push(ops.pop());
+                refresh();
+            } else {
+                ShowNoUndoOperationsError();
+            }
+            
         } else {
             ShowNoImageError();
         }
@@ -288,7 +315,11 @@ class EditableImage {
      */
     public void redo()  {
         if (current != null) {
-            apply(redoOps.pop());
+            if (redoOps.size() != 0) {
+                apply(redoOps.pop());
+            } else {
+                ShowNoRedoOperationsError();
+            }
         } else {
             ShowNoImageError();
         }

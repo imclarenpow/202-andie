@@ -29,8 +29,8 @@ public class EditActions {
     /** A list of actions for the Edit menu. */
     protected ArrayList<Action> actions;
 
-    // Sets the maximum dimension of images for resize - based on the limit used by Adobe Photoshop (https://helpx.adobe.com/nz/photoshop-elements/kb/maximum-image-size-limits-photoshop.html)
-    private final double MAX_DIMENSION_LIMIT = 30000;
+    // Sets the maximum dimension of images for resize 
+    private final double MAX_DIMENSION_LIMIT = 20000;
 
     /**
      * <p>
@@ -165,7 +165,7 @@ public class EditActions {
 
         /**
          * <p>
-         * Create a resize redo action.
+         * Creates a resize action.
          * </p>
          * 
          * @param name The name of the action (ignored if null).
@@ -215,17 +215,18 @@ public class EditActions {
                 return;
             } else if (option == JOptionPane.OK_OPTION) {
                 scale = scaleModel.getNumber().doubleValue();
-                if (scale == 1) {
+                if (scale == 1 || scale < minScale || scale > maxScale) {
                     // Warning dialog for when no changes have been made
                     JOptionPane.showMessageDialog(null, lang.text("resizescalewarning"),
                     lang.text("invalidscale"),
                     JOptionPane.WARNING_MESSAGE);
+                } else {
+                    target.getImage().apply(new Resize(scale));
+                    target.repaint();
+                    target.getParent().revalidate();
                 }
             }
-
-            target.getImage().apply(new Resize(scale));
-            target.repaint();
-            target.getParent().revalidate();
+            
         }
     }
 

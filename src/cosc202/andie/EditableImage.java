@@ -133,14 +133,21 @@ class EditableImage {
      * </p>
      * 
      * @param filePath The file to open the image from.
+     * @throws NullPointerException If attempting to read or deepCopy a corrupt or missing
      * @throws Exception If something goes wrong.
      */
     public void open(String filePath) throws Exception {
         imageFilename = filePath;
         opsFilename = imageFilename + ".ops";
         File imageFile = new File(imageFilename);
+        try{
         original = ImageIO.read(imageFile);
         current = deepCopy(original);
+        }catch (NullPointerException badFile){
+            JOptionPane.showMessageDialog(null, lang.text("badfilewarning"), 
+                lang.text("corruptfile"), JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         ops = new Stack<ImageOperation>();
         redoOps = new Stack<ImageOperation>();
         try {
@@ -160,7 +167,7 @@ class EditableImage {
             redoOps.clear();
             objIn.close();
             fileIn.close();
-        } catch (Exception ex) {
+        }catch (Exception ex) {
             // Could be no file or something else. Carry on for now.
         }
         this.refresh();

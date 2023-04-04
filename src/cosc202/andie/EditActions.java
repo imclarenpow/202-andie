@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import cosc202.andie.lang.LanguageSupport;
+
  /**
  * <p>
  * Actions provided by the Edit menu.
@@ -44,12 +45,12 @@ public class EditActions {
         actions.add(new RedoAction(lang.text("redo"), null, lang.text("redo"), Integer.valueOf(KeyEvent.VK_Y)));
         actions.add(new ResizeAction(lang.text("resize"), null, lang.text("resize"), Integer.valueOf(KeyEvent.VK_R)));
 
-        actions.add(new FlipHorizontalAction("Flip Horizontal", null, "Flip Horizontal", Integer.valueOf(KeyEvent.VK_H)));
-        actions.add(new FlipVericalAction("Flip Vertical", null, "Flip Vertical", Integer.valueOf(KeyEvent.VK_V)));
+        actions.add(new FlipHorizontalAction(lang.text("fliphoriz"), null, lang.text("fliphoriz"), Integer.valueOf(KeyEvent.VK_H)));
+        actions.add(new FlipVerticalAction(lang.text("flipvert"), null, lang.text("flipvert"), Integer.valueOf(KeyEvent.VK_V)));
 
-        actions.add(new RotateClockwiseAction("Rotate 90° Right", null, "Rotate 90° Clockwise", Integer.valueOf(KeyEvent.VK_R)));
-        actions.add(new RotateAntiClockwiseAction("Rotate 90° Left", null, "Rotate 90° Anti-Clockwise", Integer.valueOf(KeyEvent.VK_L)));
-        actions.add(new Rotate180Action("Rotate 180°", null, "Rotate 180°", Integer.valueOf(KeyEvent.VK_D)));
+        actions.add(new RotateClockwiseAction(lang.text("rotate90r"), null, lang.text("rotate90cw"), Integer.valueOf(KeyEvent.VK_R)));
+        actions.add(new RotateAntiClockwiseAction(lang.text("rotate90l"), null, lang.text("rotate90acw"), Integer.valueOf(KeyEvent.VK_L)));
+        actions.add(new Rotate180Action(lang.text("rotate180"), null, lang.text("rotate180"), Integer.valueOf(KeyEvent.VK_D)));
     }
 
     /**
@@ -160,6 +161,8 @@ public class EditActions {
      * </p>
      * 
      * @see Resize
+     * @author Niamh Avery
+     * @version 1.0
      */
     public class ResizeAction extends ImageAction {
 
@@ -279,7 +282,7 @@ public class EditActions {
      * 
      * @see Flip
      */  
-    public class FlipVericalAction extends ImageAction{
+    public class FlipVerticalAction extends ImageAction{
         /**
          * <p>
          * Create a flip Vertically action.
@@ -290,7 +293,7 @@ public class EditActions {
          * @param desc A brief description of the action  (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
          */
-        FlipVericalAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+        FlipVerticalAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
         }
         /**
@@ -299,7 +302,7 @@ public class EditActions {
          * </p>
          * 
          * <p>
-         * This method is called whenever the FlipVericalAction is triggered.
+         * This method is called whenever the FlipVerticalAction is triggered.
          * It flips the image.
          * </p>
          * 

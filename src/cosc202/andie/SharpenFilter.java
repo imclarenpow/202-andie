@@ -29,9 +29,7 @@ public class SharpenFilter implements ImageOperation, java.io.Serializable {
      * @param input Is the image that the Sharpess filter is applied to.
      * @return The result of the of image post filter application.
      */
-    public BufferedImage apply(BufferedImage input){
-        //calls no file selected popup
-        
+    public BufferedImage apply(BufferedImage input){        
         float[] array = {0      , -1/2.0f, 0      ,
                          -1/2.0f, 3      , -1/2.0f,
                          0      , -1/2.0f, 0       };

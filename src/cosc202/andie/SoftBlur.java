@@ -38,7 +38,6 @@ public class SoftBlur implements ImageOperation, java.io.Serializable {
      * @return The resulting (blurred) image.
      */
     public BufferedImage apply(BufferedImage input) {
-        //calls no file selected popup
         float[] array = {0, 1/8.0f, 0,
                          1/8.0f, 1/2.0f, 1/8.0f,
                          0, 1/8.0f, 0};

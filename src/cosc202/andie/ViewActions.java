@@ -6,7 +6,7 @@ import javax.swing.*;
 
 import cosc202.andie.lang.*;
 
-/**Test test
+/**
  * 
  * <p>
  * Actions provided by the View menu.
@@ -164,6 +164,8 @@ public class ViewActions {
      * <p>
      * Note that this action only affects the way the image is displayed, not its actual contents.
      * </p>
+     * @author Niamh Avery
+     * @version 1.0
      */
     public class ResizeWindowAction extends ImageAction {
 
@@ -251,6 +253,9 @@ public class ViewActions {
      * <p>
      * Note that this action only affects the way the image is displayed, not its actual contents.
      * </p>
+     * 
+     * @author Niamh Avery
+     * @version 1.0
      */
     public class ZoomToWindowAction extends ImageAction {
 
@@ -285,7 +290,6 @@ public class ViewActions {
             target.repaint();
             target.getParent().revalidate();
         }
-
     }
 
     /**
@@ -330,9 +334,5 @@ public class ViewActions {
             target.revalidate();
             target.getParent().revalidate();
         }
-
     }
-
-
-
 }

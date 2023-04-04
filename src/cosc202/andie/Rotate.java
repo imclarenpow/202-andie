@@ -37,6 +37,7 @@ public class Rotate implements ImageOperation{
     Rotate(String direction){
         this.rotateDirection = direction;
     }
+
     /**
      * <p>
      * Apply a Rotate object to an image.
@@ -71,6 +72,7 @@ public class Rotate implements ImageOperation{
         return input;//return updated image
         
     }
+    
     /**
      * <p>
      * Apply Rotate Clockwise to an image.
@@ -107,6 +109,7 @@ public class Rotate implements ImageOperation{
         }
         return output;//return updated image
     }
+
     /**
      * <p>
      * Apply Rotate Anti-Clockwise to an image.
@@ -144,6 +147,7 @@ public class Rotate implements ImageOperation{
         return output;//return updated image
         
     }
+    
     /**
      * <p>
      * Apply Rotate Hundred and Eighty to an image.
@@ -189,7 +193,6 @@ public class Rotate implements ImageOperation{
         
         return input;  //return the updated image     
     }
-
-    }
+}
 
   

@@ -1,11 +1,9 @@
 package cosc202.andie;
-
-import java.awt.*;
-import javax.swing.*;
-
 import cosc202.andie.lang.*;
 
+import java.awt.*;
 import javax.imageio.*;
+import javax.swing.*;
 
 /**
  * <p>
@@ -26,6 +24,9 @@ import javax.imageio.*;
  */
 public class Andie {
     private static JFrame f;
+
+    // Sets the maximum dimension of images for resize 
+    public static final double MAX_DIMENSION_LIMIT = 20000;
     
     /**
      * <p>

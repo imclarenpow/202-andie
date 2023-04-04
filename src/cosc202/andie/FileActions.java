@@ -100,6 +100,9 @@ public class FileActions {
          * </p>
          * 
          * @param e The event triggering this callback.
+         * @throws IIOException If the specified file is invalid or corrupted.
+         * @throws SecurityException If the application doesn't have access privileges to the file.
+         * @throws Exception For all other unhandled exceptions.
          */
         public void actionPerformed(ActionEvent e) {
             JFileChooser fileChooser = new JFileChooser();
@@ -113,9 +116,13 @@ public class FileActions {
                     //Sets window size according to image size
                     Andie.resizeWindowToImage(target.getPreferredSize());
                 } catch (IIOException noFile) {
-                    JOptionPane.showMessageDialog(null, lang.text("invalidfilename"),
-                    lang.text("openfilenamewarning"),
-                    JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, lang.text("openfilenamewarning"),
+                            lang.text("invalidfilename"), JOptionPane.ERROR_MESSAGE);
+                            return;
+                } catch (SecurityException ex) {
+                    JOptionPane.showMessageDialog(null, lang.text("noaccesswarning"),
+                            lang.text("accessdenied"), JOptionPane.ERROR_MESSAGE);
+                            return;
                 } catch (Exception ex) {
                     System.out.println(ex);
                     System.exit(1);
@@ -347,7 +354,5 @@ public class FileActions {
         public void actionPerformed(ActionEvent e) {
             System.exit(0);
         }
-
     }
-
 }

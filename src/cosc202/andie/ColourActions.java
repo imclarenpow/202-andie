@@ -103,12 +103,39 @@ public class ColourActions {
 
     }
 
+    /**
+     * Action to adjust an image's brightness and contrast
+     * 
+     * @author Nic Scott - with assistance from ChatGPT for JSlider formatting
+     * @see BrightnessAndContrast
+     */
     public class BrightnessAndContrastAction extends ImageAction {
 
+        /**
+         * Create a new brightness-and-contrast action.
+         * 
+         * @param name The name of the action (ignored if null).
+         * @param icon An icon to use to represent the action (ignored if null).
+         * @param desc A brief description of the action  (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         */
         BrightnessAndContrastAction(String name, ImageIcon icon, String desc, Integer mnemonic){
             super(name, icon, desc, mnemonic);
         }
 
+        /**
+         * <p> 
+         * Callback for when the BrightnessAndContrast action is triggered
+         * </p>
+         * 
+         * <p>
+         * Performs the BrightnessAndContrast action by creating sliders for brightness and contrast, 
+         * displaying a message in an option dialog, getting the user's response, 
+         * and adjusting the brightness and contrast of the image accordingly.
+         * </p>
+         *
+         * @param e The event triggering this callback
+         */
         public void actionPerformed(ActionEvent e) {
             int brightness = 0;
             int contrast = 0;

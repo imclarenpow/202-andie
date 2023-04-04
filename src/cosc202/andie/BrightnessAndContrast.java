@@ -1,6 +1,25 @@
 package cosc202.andie;
 
 import java.awt.image.BufferedImage;
+/**
+ * <p> 
+ * ImageOperation to adjust brightness and contrast of an image
+ * </p>
+ * 
+ * <p>
+ * This operation is applied to the entire image using a simple loop that performs the operation on all pixels. 
+ * The adjustment is done using an equation that is run by a separate method.
+ * </p>
+ * 
+ * <p>
+ * The new brightness and contrast values are set in the constructor, and are applied to the input image when the 
+ * apply method is called.
+ * </p>
+ * 
+ * @see cosc202.andie.ImageOperation
+ * @author Nic Scott - adapted from the COSC202 Lab Book
+ * @version 1.0
+ */
 
 public class BrightnessAndContrast implements ImageOperation, java.io.Serializable{
 
@@ -8,9 +27,10 @@ public class BrightnessAndContrast implements ImageOperation, java.io.Serializab
     private double contrast;
 
     /**
-     * A constructor for the BrightnessAndContrast class
-     * @param brightness the new brightness value
-     * @param contrast the new contrast value
+     * Creates a new BrightnessAndContrast object storing the inputted brightness and contrast values.
+     * 
+     * @param brightness the new brightness value, in the range [-100, 100]
+     * @param contrast the new contrast value, in the range [-100, 100]
      */
     public BrightnessAndContrast(int brightness, int contrast){
         this.brightness = brightness;
@@ -19,20 +39,20 @@ public class BrightnessAndContrast implements ImageOperation, java.io.Serializab
     
     /**
      * <p>
-     *  Apply a Brightness and Contrast adjustment to an image
+     * Applies a brightness and contrast adjustment to the input image.
+     * </p>
+     * 
      * <p>
-     *  As this adjustment is applied to the entire image, a simple loop performs the operation on all pixels, 
-     *  using an equation run by a separate method
-     * <p>
-     * @param input
-     * @return The resulting image with brightness and contrast adjustments
-     * */
+     * This method loops over all pixels in the input image and applies a brightness and contrast adjustment
+     * to each pixel using bitwise operations.
+     * </p>
+     * @param input the input image to adjust
+     * @return the resulting image with brightness and contrast adjustments
+     */
     public BufferedImage apply(BufferedImage input){
-        //calls no file selected popup
         
         for (int y = 0; y < input.getHeight(); ++y) {
             for (int x = 0; x < input.getWidth(); ++x) {
-                // if greyscale check??
 
                 int argb = input.getRGB(x, y);
                 int a = (argb & 0xFF000000) >> 24;
@@ -53,12 +73,23 @@ public class BrightnessAndContrast implements ImageOperation, java.io.Serializab
 
     /**
      * <p>
-     * Adjusts value by requested percentages
+     * Adjusts the given value by the requested percentages.
+     * </p>
+     * 
      * <p>
-     * Equation used to apply brightness and contrast adjustments, with simple checks to keep values in the range 0-255
+     * The adjustment is done using the following equation:
+     * </p>
+     * 
      * <p>
-     * @param v - a value to be adjusted
-     * @return The adjusted value
+     * adjV = (int) Math.round((1 + contrast / 100) * (v - 127.5) + 127.5 * (1 + brightness / 100))
+     * </p>
+     * 
+     * <p>
+     * If the adjusted value is less than 0 or greater than 255, it is corrected to the appropriate limit.
+     * </p>
+     * 
+     * @param v the value to be adjusted, in the range [0, 255]
+     * @return the adjusted value, in the range [0, 255]
      */
     private int adjustmentMath(int v){
         int adjV = 0;

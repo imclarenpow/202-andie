@@ -9,6 +9,8 @@ It is also non-destructive, in the sense that it can save an image, a set of ima
 Examples of ANDIE can be seen below
 ![A screenshot of an image in ANDIE](/assets/andieexample.jpg "An unedited image open in ANDIE")
 ![A screenshot of an image that has been greyscaled in ANDIE](/assets/andieexamplebw.jpg "An image that has been filtered in ANDIE")
+  
+  
 (Example image retrieved from [here](https://lovepik.com/image-500447536/simple.html))
 
 ## User guide
@@ -134,11 +136,22 @@ The team tended to meet in-person at COSC202 labs where much of the progress was
 
 #### Rochelle
 
+
 #### Isaac
 
+
 #### Nic
+- Added the brightness adjustment feature
+- Added the contrast adjustment feature
+- Separated corrupt image handling from invalid filepaths - handled in EditableImage.open()
+- Error handling for cases where the user doesn't have access privileges to the requested image file
+- Helped intergrate sliders for user input in other features
 
 #### James
+- Added sharpness filter adjustment feature
+- Added median filter adjustment feature
+- Implemented filter actions applicable to sharpness and median filter adjustment features
+- Implement slider for median filter adjustment feature
 
 ## Features that were added
 The team generally stuck to the checklist for part 1 to ensure that features were implemented to a high standard. However, some other changes were made.
@@ -153,4 +166,9 @@ Another additional option within the view menu that adjusts ANDIE's window size 
 Though multilingual support was listed in the project's requirements, two additional languages - Japanese and Māori - were added rather than just one
 
 ### Additional warnings
-A number of new warning dialogs were added, such as those that appear when an invalid filepath is entered or the user attempts to filter a blank canvas
+A number of new warning dialogs were added, such as those that appear when an invalid filepath is entered or the user attempts to filter a blank canvas. Additionally, there are new dialogs for corrupt image files and errors occuring due to lack of access privileges. 
+
+## Current progress  
+
+### Deliverable One - April 6th 2023
+At this stage all features required for the first deliverable have been implemented and thoroughly tested. There are a few features we would like to add in the future such as a warning when a user exits ANDIE without saving but these will be done after the mid-semester break. We are all quite happy with the progress, having finished everything several days before the deadline and hope to continue working at the same rate after the break.

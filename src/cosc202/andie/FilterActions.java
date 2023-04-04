@@ -48,7 +48,7 @@ public class FilterActions {
 
     /**
      * <p>
-     * Create a menu contianing the list of Filter actions.
+     * Create a menu containing the list of Filter actions.
      * </p>
      * 
      * @return The filter menu UI element.
@@ -196,7 +196,6 @@ public class GaussianFilterAction extends ImageAction{
                 JOptionPane.showMessageDialog(null, lang.text("sharpfiltrun"));
             }
         }
-
     }
 
     /**
@@ -263,7 +262,6 @@ public class GaussianFilterAction extends ImageAction{
             target.repaint();
             target.getParent().revalidate();
         }
-        
     }
 
     /**
@@ -274,40 +272,40 @@ public class GaussianFilterAction extends ImageAction{
      * @see SoftBlur
      */
     public class SoftBlurAction extends ImageAction {
-            /**
-             * <p>
-             * Create a new soft-blur action.
-             * </p>
-             * 
-             * @param name The name of the action (ignored if null).
-             * @param icon An icon to use to represent the action (ignored if null).
-             * @param desc A brief description of the action  (ignored if null).
-             * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
-             */
-            SoftBlurAction(String name, ImageIcon icon, 
-                            String desc, Integer mnemonic) {
-                super(name, icon, desc, mnemonic);
-            }
+        /**
+         * <p>
+         * Create a new soft-blur action.
+         * </p>
+         * 
+         * @param name The name of the action (ignored if null).
+         * @param icon An icon to use to represent the action (ignored if null).
+         * @param desc A brief description of the action  (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         */
+        SoftBlurAction(String name, ImageIcon icon, 
+                        String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+        }
 
-            /**
-             * <p>
-             * Callback for when the soft blur filter action is triggered.
-             * </p>
-             * 
-             * <p>
-             * This method is called whenever the SoftBlur is triggered.
-             * It applies a soft blur filter to the current image
-             * </p>
-             * 
-             * @param e The event triggering this callback.
-             */
-            public void actionPerformed(ActionEvent e) {
-                boolean success = target.getImage().apply(new SoftBlur());
-                target.repaint();
-                target.getParent().revalidate();
-                if (success) {
-                    JOptionPane.showMessageDialog(null, lang.text("softblurrun"));
-                }
+        /**
+         * <p>
+         * Callback for when the soft blur filter action is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the SoftBlur is triggered.
+         * It applies a soft blur filter to the current image
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
+        public void actionPerformed(ActionEvent e) {
+            boolean success = target.getImage().apply(new SoftBlur());
+            target.repaint();
+            target.getParent().revalidate();
+            if (success) {
+                JOptionPane.showMessageDialog(null, lang.text("softblurrun"));
             }
         }
+    }
 }

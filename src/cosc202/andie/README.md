@@ -162,3 +162,8 @@ Though multilingual support was listed in the project's requirements, two additi
 
 ### Additional warnings
 A number of new warning dialogs were added, such as those that appear when an invalid filepath is entered or the user attempts to filter a blank canvas. Additionally, there are new dialogs for corrupt image files and errors occuring due to lack of access privileges. 
+
+## Current progress  
+
+### Deliverable One - April 6th 2023
+At this stage all features required for the first deliverable have been implemented and thoroughly tested. There are a few features we would like to add in the future such as a warning when a user exits ANDIE without saving but these will be done after the mid-semester break. We are all quite happy with the progress, having finished everything several days before the deadline and hope to continue working at the same rate after the break.

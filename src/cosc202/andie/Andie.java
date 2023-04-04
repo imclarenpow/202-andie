@@ -1,11 +1,9 @@
 package cosc202.andie;
-
-import java.awt.*;
-import javax.swing.*;
-
 import cosc202.andie.lang.*;
 
+import java.awt.*;
 import javax.imageio.*;
+import javax.swing.*;
 
 /**
  * <p>

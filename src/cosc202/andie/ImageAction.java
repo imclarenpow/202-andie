@@ -82,5 +82,4 @@ public abstract class ImageAction extends AbstractAction {
     public static ImagePanel getTarget() {
         return target;
     }
-
 }

@@ -48,7 +48,12 @@ Redoes the most recent ImageOperation that was undone
 ##### Resize
 Resizes an image according to a scale retrieved from the user
 The scale must be between 0 and a displayed limit based on the current size of the image  
-  
+##### Flip Horizontal 
+
+##### Flip Vertical
+##### Rotate 90° Right
+##### Rotate 90° Left
+##### Rotate 180° 
     
       
 ### View

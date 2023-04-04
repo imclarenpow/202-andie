@@ -6,11 +6,9 @@ ANDIE is a fast, lightweight and reliable editor for making basic image modifica
 
 It is also non-destructive, in the sense that it can save an image, a set of image operations and edited version of the image separately
 
-Examples of ANDIE 
+Examples of ANDIE can be seen below
 ![A screenshot of an image in ANDIE](/assets/andieexample.jpg "An unedited image open in ANDIE")
 ![A screenshot of an image that has been greyscaled in ANDIE](/assets/andieexamplebw.jpg "An image that has been filtered in ANDIE")
-  
-  
 (Example image retrieved from [here](https://lovepik.com/image-500447536/simple.html))
 
 ## User guide
@@ -134,6 +132,11 @@ The team tended to meet in-person at COSC202 labs where much of the progress was
 #### Isaac
 
 #### Nic
+- Added the brightness adjustment feature
+- Added the contrast adjustment feature
+- Separated corrupt image handling from invalid filepaths - handled in EditableImage.open()
+- Error handling for cases where the user doesn't have access privileges to the requested image file
+- Helped intergrate sliders for user input in other features
 
 #### James
 
@@ -150,4 +153,4 @@ Another additional option within the view menu that adjusts ANDIE's window size 
 Though multilingual support was listed in the project's requirements, two additional languages - Japanese and Māori - were added rather than just one
 
 ### Additional warnings
-A number of new warning dialogs were added, such as those that appear when an invalid filepath is entered or the user attempts to filter a blank canvas
+A number of new warning dialogs were added, such as those that appear when an invalid filepath is entered or the user attempts to filter a blank canvas. Additionally, there are new dialogs for corrupt image files and errors occuring due to lack of access privileges. 

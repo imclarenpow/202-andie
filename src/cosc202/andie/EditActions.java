@@ -30,9 +30,6 @@ public class EditActions {
     /** A list of actions for the Edit menu. */
     protected ArrayList<Action> actions;
 
-    // Sets the maximum dimension of images for resize 
-    private final double MAX_DIMENSION_LIMIT = 20000;
-
     /**
      * <p>
      * Create a set of Edit menu actions.
@@ -205,7 +202,7 @@ public class EditActions {
             double largestDimension = Math.max(target.getImage().getCurrentImage().getWidth(), target.getImage().getCurrentImage().getHeight());
             double smallestDimension = Math.min(target.getImage().getCurrentImage().getWidth(), target.getImage().getCurrentImage().getHeight());
             double minScale = Math.ceil(100 / smallestDimension + 0.01) / 100; // ensures image dimensions will not fall below 0
-            double maxScale = Math.floor(100 * MAX_DIMENSION_LIMIT / largestDimension) / 100;
+            double maxScale = Math.floor(100 * Andie.MAX_DIMENSION_LIMIT / largestDimension) / 100;
             
             // Pop-up dialog box to ask the user for the new width and height values.
             SpinnerNumberModel scaleModel = new SpinnerNumberModel(1, minScale, maxScale, 0.01);

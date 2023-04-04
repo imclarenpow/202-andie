@@ -142,7 +142,16 @@ class EditableImage {
         File imageFile = new File(imageFilename);
         try{
         original = ImageIO.read(imageFile);
-        current = deepCopy(original);
+        if (original.getWidth() <= Andie.MAX_DIMENSION_LIMIT && original.getHeight() <= Andie.MAX_DIMENSION_LIMIT) {
+            current = deepCopy(original);
+        } else {
+            // Handles cases where the image is too large
+            original = null;
+            JOptionPane.showMessageDialog(null, lang.text("oversizedimgwarning"), 
+                lang.text("oversizedimg"), JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         }catch (NullPointerException badFile){
             JOptionPane.showMessageDialog(null, lang.text("badfilewarning"), 
                 lang.text("corruptfile"), JOptionPane.ERROR_MESSAGE);

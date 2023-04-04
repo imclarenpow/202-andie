@@ -24,6 +24,9 @@ import javax.swing.*;
  */
 public class Andie {
     private static JFrame f;
+
+    // Sets the maximum dimension of images for resize 
+    public static final double MAX_DIMENSION_LIMIT = 20000;
     
     /**
      * <p>

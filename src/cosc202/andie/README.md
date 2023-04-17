@@ -116,7 +116,7 @@ the group.
 ## Who did what
 
 ### Assigning tasks
-Niamh segregated the part 1's 12 tasks into groups based on functional areas which were adjusted by other team members as needed. 
+Niamh segregated part 1's 12 tasks into groups based on functional areas which were adjusted by other team members as needed. 
 There were six groups. Each person took on one of the groups and the tasks in the remaining group (exception handling and other error avoidance/prevention) were assigned to everyone. The tasks were recorded in a Google Sheet created by Niamh [See here](https://docs.google.com/spreadsheets/d/1wUH_0vrxPMKSQxfkcnS12u-eqmQrrh8pfllngzK0Vwk/edit#gid=0) which was used to track the progress of each task.
 
 ### Communicating throughout the project

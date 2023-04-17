@@ -4,7 +4,8 @@ import java.awt.image.BufferedImage;
 //import java.awt.Color;
 
 /** Using MeanFilter Code as a template to start the layout of the filter,
- * @author Isaac & help from ChatGPT
+ * @author Isaac 
+ * With help from ChatGPT
  * 
  */
 public class GaussianBlur implements ImageOperation, java.io.Serializable{

@@ -34,6 +34,20 @@ lint-test-job:   # This job also runs in the test stage.
     - sleep 10
     - echo "No lint issues found."
 
+unit-test-job:
+  tags:
+    - docker
+  image: eclipse-temurin:17
+  stage: test
+  script:
+    - echo "Attempting to run unit tests..."
+    - javac -d bin src/cosc202/andie/*.java src/cosc202/andie/lang/*.java
+    - javac -d bin -classpath
+      bin:lib/junit-platform-console-standalone-1.9.2.jar
+      src/test/cosc202/andie/*.java
+    - java -jar lib/junit-platform-console-standalone-1.9.2.jar -classpath
+      bin --select-package test.cosc202.andie
+
 deploy-job:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
   environment: production
@@ -58,17 +72,3 @@ pages: # publish Javadoc website
         - public
     only:
         - main
-
-unit-test-job:
-  tags:
-    - docker
-  image: eclipse-temurin:17
-  stage: test
-  script:
-    - echo "Attempting to run unit tests..."
-    - javac -d bin src/cosc202/andie/*.java
-    - javac -d bin -classpath
-      bin:lib/junit-platform-console-standalone-1.9.2.jar
-      src/test/cosc202/andie/*.java
-    - java -jar lib/junit-platform-console-standalone-1.9.2.jar -classpath
-      bin --select-package test.cosc202.andie

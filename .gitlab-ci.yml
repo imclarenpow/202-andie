@@ -40,12 +40,12 @@ unit-test-job:
   image: eclipse-temurin:17
   stage: test
   script:
-    - echo "Attempting to run unit tests..."
-    - cp -r src/cosc202/andie/lang/ bin
+    - echo "Attempting to run unit tests..."    
     - javac -d bin src/cosc202/andie/*.java src/cosc202/andie/lang/*.java
     - javac -d bin -classpath
       bin:lib/junit-platform-console-standalone-1.9.2.jar
       src/test/cosc202/andie/*.java src/cosc202/andie/lang/*.java
+    - cp -r src/cosc202/andie/lang/*.properties bin/cosc202/andie/lang 
     - java -jar lib/junit-platform-console-standalone-1.9.2.jar -classpath
       bin --select-package test.cosc202.andie
 

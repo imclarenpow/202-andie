@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import cosc202.andie.ImagePanel;
+import cosc202.andie.lang.*;
 
 public class ImagePanelTest {
     

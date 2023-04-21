@@ -41,7 +41,7 @@ unit-test-job:
   stage: test
   script:
     - echo "Attempting to run unit tests..."
-    - cp src/cosc202/andie/lang/*.properties /bin
+    - cp -r src/cosc202/andie/lang/ /bin
     - javac -d bin src/cosc202/andie/*.java src/cosc202/andie/lang/*.java
     - javac -d bin -classpath
       bin:lib/junit-platform-console-standalone-1.9.2.jar

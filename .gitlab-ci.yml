@@ -27,20 +27,6 @@ build-job:       # This job runs in the build stage, which runs first.
     - echo "Compiling the code..."
     - echo "Compile complete."
 
-unit-test-job:
-  tags:
-    - docker
-  image: eclipse-temurin:17
-  stage: test
-  script:
-    - echo "Attempting to run unit tests..."
-    - javac -d bin src/cosc202/andie/*.java
-    - javac -d bin -classpath
-      bin:lib/junit-platform-console-standalone-1.9.2.jar
-      src/test/cosc202/andie/*.java
-    - java -jar lib/junit-platform-console-standalone-1.9.2.jar -classpath
-      bin --select-package test.cosc202.andie
-
 lint-test-job:   # This job also runs in the test stage.
   stage: test    # It can run at the same time as unit-test-job (in parallel).
   script:
@@ -73,3 +59,17 @@ pages: # publish Javadoc website
         - public
     only:
         - main
+
+unit-test-job:
+  tags:
+    - docker
+  image: eclipse-temurin:17
+  stage: test
+  script:
+    - echo "Attempting to run unit tests..."
+    - javac -d bin src/cosc202/andie/*.java
+    - javac -d bin -classpath
+      bin:lib/junit-platform-console-standalone-1.9.2.jar
+      src/test/cosc202/andie/*.java
+    - java -jar lib/junit-platform-console-standalone-1.9.2.jar -classpath
+      bin --select-package test.cosc202.andie

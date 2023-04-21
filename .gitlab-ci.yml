@@ -41,7 +41,6 @@ deploy-job:      # This job runs in the deploy stage.
     - echo "Deploying application..."
     - echo "Application successfully deployed."
 
-
 pages: # publish Javadoc website
     tags:
         - docker

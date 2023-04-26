@@ -51,10 +51,10 @@ public class Andie {
      * 
      * @throws Exception if something goes wrong.
      */
-    //currently not in use, may need to be used in the future, may not
-    public void langSet(){
-        f.dispose();
+  /** Closes and Reopens an instance of ANDIE, as to reset the language in the current session */
+    public void langSet(){  
         try{
+            f.dispose();
             createAndShowGUI();
         }catch(Exception ex){
             System.out.println("Error while running langSet");

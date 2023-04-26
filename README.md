@@ -1,3 +1,11 @@
+# Information on this Repository
+
+>Detailed information of this repository is found in: `src/cosc202/andie/README.md`
+
+>The README.md file outlined above details:
+ - All functions of the application ANDIE
+ - Group Members additions to the code.
+
 ## Getting Started
 
 Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.

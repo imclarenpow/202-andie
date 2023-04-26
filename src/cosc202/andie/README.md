@@ -51,11 +51,15 @@ Redoes the most recent ImageOperation that was undone
 Resizes an image according to a scale retrieved from the user
 The scale must be between 0 and a displayed limit based on the current size of the image  
 ##### Flip Horizontal 
-
+Flips image using vertical reference line
 ##### Flip Vertical
+Flips image using horizontal reference line
 ##### Rotate 90° Right
+Turns image 90 degrees to the right
 ##### Rotate 90° Left
+Turns image 90 degrees to the left
 ##### Rotate 180° 
+Turns the image 180 degrees so it is upside down, but not vertically flipped
     
       
 ### View
@@ -86,6 +90,7 @@ Applies a median filter to the image
 Applies a mean filter to the image
 ##### Gaussian Filter
 Applies a Gaussian blur filter to the image
+Uses a slider to adjust the severity of the blur
 ##### Soft Blur
 Applies a soft blur filter to the image  
   
@@ -121,6 +126,8 @@ There were six groups. Each person took on one of the groups and the tasks in th
 
 ### Communicating throughout the project
 The team tended to meet in-person at COSC202 labs where much of the progress was discussed and everyone could help to keep one another on track. Outside of these, the team communicated using a Discord server set up by Isaac. Though most discussion occurred within the server's general chat, Isaac also posted regular updates on the team's progress to a separate channel and set up another channel to automatically alert people of changes to the Google Sheet.
+![Discord Server](/assets/discordserver.png "A Screenshot of the Discord Server")
+![Google Sheets](/assets/googlesheets.png "A Screenshot of the Sheets document")
 
 ### Individual contributions
 
@@ -138,7 +145,10 @@ The team tended to meet in-person at COSC202 labs where much of the progress was
 
 
 #### Isaac
-
+- Added internationalisation
+- Added the UI and logic for Gaussian Blur
+- Added exception handling for Language
+- Added the ability for the program to remember the previous language used
 
 #### Nic
 - Added the brightness adjustment feature

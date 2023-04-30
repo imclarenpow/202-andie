@@ -1,5 +1,11 @@
 package cosc202.andie;
+import cosc202.andie.colour.*;
+import cosc202.andie.edit.*;
+import cosc202.andie.file.*;
+import cosc202.andie.filter.*;
+import cosc202.andie.image.*;
 import cosc202.andie.lang.*;
+import cosc202.andie.view.*;
 
 import java.awt.*;
 import javax.imageio.*;

@@ -1,10 +1,11 @@
-package cosc202.andie;
+package cosc202.andie.filter;
 
 import java.util.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import cosc202.andie.lang.LanguageSupport;
+import cosc202.andie.image.*;
+import cosc202.andie.lang.*;
 
 /**
  * <p>

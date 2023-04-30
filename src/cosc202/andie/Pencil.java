@@ -1,21 +1,14 @@
 package cosc202.andie;
 
-import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.image.*;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputAdapter;
+
+import cosc202.andie.colour.ColourSelectorButton;
+import cosc202.andie.image.ImageOperation;
 
 /**
  * <p>

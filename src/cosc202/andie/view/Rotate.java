@@ -1,6 +1,8 @@
-package cosc202.andie;
+package cosc202.andie.view;
 
 import java.awt.image.BufferedImage;
+
+import cosc202.andie.image.*;
 
 /**
  * <p>
@@ -34,7 +36,7 @@ public class Rotate implements ImageOperation{
      * 
      * @param rotateDirection The direction indicator of the rotate object
      */
-    Rotate(String direction){
+    public Rotate(String direction){
         this.rotateDirection = direction;
     }
 

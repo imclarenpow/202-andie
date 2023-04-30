@@ -1,10 +1,14 @@
-package cosc202.andie;
+package cosc202.andie.edit;
 
 import java.util.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import cosc202.andie.lang.LanguageSupport;
+import cosc202.andie.Andie;
+import cosc202.andie.EditableImage;
+import cosc202.andie.image.*;
+import cosc202.andie.lang.*;
+import cosc202.andie.view.*;
 
  /**
  * <p>

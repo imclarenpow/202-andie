@@ -1,8 +1,9 @@
-package cosc202.andie;
+package cosc202.andie.filter;
 
 import java.awt.image.*;
 import java.util.Arrays;
 
+import cosc202.andie.image.*;
 
 /**
  * <p>

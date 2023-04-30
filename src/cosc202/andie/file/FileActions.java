@@ -1,4 +1,4 @@
-package cosc202.andie;
+package cosc202.andie.file;
 
 import java.util.*;
 import java.awt.event.*;
@@ -6,7 +6,11 @@ import java.awt.event.*;
 import javax.imageio.IIOException;
 import javax.swing.*;
 
-import cosc202.andie.lang.LanguageSupport;
+import cosc202.andie.Andie;
+import cosc202.andie.EditableImage;
+import cosc202.andie.ImagePanel;
+import cosc202.andie.image.*;
+import cosc202.andie.lang.*;
 
 /**
  * <p>

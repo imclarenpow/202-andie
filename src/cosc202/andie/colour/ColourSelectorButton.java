@@ -1,4 +1,4 @@
-package cosc202.andie;
+package cosc202.andie.colour;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

@@ -1,6 +1,8 @@
-package cosc202.andie;
+package cosc202.andie.colour;
 
 import java.awt.image.*;
+
+import cosc202.andie.image.*;
 
 /**
  * <p>

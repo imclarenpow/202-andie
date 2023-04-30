@@ -5,16 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-import cosc202.andie.lang.LanguageSupport;
+import cosc202.andie.image.ImageAction;
 
 public class PencilButton {
     private static boolean isDrawMode;
     private static Cursor defaultCursor;
     private static ImageIcon icon;
     
-    // creating an instance of the LanguageSupport class for Internationalisation
-    private LanguageSupport lang = new LanguageSupport();
-
     public PencilButton() {
         isDrawMode = false;
         defaultCursor = Andie.getCursor();

@@ -1,7 +1,9 @@
-package cosc202.andie;
+package cosc202.andie.filter;
 
 import java.awt.image.BufferedImage;
 //import java.awt.Color;
+
+import cosc202.andie.image.*;
 
 /** Using MeanFilter Code as a template to start the layout of the filter,
  * @author Isaac 

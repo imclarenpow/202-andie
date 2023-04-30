@@ -1,6 +1,8 @@
-package cosc202.andie;
+package cosc202.andie.colour;
 
 import java.awt.image.BufferedImage;
+
+import cosc202.andie.image.*;
 /**
  * <p> 
  * ImageOperation to adjust brightness and contrast of an image
@@ -16,7 +18,7 @@ import java.awt.image.BufferedImage;
  * apply method is called.
  * </p>
  * 
- * @see cosc202.andie.ImageOperation
+ * @see cosc202.andie.image.ImageOperation
  * @author Nic Scott - adapted from the COSC202 Lab Book
  * @version 1.0
  */

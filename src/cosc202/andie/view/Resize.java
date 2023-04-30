@@ -1,9 +1,10 @@
-package cosc202.andie;
+package cosc202.andie.view;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.*;
 
+import cosc202.andie.image.*;
 
 /**
  * <p>
@@ -39,7 +40,7 @@ public class Resize implements ImageOperation, java.io.Serializable {
      * 
      * @param radius The radius of the newly constructed MeanFilter
      */
-    Resize(double resizeScale) {
+    public Resize(double resizeScale) {
         this.resizeScale = resizeScale;
         if (resizeScale <= 0) {
             resizeScale = 0.01;

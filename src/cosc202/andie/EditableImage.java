@@ -6,8 +6,8 @@ import java.awt.image.*;
 import javax.imageio.*;
 import javax.swing.JOptionPane;
 
-import cosc202.andie.lang.LanguageSupport;
-
+import cosc202.andie.image.*;
+import cosc202.andie.lang.*;
 /**
  * <p>
  * An image with a set of operations applied to it.
@@ -34,7 +34,7 @@ import cosc202.andie.lang.LanguageSupport;
  * @author Steven Mills
  * @version 1.0
  */
-class EditableImage {
+public class EditableImage {
 
     /** The original image. This should never be altered by ANDIE. */
     private BufferedImage original;

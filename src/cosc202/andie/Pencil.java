@@ -88,7 +88,7 @@ public class Pencil implements ImageOperation, java.io.Serializable {
             int x = e.getX();
             int y = e.getY();
             Graphics2D g2 = input.createGraphics();
-            g2.setColor(ColourSelectorButton.getColor());
+            g2.setColor(ColourSelectorButton.getColour());
             g2.drawLine(startX, startY, x, y);
            
             startX = x;

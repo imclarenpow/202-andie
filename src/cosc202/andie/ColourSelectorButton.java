@@ -15,7 +15,7 @@ public class ColourSelectorButton {
         icon = new WheelIcon(20, 20);
     }
 
-    public static Color getColor() {
+    public static Color getColour() {
         Color colour = drawingColour;
         return colour;
     }

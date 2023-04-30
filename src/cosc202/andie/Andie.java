@@ -2,6 +2,7 @@ package cosc202.andie;
 import cosc202.andie.colour.*;
 import cosc202.andie.edit.*;
 import cosc202.andie.file.*;
+import cosc202.andie.file.FileActions.FileSaveAction;
 import cosc202.andie.filter.*;
 import cosc202.andie.image.*;
 import cosc202.andie.lang.*;
@@ -10,6 +11,10 @@ import cosc202.andie.view.*;
 import java.awt.*;
 import javax.imageio.*;
 import javax.swing.*;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * <p>
@@ -31,7 +36,7 @@ import javax.swing.*;
 public class Andie {
     private static JFrame f;
     private static JButton pencilJButton;
-
+    private static LanguageSupport lang = new LanguageSupport();
     // Sets the maximum dimension of images for resize 
     public static final double MAX_DIMENSION_LIMIT = 20000;
     
@@ -120,6 +125,37 @@ public class Andie {
         frame.setJMenuBar(menuBar);
         frame.pack();
         frame.setVisible(true);
+
+        // Add a WindowAdapter to detect when the user is trying to close the window
+        frame.addWindowListener(new WindowAdapter() {
+            FileActions fileActions = new FileActions();
+            FileSaveAction saveAction = fileActions.new FileSaveAction(lang.text("save"),
+                null, 
+                lang.text("savethefile"), 
+                Integer.valueOf(KeyEvent.VK_S));
+            
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int option = JOptionPane.showOptionDialog(
+                    frame,
+                    lang.text("doyouwanttosave"),
+                    lang.text("save"),
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    new String[] {lang.text("save"), lang.text("dontsave")},
+                    lang.text("save")
+                );
+
+                if (option == JOptionPane.YES_OPTION) {
+                    // User wants to save changes
+                    saveAction.actionPerformed(null);
+                    frame.dispose();
+                } else if (option == JOptionPane.NO_OPTION) {
+                    // User does not want to save changes
+                    frame.dispose();
+            }
+        }});
     }
 
     public static void setCursor(Cursor c) {

@@ -278,6 +278,7 @@ class EditableImage {
      * </p>
      */
     private void ShowNoImageError() {
+        PencilButton.disableDrawMode();
         JOptionPane.showMessageDialog(null, lang.text("noimagewarning"),
         lang.text("noimage"),
         JOptionPane.WARNING_MESSAGE);

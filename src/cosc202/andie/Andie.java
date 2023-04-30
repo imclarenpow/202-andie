@@ -24,6 +24,7 @@ import javax.swing.*;
  */
 public class Andie {
     private static JFrame f;
+    private static JButton pencilJButton;
 
     // Sets the maximum dimension of images for resize 
     public static final double MAX_DIMENSION_LIMIT = 20000;
@@ -96,6 +97,15 @@ public class Andie {
         // Actions that affect the representation of colour in the image
         ColourActions colourActions = new ColourActions();
         menuBar.add(colourActions.createMenu());
+
+        // Adds the colour wheel for drawing tools to the menu bar
+        JSeparator separator = new JSeparator(); // Credit to https://stackoverflow.com/questions/12212254/adding-spacing-between-elements-in-jmenubar for separator idea
+        menuBar.add(separator);
+        PencilButton pencilButton = new PencilButton();
+        pencilJButton = pencilButton.createButton();
+        menuBar.add(pencilJButton);
+        ColourSelectorButton colourSelector = new ColourSelectorButton();
+        menuBar.add(colourSelector.createButton());
         
         // Sets the minimum size for warning messages
         // Adapted from https://stackoverflow.com/questions/14299741/setting-size-of-jpanel-or-joptionpane
@@ -104,6 +114,19 @@ public class Andie {
         frame.setJMenuBar(menuBar);
         frame.pack();
         frame.setVisible(true);
+    }
+
+    public static void setCursor(Cursor c) {
+        f.setCursor(c);
+    }
+
+    public static void setPencilIcon(ImageIcon icon) {
+        pencilJButton.setIcon(icon);
+        pencilJButton.repaint();
+    }
+
+    public static Cursor getCursor() {
+        return f.getCursor();
     }
 
     /**

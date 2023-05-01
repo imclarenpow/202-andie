@@ -1,0 +1,14 @@
+File
+What Each Action in the File Menu Does:
+> Open
+Opens an image
+If the image has previously been edited and saved in ANDIE,
+then the edits will appear 
+> Save
+Saves an image and any image operations applied in separate files
+> Save a Copy
+Saves an image and any image operations applied in separate files at a new location/name
+> Export a Copy
+Saves the edited version of an image to some given location
+> Exit
+Closes ANDIE  

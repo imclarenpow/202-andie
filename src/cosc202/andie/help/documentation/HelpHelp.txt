@@ -1,0 +1,6 @@
+Help
+What each action in help does:
+> Language
+Changes the language
+> Help
+Where you are now

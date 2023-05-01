@@ -41,7 +41,7 @@ import cosc202.andie.Andie;
     /** Runs when ANDIE Starts, this checks what the current default is */
     public void loadDefaultLanguage() {
         // Load the language preference from the file
-        try (Scanner sc = new Scanner(new File(defLang))) {
+        try (Scanner sc = new Scanner(new File("src/cosc202/andie/lang/", defLang))) {
             String languageCode = sc.nextLine();
             String countryCode = sc.nextLine();
             Locale newLocale = new Locale(languageCode, countryCode);
@@ -54,7 +54,7 @@ import cosc202.andie.Andie;
     //default write script
     public void write() {
         // makes english the language if no default file is found
-        try (PrintWriter fr = new PrintWriter(defLang)) {
+        try (PrintWriter fr = new PrintWriter("src/cosc202/andie/lang/", defLang)) {
             fr.println("en");
             fr.println("NZ");
         } catch (IOException e) {

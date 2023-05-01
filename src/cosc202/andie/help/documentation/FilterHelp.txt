@@ -1,0 +1,13 @@
+Filter
+What Each button in the Filter Menu Does:
+> Sharpen 
+Applies a sharpening filter to the image
+> Median Filter
+Applies a median filter to the image
+> Mean Filter
+Applies a mean filter to the image
+> Gaussian Filter
+Applies a Gaussian blur filter to the image
+Uses a slider to adjust the severity of the blur
+> Soft Blur
+Applies a soft blur filter to the image 

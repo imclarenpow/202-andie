@@ -1,0 +1,15 @@
+View
+What Each Button Does in the View Menu:
+> Zoom In
+Increases zoom by 10%
+> Zoom Out
+Decreases zoom by 10%
+> Zoom to Fit Window Size
+Zooms in/out of the image so that it fills ANDIE's current window
+> Zoom Full
+Resets the zoom to the image's actual size
+> Language
+Lets the user change ANDIE's current language
+Currently, the available languages are English, Japanese and Māori
+> Resize Window to Image Size
+Resizes ANDIE's window to match the current image size

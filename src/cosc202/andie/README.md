@@ -103,7 +103,12 @@ Converts the image to black and white (greyscale)
 ##### Brightness and Contrast
 Provides options to adjust image brightness and contrast  
 
-
+### Help
+> Provides the options to change language or to view documentation
+##### Language
+Pop up menu to change language
+##### Help
+Pop up window with Documentation for each menu
 
 ## How code was tested
 Each person tested the features they developed independently, and then later tested each other's features.

@@ -45,7 +45,6 @@ public class ViewActions {
         actions.add(new ZoomOutAction(lang.text("zoomout"), null, lang.text("zoomout"), Integer.valueOf(KeyEvent.VK_MINUS)));
         actions.add(new ZoomToWindowAction(lang.text("zoomtowindow"), null, lang.text("zoomtowindow"), Integer.valueOf(KeyEvent.VK_SPACE)));
         actions.add(new ZoomFullAction(lang.text("zoomfull"), null, lang.text("zoomfull"), Integer.valueOf(KeyEvent.VK_1)));
-        actions.add(new LanguageAction(lang.text("language"), null, lang.text("language"), Integer.valueOf(KeyEvent.VK_1)));
         actions.add(new ResizeWindowAction(lang.text("resizewindow"), null, lang.text("resizewindow"), Integer.valueOf(KeyEvent.VK_MINUS)));
     }
 
@@ -68,49 +67,6 @@ public class ViewActions {
     public JMenu reset(){
         return createMenu();
     }
-    /** Allows the user to change the language of the program
-     * @author Isaac with assistance from ChatGPT
-     */
-    /** Allows the user to change the language of the program
-     * @author Isaac with assistance from ChatGPT
-     */
-    public class LanguageAction extends ImageAction{
-       
-        LanguageAction(String name, ImageIcon icon, String desc, Integer mnemonic){
-            super(name, icon, desc, mnemonic);
-            //Options for the dropdown menu
-            String[] options = {lang.text("english"), lang.text("maori"), lang.text("japanese")};
-            JComboBox<String> dropdown = new JComboBox<>(options);
-            JPanel panel = new JPanel();
-            panel.add(dropdown);
-        }
-
-            public void actionPerformed(ActionEvent e) {
-                // have to reference indirectly as static by extension
-                LanguageSupport l = new LanguageSupport();
-                String[] options = {"English", "Maori", "Japanese"};
-                JComboBox<String> dropdown = new JComboBox<>(options);
-                JPanel panel = new JPanel();
-                panel.add(dropdown);
-                int result = JOptionPane.showOptionDialog(null, panel, l.text("select"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, // icon
-                            // internationalisationing the buttons                
-                                new Object[] {
-                                    l.text("ok"),
-                                    l.text("cancel")
-                                },
-                                lang.text("cancel")); //default selection (if window is closed)
-                if (result == JOptionPane.OK_OPTION) {
-                    String selectedOption = (String) dropdown.getSelectedItem();
-                    if(selectedOption == "English"){
-                        l.setDefaultLanguage("en", "NZ");
-                    }else if(selectedOption == "Maori"){
-                        l.setDefaultLanguage("mi", "NZ");
-                    }else if(selectedOption == "Japanese"){
-                        l.setDefaultLanguage("ja", "JP");
-                    }
-                    }
-                }
-            }
 
     /**
      * <p>

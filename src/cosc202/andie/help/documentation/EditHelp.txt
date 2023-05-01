@@ -1,0 +1,19 @@
+Edit
+What Each Button in the Edit Menu does:
+> Undo
+Undoes the most recent ImageOperation applied
+> Redo
+Redoes the most recent ImageOperation that was undone
+> Resize
+Resizes an image according to a scale retrieved from the user
+The scale must be between 0 and a displayed limit based on the current size of the image  
+> Flip Horizontal 
+Flips image using vertical reference line
+> Flip Vertical
+Flips image using horizontal reference line
+> Rotate 90° Right
+Turns image 90 degrees to the right
+> Rotate 90° Left
+Turns image 90 degrees to the left
+> Rotate 180° 
+Turns the image 180 degrees so it is upside down, but not vertically flipped

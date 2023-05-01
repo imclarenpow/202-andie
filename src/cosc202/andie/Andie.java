@@ -4,6 +4,7 @@ import cosc202.andie.edit.*;
 import cosc202.andie.file.*;
 import cosc202.andie.file.FileActions.FileSaveAction;
 import cosc202.andie.filter.*;
+import cosc202.andie.help.HelpActions;
 import cosc202.andie.image.*;
 import cosc202.andie.lang.*;
 import cosc202.andie.view.*;
@@ -108,6 +109,10 @@ public class Andie {
         // Actions that affect the representation of colour in the image
         ColourActions colourActions = new ColourActions();
         menuBar.add(colourActions.createMenu());
+
+        // Adds help menu to JFrame
+        HelpActions helpActions = new HelpActions();
+        menuBar.add(helpActions.createMenu());
 
         // Adds the colour wheel for drawing tools to the menu bar
         JSeparator separator = new JSeparator(); // Credit to https://stackoverflow.com/questions/12212254/adding-spacing-between-elements-in-jmenubar for separator idea

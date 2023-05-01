@@ -11,23 +11,23 @@ import cosc202.andie.colour.ColourSelectorButton;
 
 /**
  * <p>
- * ImageOperation to convert an image from colour to greyscale.
+ * A class that handles a user drawing on an image with a 'pencil'
  * </p>
  * 
  * <p>
- * The images produced by this operation are still technically colour images,
- * in that they have red, green, and blue values, but each pixel has equal
- * values for red, green, and blue giving a shade of grey.
+ * Draws a series of small lines from the Graphics library onto an image as the mouse is dragged
+ * Uses coordinates to identify where to draw the lines
  * </p>
  * 
  * <p>
  * <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
  * </p>
  * 
- * @author Steven Mills
+ * @author Niamh Avery
  * @version 1.0
  */
 public class Pencil implements ImageOperation, java.io.Serializable {
+    // Data fields
     private BufferedImage input;
     private JPanel target;
     private int startX;
@@ -35,31 +35,35 @@ public class Pencil implements ImageOperation, java.io.Serializable {
 
     /**
      * <p>
-     * Create a new CovertToGrey operation.
+     * Create a new Pencil operation.
      * </p>
      */
     Pencil() {
 
     }
 
+    /**
+     * <p>
+     * Sets the target image onto which drawing occurs
+     * </p>
+     * @param target
+     */
     public void setTarget(JPanel target) {
         this.target = target;
     }
 
     /**
      * <p>
-     * Apply greyscale conversion to an image.
+     * Apply pencil operation to an image.
      * </p>
      * 
      * <p>
-     * The conversion from red, green, and blue values to greyscale uses a 
-     * weighted average that reflects the human visual system's sensitivity 
-     * to different wavelengths -- we are most sensitive to green light and 
-     * least to blue.
+     * Sets the input image and adds mouse listeners to track the mouse's movement
+     * The mouse listeners enable mouse dragging to be identified so drawing can occur
      * </p>
      * 
-     * @param input The image to be converted to greyscale
-     * @return The resulting greyscale image.
+     * @param input The image to be drawn on
+     * @return The image onto 
      */
     public BufferedImage apply(BufferedImage input) {
         this.input = input;
@@ -67,13 +71,22 @@ public class Pencil implements ImageOperation, java.io.Serializable {
         target.addMouseListener(pencilListener);
         target.addMouseMotionListener(pencilListener);
 
-        return input;
-
-        
+        return input; 
     }
 
-    // Adapted from https://docs.oracle.com/javase/tutorial/uiswing/events/mousemotionlistener.html
+    /**
+     * <p>
+     * A private class that responds to mouse dragging by drawing small lines of a given colour onto an image
+     * Obtains mouse coordinates to identify where lines should be drawn
+     * The lines are drawn using a new graphics object created on the target image
+     * Adapted from https://docs.oracle.com/javase/tutorial/uiswing/events/mousemotionlistener.html
+     * </p>
+     */
     private class PencilMouseMotionListener extends MouseInputAdapter {
+
+        /**
+         * Responds to mouse drags by drawing onto the target image
+         */
         public void mouseDragged(MouseEvent e) { 
 
             // Adapted from https://www.oreilly.com/library/view/learning-java/1565927184/ch17s08.html
@@ -88,6 +101,9 @@ public class Pencil implements ImageOperation, java.io.Serializable {
             target.repaint();
         }
 
+        /**
+         * Identifies the initial coordinates when the mouse is pressed/dragged
+         */
         public void mousePressed(MouseEvent e) {
             startX = e.getX();
             startY = e.getY();

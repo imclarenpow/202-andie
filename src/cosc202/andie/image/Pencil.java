@@ -63,7 +63,7 @@ public class Pencil implements ImageOperation, java.io.Serializable {
      * </p>
      * 
      * @param input The image to be drawn on
-     * @return The image onto 
+     * @return The image with drawings applied
      */
     public BufferedImage apply(BufferedImage input) {
         this.input = input;

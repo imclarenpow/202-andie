@@ -1,11 +1,11 @@
-package cosc202.andie;
+package cosc202.andie.image;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-import cosc202.andie.image.ImageAction;
+import cosc202.andie.Andie;
 
 public class PencilButton {
     private static boolean isDrawMode;

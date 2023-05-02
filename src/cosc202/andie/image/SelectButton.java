@@ -20,11 +20,9 @@ import cosc202.andie.Andie;
  * @version 1.0
  */
 public class SelectButton {
-
-    // Data fields
-    private static boolean isSelectMode;
    // private static Cursor defaultCursor;
     private static ImageIcon icon;
+    private static boolean isSelectMode;
     
     /**
      * <p>
@@ -34,9 +32,16 @@ public class SelectButton {
      * </p>
      */
     public SelectButton() {
-        isSelectMode = false;
        // defaultCursor = Andie.getCursor();
         icon = new ImageIcon("assets/selecticon.jpg"); // retrieved from https://cdn-icons-png.flaticon.com/512/1046/1046346.png (free to use license)
+    }
+
+    public static void disableSelectMode() {
+        isSelectMode = false;
+    }
+
+    public static void enableSelectMode() {
+        isSelectMode = true;
     }
     
     /**
@@ -59,40 +64,33 @@ public class SelectButton {
         return button;
     }
 
-    public static void disableSelectMode(){
-        isSelectMode = false; 
-    }
-    
-    public static void enableSelectMode(){
-        isSelectMode = true;
-    }
-
     private class SelectAction extends ImageAction{
 
         SelectAction(String name, ImageIcon icon, String desc, Integer mnemonic){
             super(name, icon, desc, mnemonic);
-            isSelectMode = false;
         }
 
         public void actionPerformed(ActionEvent e){
             Select select = new Select();
             select.setTarget(target);
             target.getImage().apply(select);
+            target.repaint();
             target.getParent().revalidate();
         }
         
         
     }
 
+
+    //handles clicks of button
     private class SelectListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            if(isSelectMode){
-                disableSelectMode();
-            }else{
-                enableSelectMode(); 
-                SelectAction selectAction = new SelectAction(null, icon, null, null);
-                selectAction.actionPerformed(e);
-            }
+                if(isSelectMode){
+                    disableSelectMode();
+                }else{
+                    SelectAction selectAction = new SelectAction(null, icon, null, null);
+                    selectAction.actionPerformed(e);
+                }
         }
     }
 

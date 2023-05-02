@@ -30,6 +30,7 @@ public class Pencil implements ImageOperation, java.io.Serializable {
     // Data fields
     private BufferedImage input;
     private JPanel target;
+    private PencilMouseMotionListener pencilListener;
     private int startX;
     private int startY;
 
@@ -67,11 +68,15 @@ public class Pencil implements ImageOperation, java.io.Serializable {
      */
     public BufferedImage apply(BufferedImage input) {
         this.input = input;
-        PencilMouseMotionListener pencilListener = new PencilMouseMotionListener();
+        this.pencilListener = new PencilMouseMotionListener();
         target.addMouseListener(pencilListener);
         target.addMouseMotionListener(pencilListener);
 
         return input; 
+    }
+
+    public void stopListening(){
+        this.pencilListener.setListening(false);
     }
 
     /**
@@ -83,30 +88,38 @@ public class Pencil implements ImageOperation, java.io.Serializable {
      * </p>
      */
     private class PencilMouseMotionListener extends MouseInputAdapter {
+        private boolean listening = true;
 
+
+        public void setListening(boolean state){
+            listening = state;
+        }
         /**
          * Responds to mouse drags by drawing onto the target image
          */
         public void mouseDragged(MouseEvent e) { 
-
-            // Adapted from https://www.oreilly.com/library/view/learning-java/1565927184/ch17s08.html
-            int x = e.getX();
-            int y = e.getY();
-            Graphics2D g2 = input.createGraphics();
-            g2.setColor(ColourSelectorButton.getColour());
-            g2.drawLine(startX, startY, x, y);
-           
-            startX = x;
-            startY = y;
-            target.repaint();
+            if(listening){
+                // Adapted from https://www.oreilly.com/library/view/learning-java/1565927184/ch17s08.html
+                int x = e.getX();
+                int y = e.getY();
+                Graphics2D g2 = input.createGraphics();
+                g2.setColor(ColourSelectorButton.getColour());
+                g2.drawLine(startX, startY, x, y);
+            
+                startX = x;
+                startY = y;
+                target.repaint();
+            }
         }
 
         /**
          * Identifies the initial coordinates when the mouse is pressed/dragged
          */
         public void mousePressed(MouseEvent e) {
-            startX = e.getX();
-            startY = e.getY();
+            if(listening){
+                startX = e.getX();
+                startY = e.getY();
+            }
         }
      }
     

@@ -32,6 +32,7 @@ public class Pencil implements ImageOperation, java.io.Serializable {
     // Data fields
     private BufferedImage input;
     private JPanel target;
+    private PencilMouseMotionListener pencilListener;
     private int startX;
     private int startY;
 
@@ -83,11 +84,15 @@ public class Pencil implements ImageOperation, java.io.Serializable {
      */
     public BufferedImage apply(BufferedImage input) {
         this.input = input;
-        PencilMouseMotionListener pencilListener = new PencilMouseMotionListener();
+        this.pencilListener = new PencilMouseMotionListener();
         target.addMouseListener(pencilListener);
         target.addMouseMotionListener(pencilListener);
 
         return input; 
+    }
+
+    public void stopListening(){
+        this.pencilListener.setListening(false);
     }
 
     /**
@@ -99,46 +104,54 @@ public class Pencil implements ImageOperation, java.io.Serializable {
      * </p>
      */
     private class PencilMouseMotionListener extends MouseInputAdapter {
+        private boolean listening = true;
 
+
+        public void setListening(boolean state){
+            listening = state;
+        }
         /**
          * Responds to mouse drags by drawing onto the target image
          */
         public void mouseDragged(MouseEvent e) { 
+            if(listening){
+                // Adapted from https://www.oreilly.com/library/view/learning-java/1565927184/ch17s08.html
+                int x = e.getX();
+                int y = e.getY();
+                Graphics2D g2 = input.createGraphics();
+                g2.setColor(ColourSelectorButton.getColour());
 
-            // Adapted from https://www.oreilly.com/library/view/learning-java/1565927184/ch17s08.html
-            int x = e.getX();
-            int y = e.getY();
-            Graphics2D g2 = input.createGraphics();
-            g2.setColor(ColourSelectorButton.getColour());
+                // Sets g2's stroke according to the current value of the pencil width
+                // With help from https://stackoverflow.com/questions/16995308/can-you-increase-line-thickness-when-using-java-graphics-for-an-applet-i-dont
+                switch (width) {
+                    case SMALL:
+                        g2.setStroke(new BasicStroke(1));
+                        break;
+                    case MEDIUM:
+                        g2.setStroke(new BasicStroke(3));
+                        break;
+                    case LARGE:
+                    default:
+                        g2.setStroke(new BasicStroke(5));
+                        break;
+                }
 
-            // Adjusting pencil stroke according to the current width value
-            // Credit to https://stackoverflow.com/questions/16995308/can-you-increase-line-thickness-when-using-java-graphics-for-an-applet-i-dont for inspiration
-            switch (width) {
-                case SMALL:
-                    g2.setStroke(new BasicStroke(1));
-                    break;
-                case LARGE:
-                    g2.setStroke(new BasicStroke(5));
-                    break;
-                case MEDIUM:
-                default:
-                    g2.setStroke(new BasicStroke(3));
-                    break;
+                g2.drawLine(startX, startY, x, y);
+            
+                startX = x;
+                startY = y;
+                target.repaint();
             }
-
-            g2.drawLine(startX, startY, x, y);
-           
-            startX = x;
-            startY = y;
-            target.repaint();
         }
 
         /**
          * Identifies the initial coordinates when the mouse is pressed/dragged
          */
         public void mousePressed(MouseEvent e) {
-            startX = e.getX();
-            startY = e.getY();
+            if(listening){
+                startX = e.getX();
+                startY = e.getY();
+            }
         }
      }
     

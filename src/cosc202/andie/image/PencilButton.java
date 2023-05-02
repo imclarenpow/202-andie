@@ -26,6 +26,7 @@ public class PencilButton {
     private static Cursor defaultCursor;
     private static ImageIcon icon;
     private static JButton[] widthJButtons;
+    private static Pencil pencil;
     
     /**
      * <p>
@@ -70,6 +71,7 @@ public class PencilButton {
      */
     public static void disableDrawMode() {
         isDrawMode = false;
+        pencil.stopListening();
         // Changes the cursor back to the default cursor
         Andie.setCursor(defaultCursor);  
         Andie.setPencilIcon(icon); // retrieved from https://cdn-icons-png.flaticon.com/512/1046/1046346.png (free to use license)
@@ -149,7 +151,7 @@ public class PencilButton {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
-            Pencil pencil = new Pencil();
+            pencil = new Pencil();
             pencil.setTarget(target);
             target.getImage().apply(pencil);
             target.repaint();

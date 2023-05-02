@@ -25,6 +25,7 @@ public class PencilButton {
     private static boolean isDrawMode;
     private static Cursor defaultCursor;
     private static ImageIcon icon;
+    private static JButton[] widthJButtons;
     private static Pencil pencil;
     
     /**
@@ -38,6 +39,8 @@ public class PencilButton {
         isDrawMode = false;
         defaultCursor = Andie.getCursor();
         icon = new ImageIcon("assets/pencil.png"); // retrieved from https://cdn-icons-png.flaticon.com/512/1046/1046346.png (free to use license)
+        WidthButtons widthButtons = new WidthButtons();
+        widthJButtons = widthButtons.createButtons();
     }
     
     /**
@@ -72,6 +75,7 @@ public class PencilButton {
         // Changes the cursor back to the default cursor
         Andie.setCursor(defaultCursor);  
         Andie.setPencilIcon(icon); // retrieved from https://cdn-icons-png.flaticon.com/512/1046/1046346.png (free to use license)
+        Andie.removeButtonsFromMenuBar(widthJButtons);
     }
 
     /**
@@ -102,6 +106,9 @@ public class PencilButton {
                 Toolkit toolkit = Toolkit.getDefaultToolkit();
                 Cursor newCursor = toolkit.createCustomCursor(new ImageIcon("assets/pencil.png").getImage(), new Point(0, 0), "pencil");
                 Andie.setCursor(newCursor);
+
+                // Adds buttons for setting pencil width to the menu bar
+                Andie.addButtonsToMenuBar(widthJButtons);
 
                 // Prompts a pencilAction enabling the user to draw
                 PencilAction pencilAction = new PencilAction(null, icon, null, null);

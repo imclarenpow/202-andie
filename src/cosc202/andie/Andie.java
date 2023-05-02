@@ -39,6 +39,7 @@ public class Andie {
     private static JButton pencilJButton;
     private static JButton selectJButton;
     private static LanguageSupport lang = new LanguageSupport();
+    private static JMenuBar menuBar;
     // Sets the maximum dimension of images for resize 
     public static final double MAX_DIMENSION_LIMIT = 20000;
     
@@ -89,7 +90,7 @@ public class Andie {
         frame.add(scrollPane, BorderLayout.CENTER);
         
         // Add in menus for various types of action the user may perform.
-        JMenuBar menuBar = new JMenuBar();
+        menuBar = new JMenuBar();
 
         // File menus are pretty standard, so things that usually go in File menus go here.
         FileActions fileActions = new FileActions();
@@ -168,6 +169,18 @@ public class Andie {
                     frame.dispose();
             }
         }});
+    }
+
+    public static void addButtonsToMenuBar(JButton[] buttons) {
+        for (JButton button : buttons) {
+            menuBar.add(button);
+        }
+    }
+
+    public static void removeButtonsFromMenuBar(JButton[] buttons) {
+        for (JButton button : buttons) {
+            menuBar.remove(button);
+        }
     }
 
     public static void setCursor(Cursor c) {

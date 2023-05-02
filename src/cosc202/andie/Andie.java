@@ -37,6 +37,7 @@ import java.awt.event.WindowEvent;
 public class Andie {
     private static JFrame f;
     private static JButton pencilJButton;
+    private static JButton selectJButton;
     private static LanguageSupport lang = new LanguageSupport();
     // Sets the maximum dimension of images for resize 
     public static final double MAX_DIMENSION_LIMIT = 20000;
@@ -122,6 +123,12 @@ public class Andie {
         menuBar.add(pencilJButton);
         ColourSelectorButton colourSelector = new ColourSelectorButton();
         menuBar.add(colourSelector.createButton());
+
+        //Select Button
+        SelectButton selectButton = new SelectButton();
+        selectJButton = selectButton.createButton();
+        menuBar.add(selectJButton);
+
         
         // Sets the minimum size for warning messages
         // Adapted from https://stackoverflow.com/questions/14299741/setting-size-of-jpanel-or-joptionpane
@@ -170,6 +177,11 @@ public class Andie {
     public static void setPencilIcon(ImageIcon icon) {
         pencilJButton.setIcon(icon);
         pencilJButton.repaint();
+    }
+
+    public static void setSelectIcon(ImageIcon icon){
+        selectJButton.setIcon(icon);
+        selectJButton.repaint();
     }
 
     public static Cursor getCursor() {

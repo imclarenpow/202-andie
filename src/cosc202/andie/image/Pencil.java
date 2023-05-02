@@ -1,6 +1,8 @@
 package cosc202.andie.image;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.awt.image.*;
 
@@ -33,13 +35,16 @@ public class Pencil implements ImageOperation, java.io.Serializable {
     private int startX;
     private int startY;
 
+    public static enum WidthEnum {SMALL, MEDIUM, LARGE};
+    private static WidthEnum width;
+
     /**
      * <p>
      * Create a new Pencil operation.
      * </p>
      */
     Pencil() {
-
+        width = WidthEnum.MEDIUM; // Sets the default pencil width to medium
     }
 
     /**
@@ -50,6 +55,17 @@ public class Pencil implements ImageOperation, java.io.Serializable {
      */
     public void setTarget(JPanel target) {
         this.target = target;
+    }
+
+    /**
+     * <p>
+     * Sets the width of the pencil
+     * </p>
+     * 
+     * @param width a WidthEnum representing the pencil width to be set
+     */
+    public static void setWidth(WidthEnum widthValue) {
+        width = widthValue;
     }
 
     /**
@@ -94,6 +110,22 @@ public class Pencil implements ImageOperation, java.io.Serializable {
             int y = e.getY();
             Graphics2D g2 = input.createGraphics();
             g2.setColor(ColourSelectorButton.getColour());
+
+            // Adjusting pencil stroke according to the current width value
+            // Credit to https://stackoverflow.com/questions/16995308/can-you-increase-line-thickness-when-using-java-graphics-for-an-applet-i-dont for inspiration
+            switch (width) {
+                case SMALL:
+                    g2.setStroke(new BasicStroke(1));
+                    break;
+                case LARGE:
+                    g2.setStroke(new BasicStroke(5));
+                    break;
+                case MEDIUM:
+                default:
+                    g2.setStroke(new BasicStroke(3));
+                    break;
+            }
+
             g2.drawLine(startX, startY, x, y);
            
             startX = x;

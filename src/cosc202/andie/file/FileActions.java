@@ -36,7 +36,7 @@ public class FileActions {
     /** A list of actions for the File menu. */
     protected ArrayList<Action> actions;
     /** A list of valid extensions for an image file */
-    private ArrayList<String> validImageExtensions = new ArrayList<String>(Arrays.asList("jpg", "png", ".bmp", ".jpeg", ".gif", ".wbmp"));
+    private ArrayList<String> validImageExtensions = new ArrayList<String>(Arrays.asList("jpg", "png"));
 
     /**
      * <p>

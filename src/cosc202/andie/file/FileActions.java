@@ -176,7 +176,9 @@ public class FileActions {
          */
         public void actionPerformed(ActionEvent e) {
             try {
-                target.getImage().save();           
+                if (target.getImage().hasImage()) {
+                    target.getImage().save();    
+                }   
             } catch (Exception ex) {
                 System.exit(1);
             }

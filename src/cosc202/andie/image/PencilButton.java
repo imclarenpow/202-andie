@@ -26,6 +26,7 @@ public class PencilButton {
     private static Cursor defaultCursor;
     private static ImageIcon icon;
     private static JButton[] widthJButtons;
+    private static JButton eraserJButton;
     private static Pencil pencil;
     
     /**
@@ -41,6 +42,13 @@ public class PencilButton {
         icon = new ImageIcon("assets/pencil.png"); // retrieved from https://cdn-icons-png.flaticon.com/512/1046/1046346.png (free to use license)
         WidthButtons widthButtons = new WidthButtons();
         widthJButtons = widthButtons.createButtons();
+        EraserButton eraserButton = new EraserButton();
+        eraserJButton = eraserButton.createButton();
+    }
+
+    public void reenableDraw(ActionEvent e) {
+        PencilListener listener = new PencilListener();
+        listener.reenableListener(e);
     }
     
     /**
@@ -76,6 +84,7 @@ public class PencilButton {
         Andie.setCursor(defaultCursor);  
         Andie.setPencilIcon(icon); // retrieved from https://cdn-icons-png.flaticon.com/512/1046/1046346.png (free to use license)
         Andie.removeButtonsFromMenuBar(widthJButtons);
+        Andie.removeButtonFromMenuBar(eraserJButton);
     }
 
     /**
@@ -85,6 +94,20 @@ public class PencilButton {
      * </p>
      */
     private class PencilListener implements ActionListener {
+        private PencilAction pencilAction;
+
+        public void reenableListener(ActionEvent e) {
+            // Code to change the cursor to a pencil
+            // Adapted from https://stackoverflow.com/questions/4274606/how-to-change-cursor-icon-in-java
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+            Cursor newCursor = toolkit.createCustomCursor(new ImageIcon("assets/pencil.png").getImage(), new Point(0, 0), "pencil");
+            Andie.setCursor(newCursor);
+
+            // Prompts a pencilAction enabling the user to draw
+            this.pencilAction = new PencilAction(null, icon, null, null);
+            pencilAction.actionPerformed(e);
+        }
+
         /**
          * <p>
          * Handles clicks of the PencilButton
@@ -100,19 +123,13 @@ public class PencilButton {
                 // Enables draw mode, updates the cursor and pencil icon
                 Andie.setPencilIcon(new ImageIcon("assets/exit.png", null)); // retrieved from https://icon-icons.com/icon/cancel-close-cross-delete-exit/114048 (free to use license)
                 isDrawMode = true;
-                
-                // Code to change the cursor to a pencil
-                // Adapted from https://stackoverflow.com/questions/4274606/how-to-change-cursor-icon-in-java
-                Toolkit toolkit = Toolkit.getDefaultToolkit();
-                Cursor newCursor = toolkit.createCustomCursor(new ImageIcon("assets/pencil.png").getImage(), new Point(0, 0), "pencil");
-                Andie.setCursor(newCursor);
+                reenableListener(e);
 
                 // Adds buttons for setting pencil width to the menu bar
                 Andie.addButtonsToMenuBar(widthJButtons);
 
-                // Prompts a pencilAction enabling the user to draw
-                PencilAction pencilAction = new PencilAction(null, icon, null, null);
-                pencilAction.actionPerformed(e);
+                // Adds the eraser button to the menu bar
+                Andie.addButtonToMenuBar(eraserJButton);
             }
         }
     }

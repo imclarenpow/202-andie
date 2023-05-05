@@ -90,7 +90,7 @@ public class EditActions {
          * @param desc A brief description of the action  (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
          */
-        UndoAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+        public UndoAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
         }
 
@@ -110,6 +110,17 @@ public class EditActions {
             target.getImage().undo();
             target.repaint();
             target.getParent().revalidate();
+        }
+
+        public void undoDraw(ActionEvent e) {
+            Stack<ImageOperation> opsCopy = target.getImage().getImageOps();
+            while (!(opsCopy.peek() instanceof Pencil) && opsCopy.size() > 0) {
+                opsCopy.pop();
+            }
+
+            if (opsCopy.peek() instanceof Pencil) {
+                actionPerformed(e);
+            }
         }
     }
 

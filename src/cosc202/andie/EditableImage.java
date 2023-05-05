@@ -119,6 +119,10 @@ public class EditableImage {
         WritableRaster raster = bi.copyData(null);
         return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
     }
+
+    public Stack<ImageOperation> getImageOps() {
+        return (Stack<ImageOperation>)ops.clone();
+    }
     
     /**
      * <p>

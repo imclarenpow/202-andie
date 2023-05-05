@@ -2,7 +2,6 @@ package cosc202.andie.image;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.awt.image.*;
 

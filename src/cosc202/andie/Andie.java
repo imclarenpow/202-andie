@@ -13,6 +13,7 @@ import java.awt.*;
 import javax.imageio.*;
 import javax.swing.*;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -36,6 +37,7 @@ import java.awt.event.WindowEvent;
  */
 public class Andie {
     private static JFrame f;
+    private static PencilButton pencilButton;
     private static JButton pencilJButton;
     private static JButton selectJButton;
     private static LanguageSupport lang = new LanguageSupport();
@@ -119,7 +121,7 @@ public class Andie {
         // Adds the colour wheel for drawing tools to the menu bar
         JSeparator separator = new JSeparator(); // Credit to https://stackoverflow.com/questions/12212254/adding-spacing-between-elements-in-jmenubar for separator idea
         menuBar.add(separator);
-        PencilButton pencilButton = new PencilButton();
+        pencilButton = new PencilButton();
         pencilJButton = pencilButton.createButton();
         menuBar.add(pencilJButton);
         ColourSelectorButton colourSelector = new ColourSelectorButton();
@@ -171,16 +173,28 @@ public class Andie {
         }});
     }
 
+    public static void reenableDraw(ActionEvent e) {
+        pencilButton.reenableDraw(e);
+    }
+
     public static void addButtonsToMenuBar(JButton[] buttons) {
         for (JButton button : buttons) {
             menuBar.add(button);
         }
     }
 
+    public static void addButtonToMenuBar(JButton button) {
+        menuBar.add(button);
+    }
+
     public static void removeButtonsFromMenuBar(JButton[] buttons) {
         for (JButton button : buttons) {
             menuBar.remove(button);
         }
+    }
+
+    public static void removeButtonFromMenuBar(JButton button) {
+        menuBar.remove(button);
     }
 
     public static void setCursor(Cursor c) {

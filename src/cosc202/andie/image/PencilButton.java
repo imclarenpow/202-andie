@@ -79,7 +79,9 @@ public class PencilButton {
      */
     public static void disableDrawMode() {
         isDrawMode = false;
-        pencil.stopListening();
+        if (pencil != null) {
+            pencil.stopListening();
+        }
         // Changes the cursor back to the default cursor
         Andie.setCursor(defaultCursor);  
         Andie.setPencilIcon(icon); // retrieved from https://cdn-icons-png.flaticon.com/512/1046/1046346.png (free to use license)
@@ -99,6 +101,9 @@ public class PencilButton {
         public void reenableListener(ActionEvent e) {
             // Code to change the cursor to a pencil
             // Adapted from https://stackoverflow.com/questions/4274606/how-to-change-cursor-icon-in-java
+            if (pencilAction != null) {
+                pencilAction.stopListening();
+            }
             Toolkit toolkit = Toolkit.getDefaultToolkit();
             Cursor newCursor = toolkit.createCustomCursor(new ImageIcon("assets/pencil.png").getImage(), new Point(0, 0), "pencil");
             Andie.setCursor(newCursor);
@@ -140,6 +145,7 @@ public class PencilButton {
      * </p>
      */
     private class PencilAction extends ImageAction {
+        private Pencil pencil;
         
         /**
          * <p>
@@ -153,6 +159,10 @@ public class PencilButton {
          */
         PencilAction(String name, ImageIcon icon, String desc, Integer mnemonic){
             super(name, icon, desc, mnemonic);
+        }
+
+        public void stopListening() {
+            pencil.stopListening();
         }
 
         /**

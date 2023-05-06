@@ -34,7 +34,7 @@ public class Pencil implements ImageOperation, java.io.Serializable {
     private PencilMouseMotionListener pencilListener;
     private int startX;
     private int startY;
-
+    private static boolean listening;
     public static enum WidthEnum {SMALL, MEDIUM, LARGE};
     private static WidthEnum width;
 
@@ -68,6 +68,10 @@ public class Pencil implements ImageOperation, java.io.Serializable {
         width = widthValue;
     }
 
+    public static void setListening(boolean state){
+        listening = state;
+    }
+
     /**
      * <p>
      * Apply pencil operation to an image.
@@ -89,10 +93,7 @@ public class Pencil implements ImageOperation, java.io.Serializable {
 
         return input; 
     }
-
-    public void stopListening(){
-        this.pencilListener.setListening(false);
-    }
+    
 
     /**
      * <p>
@@ -103,12 +104,6 @@ public class Pencil implements ImageOperation, java.io.Serializable {
      * </p>
      */
     private class PencilMouseMotionListener extends MouseInputAdapter {
-        private boolean listening = true;
-
-
-        public void setListening(boolean state){
-            listening = state;
-        }
         /**
          * Responds to mouse drags by drawing onto the target image
          */

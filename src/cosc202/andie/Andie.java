@@ -178,44 +178,82 @@ public class Andie {
         }});
     }
 
+    /**
+     * Reenables draw mode in ANDIE 
+     * Used after all drawings have been erased
+     * @param e the ActionEvent triggering this method call
+     */
     public static void reenableDraw(ActionEvent e) {
-        pencilButton.reenableDraw(e);
+        pencilButton.enableDraw(e);
     }
 
+    /**
+     * Adds a given array of buttons to ANDIE's menu bar
+     * @param buttons the buttons to be added to the menu bar
+     */
     public static void addButtonsToMenuBar(JButton[] buttons) {
         for (JButton button : buttons) {
             menuBar.add(button);
         }
     }
 
+    /**
+     * Adds a given button to ANDIE's menu bar
+     * @param button the button to be added to the menu bar
+     */
     public static void addButtonToMenuBar(JButton button) {
         menuBar.add(button);
     }
 
+    /**
+     * Removes a given array of buttons from ANDIE's menu bar
+     * @param buttons the buttons to be removed from the menu bar
+     */
     public static void removeButtonsFromMenuBar(JButton[] buttons) {
         for (JButton button : buttons) {
             menuBar.remove(button);
         }
     }
 
+    /**
+     * Removes a given button from ANDIE's menu bar
+     * @param button the button to be removed from the menu bar
+     */
     public static void removeButtonFromMenuBar(JButton button) {
         menuBar.remove(button);
     }
 
+    /**
+     * Changes the cursor in use to a new cursor 
+     * e.g. for drawing with a pencil as the cursor
+     * @param c the new cursor to be used
+     */
     public static void setCursor(Cursor c) {
         f.setCursor(c);
     }
 
+    /**
+     * Sets the ImageIcon of the pencil button
+     * @param icon the new icon for the pencil button
+     */
     public static void setPencilIcon(ImageIcon icon) {
         pencilJButton.setIcon(icon);
         pencilJButton.repaint();
     }
 
+    /**
+     * Sets the ImageIcon of the select button
+     * @param icon the new icon for the select button
+     */
     public static void setSelectIcon(ImageIcon icon){
         selectJButton.setIcon(icon);
         selectJButton.repaint();
     }
 
+    /**
+     * Obtains the current mouse cursor in use
+     * @return the cursor
+     */
     public static Cursor getCursor() {
         return f.getCursor();
     }

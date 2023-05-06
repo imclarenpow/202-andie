@@ -27,7 +27,6 @@ public class PencilButton {
     private static ImageIcon icon;
     private static JButton[] widthJButtons;
     private static JButton eraserJButton;
-    private static Pencil pencil;
     private PencilListener listener;
     
     /**
@@ -47,7 +46,12 @@ public class PencilButton {
         eraserJButton = eraserButton.createButton();
     }
 
-    public void reenableDraw(ActionEvent e) {
+    /**
+     * Enables ANDIE's draw mode by instantiating a new PencilListener if not already present 
+     * and then enabling the PencilListener
+     * @param e the ActionEvent triggering this method call
+     */
+    public void enableDraw(ActionEvent e) {
         if (listener == null) {
             listener = new PencilListener();
         }

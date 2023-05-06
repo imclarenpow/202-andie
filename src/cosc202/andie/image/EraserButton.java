@@ -10,9 +10,9 @@ import cosc202.andie.edit.EditActions.UndoAction;
 
 /** 
  * <p>
- * A class that represents the buttons used to set the pencil width
- * The class has data fields to represent each of the small, medium and large buttons (implemented as JButtons)
- * The class also has a method to create the buttons
+ * A class that represents the eraser button that removes all pencil drawings that have been applied
+ * The class has a method to create the button
+ * It has a data field to hold the ImageIcon containing the image of the eraser
  * In addition, there is a private subclass that provides a custom ActionListener implementation to respond to button clicks
  * </p>
  * 
@@ -25,24 +25,22 @@ public class EraserButton {
 
     /**
      * <p>
-     * A constructor for the WidthButtons class
-     * The constructor sets each of the three width buttons to a new JButton instance and gives each a new ImageIcon
-     * The ImageIcon sets each icon to a blue circle of a size depending on the button
-     * The circles were originally created in Microsoft Word
+     * A constructor for the EraserButton class
+     * The constructor sets the icon of the EraserButton to an image of an eraser
      * </p>
      */
     public EraserButton() {
-        icon = new ImageIcon("assets/eraser.png");
+        icon = new ImageIcon("assets/eraser.png"); // Retrieved from https://png.pngtree.com/png-clipart/20230105/original/pngtree-eraser-clipart-png-image_8875456.png (free to use) and modified with Microsoft Publisher + Microsoft Word
     }
     
     /**
      * <p>
-     * Creates an array of JButtons to represent the width buttons
-     * Each JButton is assigned an action listener
-     * The buttons are also formatted so that they are transparent etc.
+     * Creates a new JButton to represent the eraser button
+     * The eraser JButton is assigned an EraserListener - an implementation of ActionListener
+     * The button is also formatted so that it is transparent etc.
      * </p>
      * 
-     * @return an array of JButtons representing the width buttons
+     * @return a JButton representing the eraser button
      */
     public JButton createButton() {
         JButton eraserJButton = new JButton(icon);
@@ -56,18 +54,20 @@ public class EraserButton {
 
     /**
      * <p>
-     * An implementation of the ActionListener interface that responds to clicks of the width buttons
+     * An implementation of the ActionListener interface that responds to clicks of the eraser button
      * </p>
      */
     private class EraserListener implements ActionListener {
 
         /**
          * <p>
-         * Handles clicks of the width buttons
-         * The static Pencil.width field is set here depending on which of the three width buttons was clicked
+         * Handles clicks of the eraser button
+         * Creates a new instance of EditActions and its member class UndoAction
+         * The undoDraw method of UndoAction is called which removes all drawings
+         * Following this, drawing is reenabled for the user
          * </p>
          * 
-         * @param e the ActionEvent created by the click
+         * @param e the ActionEvent triggering this method call (created by the click)
          */
         public void actionPerformed(ActionEvent e) {
             EditActions editActions = new EditActions();

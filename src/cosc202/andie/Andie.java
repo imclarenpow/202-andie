@@ -141,12 +141,15 @@ public class Andie {
         frame.pack();
         frame.setVisible(true);
 
-        // Set up and check for KB Shortcuts
+        /** Set up and check for KB Shortcuts
+         * @author Isaac
+         */
         frame.requestFocusInWindow();
         KBShortcuts kbShortcuts = new KBShortcuts();
         frame.addKeyListener(kbShortcuts.getKeyAdapter());
         
-        // Add a WindowAdapter to detect when the user is trying to close the window
+        /** @author Isaac
+         * Add a WindowAdapter to detect when the user is trying to close the window */
         frame.addWindowListener(new WindowAdapter() {
             FileActions fileActions = new FileActions();
             FileSaveAction saveAction = fileActions.new FileSaveAction(lang.text("save"),

@@ -1,6 +1,7 @@
 package cosc202.andie;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
 import cosc202.andie.file.FileActions;
 import cosc202.andie.file.FileActions.*;
 import cosc202.andie.edit.EditActions;
@@ -8,6 +9,8 @@ import cosc202.andie.edit.EditActions.*;
 
 public class KBShortcuts{
     private KeyAdapter keyAdapter;
+    private int[] konamiCode = {KeyEvent.VK_UP, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_A, KeyEvent.VK_B, KeyEvent.VK_ENTER};
+    private int currentKonamiIndex = 0;
 
     public KBShortcuts(){
         // Create a new KeyAdapter and assign it to the keyAdapter field
@@ -40,6 +43,15 @@ public class KBShortcuts{
                 } else if (e.getKeyCode() == KeyEvent.VK_Z && e.isControlDown() && e.isShiftDown()){
                     // redo when user presses Ctrl+Shift+Z
                     redoAction.actionPerformed(null);
+                } else if (e.getKeyCode() == konamiCode[currentKonamiIndex]) {
+                    currentKonamiIndex++;
+                    if (currentKonamiIndex == konamiCode.length) {
+                        // lmao
+                        JOptionPane.showMessageDialog(null, "lmao nice", "Konami Code", JOptionPane.INFORMATION_MESSAGE);
+                        currentKonamiIndex = 0;
+                    }               
+                } else {
+                    currentKonamiIndex = 0;
                 }
             }
         };

@@ -120,6 +120,11 @@ public class EditableImage {
         return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
     }
 
+    /**
+     * Gets a copy of image operations that have been applied to the current image
+     * @return a clone of the image operations as a stack
+     */
+    @SuppressWarnings("unchecked")
     public Stack<ImageOperation> getImageOps() {
         return (Stack<ImageOperation>)ops.clone();
     }
@@ -326,6 +331,29 @@ public class EditableImage {
             
         } else {
             ShowNoImageError();
+        }
+    }
+
+    /**
+     * Undoes all pencil drawings that have been applied to the current image
+     */
+    public void undoDrawings() {
+        if (current != null) {
+            Stack<ImageOperation> auxiliary = new Stack<ImageOperation>();
+            while (ops.size() > 0) {
+                ImageOperation operation = ops.pop();
+                if (operation instanceof Pencil) {
+                    redoOps.push(operation);
+                } else {
+                    auxiliary.push(operation);
+                }
+            }
+
+            for (ImageOperation redoOperation : auxiliary) {
+                ops.push(redoOperation);
+            }
+
+            refresh();
         }
     }
 

@@ -112,15 +112,12 @@ public class EditActions {
             target.getParent().revalidate();
         }
 
+        /**
+         * Removes all drawings that have been applied
+         * @param e
+         */
         public void undoDraw(ActionEvent e) {
-            Stack<ImageOperation> opsCopy = target.getImage().getImageOps();
-            while (!(opsCopy.peek() instanceof Pencil) && opsCopy.size() > 0) {
-                opsCopy.pop();
-            }
-
-            if (opsCopy.peek() instanceof Pencil) {
-                actionPerformed(e);
-            }
+            target.getImage().undoDrawings();
         }
     }
 

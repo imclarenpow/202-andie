@@ -245,6 +245,7 @@ public class GaussianFilterAction extends ImageAction{
             medianSlider.setMajorTickSpacing(5);
             medianSlider.setMinorTickSpacing(1);
             medianSlider.setPaintTicks(true);
+            medianSlider.setPaintLabels(true);
             panel.add(medianSlider);
         
             Object[] message = { lang.text("enterfiltrad"), panel };

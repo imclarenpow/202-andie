@@ -186,6 +186,7 @@ public class FileActions {
                 System.exit(1);
             }
         }
+        /** adds a method so ANDIE can read if there is an image open */
         public boolean imageOpen(){
             if(!target.getImage().hasImage()){
                 return true;

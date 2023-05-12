@@ -183,11 +183,16 @@ public class PencilButton {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
-            pencil = new Pencil();
-            pencil.setTarget(target);
-            target.getImage().apply(pencil);
-            target.repaint();
-            target.getParent().revalidate();
+            if (target.getImage().hasImage()) {
+                pencil = new Pencil();
+                pencil.setTarget(target);
+                target.getImage().apply(pencil);
+                target.repaint();
+                target.getParent().revalidate();
+            } else {
+                target.getImage().ShowNoImageError();
+            }
+           
         }
     }
 }

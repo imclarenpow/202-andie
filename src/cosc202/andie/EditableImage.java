@@ -286,7 +286,7 @@ public class EditableImage {
      * Warns the user that they have tried to edit an image when there is no image present
      * </p>
      */
-    private void ShowNoImageError() {
+    public void ShowNoImageError() {
         PencilButton.disableDrawMode();
         JOptionPane.showMessageDialog(null, lang.text("noimagewarning"),
         lang.text("noimage"),

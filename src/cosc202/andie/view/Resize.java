@@ -82,19 +82,23 @@ public class Resize implements ImageOperation, java.io.Serializable {
      * @return The resulting (resized/scaled) image.
      */
     public BufferedImage apply(BufferedImage input) {
-        int width = input.getWidth();
-        int height = input.getHeight();
-        width = (int)Math.round((double)width * resizeScale);
-        height = (int)Math.round((double)height * resizeScale);
+        BufferedImage output = null;
+        if (input != null) {
+            int width = input.getWidth();
+            int height = input.getHeight();
+            width = (int)Math.round((double)width * resizeScale);
+            height = (int)Math.round((double)height * resizeScale);
 
-        // Creates a new Image object of the correct size
-        Image scaledImage = input.getScaledInstance(width, height, 0);
+            // Creates a new Image object of the correct size
+            Image scaledImage = input.getScaledInstance(width, height, 0);
+            
+            // Draws the resized image onto a new BufferedImage
+            // Adapted from http://underpop.online.fr/j/java/help/java-converting-an-image-to-a-bufferedimage.html.gz
+            output = new BufferedImage(width, height, input.getType());
+            Graphics2D g2 = output.createGraphics();
+            g2.drawImage(scaledImage, 0, 0, null);
+        }
         
-        // Draws the resized image onto a new BufferedImage
-        // Adapted from http://underpop.online.fr/j/java/help/java-converting-an-image-to-a-bufferedimage.html.gz
-        BufferedImage output = new BufferedImage(width, height, input.getType());
-        Graphics2D g2 = output.createGraphics();
-        g2.drawImage(scaledImage, 0, 0, null);
         return output;
     }
 }

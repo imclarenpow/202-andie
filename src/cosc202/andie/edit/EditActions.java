@@ -207,38 +207,41 @@ public class EditActions {
 
          
         public void actionPerformed(ActionEvent e) {
-            // Determine the current width and height.
-            double scale = 0;
+            if (target.getImage().hasImage()) {
+                // Determine the current width and height.
+                double scale = 0;
 
-            // Finds the minimum and maximum scales for resizing
-            double largestDimension = Math.max(target.getImage().getCurrentImage().getWidth(), target.getImage().getCurrentImage().getHeight());
-            double smallestDimension = Math.min(target.getImage().getCurrentImage().getWidth(), target.getImage().getCurrentImage().getHeight());
-            double minScale = Math.ceil(100 / smallestDimension + 0.01) / 100; // ensures image dimensions will not fall below 0
-            double maxScale = Math.floor(100 * Andie.MAX_DIMENSION_LIMIT / largestDimension) / 100;
-            
-            // Pop-up dialog box to ask the user for the new width and height values.
-            SpinnerNumberModel scaleModel = new SpinnerNumberModel(1, minScale, maxScale, 0.01);
-            JSpinner scaleSpinner = new JSpinner(scaleModel);
-            String optionDialogText = lang.text("enterscale") + ": " + minScale + " -> " + maxScale;
-            int option = JOptionPane.showOptionDialog(null, scaleSpinner, optionDialogText, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                // Finds the minimum and maximum scales for resizing
+                double largestDimension = Math.max(target.getImage().getCurrentImage().getWidth(), target.getImage().getCurrentImage().getHeight());
+                double smallestDimension = Math.min(target.getImage().getCurrentImage().getWidth(), target.getImage().getCurrentImage().getHeight());
+                double minScale = Math.ceil(100 / smallestDimension + 0.01) / 100; // ensures image dimensions will not fall below 0
+                double maxScale = Math.floor(100 * Andie.MAX_DIMENSION_LIMIT / largestDimension) / 100;
+                
+                // Pop-up dialog box to ask the user for the new width and height values.
+                SpinnerNumberModel scaleModel = new SpinnerNumberModel(1, minScale, maxScale, 0.01);
+                JSpinner scaleSpinner = new JSpinner(scaleModel);
+                String optionDialogText = lang.text("enterscale") + ": " + minScale + " -> " + maxScale;
+                int option = JOptionPane.showOptionDialog(null, scaleSpinner, optionDialogText, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
-            // Checks the return value from the dialog box
-            if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
-                scale = scaleModel.getNumber().doubleValue();
-                if (scale == 1 || scale < minScale || scale > maxScale) {
-                    // Warning dialog for when no changes have been made
-                    JOptionPane.showMessageDialog(null, lang.text("resizescalewarning"),
-                    lang.text("invalidscale"),
-                    JOptionPane.WARNING_MESSAGE);
-                } else {
-                    target.getImage().apply(new Resize(scale));
-                    target.repaint();
-                    target.getParent().revalidate();
+                // Checks the return value from the dialog box
+                if (option == JOptionPane.CANCEL_OPTION) {
+                    return;
+                } else if (option == JOptionPane.OK_OPTION) {
+                    scale = scaleModel.getNumber().doubleValue();
+                    if (scale == 1 || scale < minScale || scale > maxScale) {
+                        // Warning dialog for when no changes have been made
+                        JOptionPane.showMessageDialog(null, lang.text("resizescalewarning"),
+                        lang.text("invalidscale"),
+                        JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        target.getImage().apply(new Resize(scale));
+                        target.repaint();
+                        target.getParent().revalidate();
+                    }
                 }
+            } else {
+                target.getImage().ShowNoImageError();
             }
-            
         }
     }
 

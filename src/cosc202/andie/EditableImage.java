@@ -206,18 +206,22 @@ public class EditableImage {
      * @throws Exception If something goes wrong.
      */
     public void save() throws Exception {
-        if (this.opsFilename == null) {
-            this.opsFilename = this.imageFilename + ".ops";
+        if (this.hasImage()) {
+            if (this.opsFilename == null) {
+                this.opsFilename = this.imageFilename + ".ops";
+            }
+            // Write image file based on file extension
+            String extension = imageFilename.substring(1+imageFilename.lastIndexOf(".")).toLowerCase();
+            ImageIO.write(original, extension, new File(imageFilename));
+            // Write operations file
+            FileOutputStream fileOut = new FileOutputStream(this.opsFilename);
+            ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
+            objOut.writeObject(this.ops);
+            objOut.close();
+            fileOut.close();
+        } else {
+            Andie.throwGenericError();
         }
-        // Write image file based on file extension
-        String extension = imageFilename.substring(1+imageFilename.lastIndexOf(".")).toLowerCase();
-        ImageIO.write(original, extension, new File(imageFilename));
-        // Write operations file
-        FileOutputStream fileOut = new FileOutputStream(this.opsFilename);
-        ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
-        objOut.writeObject(this.ops);
-        objOut.close();
-        fileOut.close();
     }
 
     /**
@@ -286,7 +290,7 @@ public class EditableImage {
      * Warns the user that they have tried to edit an image when there is no image present
      * </p>
      */
-    private void ShowNoImageError() {
+    public void ShowNoImageError() {
         PencilButton.disableDrawMode();
         JOptionPane.showMessageDialog(null, lang.text("noimagewarning"),
         lang.text("noimage"),

@@ -178,12 +178,25 @@ public class FileActions {
             try {
                 if (target.getImage().hasImage()) {
                     target.getImage().save();    
-                }   
+                } else {
+                    ShowNoImageSaveExportError();
+                }
             } catch (Exception ex) {
                 System.exit(1);
             }
         }
 
+    }
+
+    /**
+     * <p>
+     * Warns the user that they have tried to save or export an image when there is no image present
+     * </p>
+     */
+    public void ShowNoImageSaveExportError() {
+        JOptionPane.showMessageDialog(null, lang.text("noimagewarning"),
+        lang.text("noimage"),
+        JOptionPane.WARNING_MESSAGE);
     }
 
     /**
@@ -223,10 +236,14 @@ public class FileActions {
          */
         public void actionPerformed(ActionEvent e) {
             try {
-                String imageFilepath = getValidImageFilepath(target, "Save Image");
-                if (!imageFilepath.isEmpty()) {
-                    target.getImage().saveAs(imageFilepath);
-                }
+                if (target.getImage().hasImage()) {
+                    String imageFilepath = getValidImageFilepath(target, "Save Image");
+                    if (!imageFilepath.isEmpty()) {
+                        target.getImage().saveAs(imageFilepath);
+                    }
+                } else {
+                    ShowNoImageSaveExportError();
+                } 
             } catch (Exception ex) {
                 System.exit(1);
             }
@@ -312,9 +329,13 @@ public class FileActions {
          */
         public void actionPerformed(ActionEvent e) {
             try {
-                String imageExportFilepath = getValidImageFilepath(target, "Export image");
-                if (!imageExportFilepath.isEmpty()) {
-                    target.getImage().exportAs(imageExportFilepath);
+                if (target.getImage().hasImage()) {
+                    String imageExportFilepath = getValidImageFilepath(target, "Export image");
+                    if (!imageExportFilepath.isEmpty()) {
+                        target.getImage().exportAs(imageExportFilepath);
+                    }
+                } else {
+                    ShowNoImageSaveExportError();
                 }
             } catch (Exception ex) {
                 System.exit(1);

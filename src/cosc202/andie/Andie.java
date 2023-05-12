@@ -182,8 +182,10 @@ public class Andie {
     }
 
     /**
+     * <p>
      * Reenables draw mode in ANDIE 
      * Used after all drawings have been erased
+     * </p>
      * @param e the ActionEvent triggering this method call
      */
     public static void reenableDraw(ActionEvent e) {
@@ -191,7 +193,9 @@ public class Andie {
     }
 
     /**
+     * <p>
      * Adds a given array of buttons to ANDIE's menu bar
+     * </p>
      * @param buttons the buttons to be added to the menu bar
      */
     public static void addButtonsToMenuBar(JButton[] buttons) {
@@ -201,7 +205,9 @@ public class Andie {
     }
 
     /**
+     * <p>
      * Adds a given button to ANDIE's menu bar
+     * </p>
      * @param button the button to be added to the menu bar
      */
     public static void addButtonToMenuBar(JButton button) {
@@ -209,7 +215,9 @@ public class Andie {
     }
 
     /**
+     * <p>
      * Removes a given array of buttons from ANDIE's menu bar
+     * </p>
      * @param buttons the buttons to be removed from the menu bar
      */
     public static void removeButtonsFromMenuBar(JButton[] buttons) {
@@ -219,7 +227,9 @@ public class Andie {
     }
 
     /**
+     * <p>
      * Removes a given button from ANDIE's menu bar
+     * </p>
      * @param button the button to be removed from the menu bar
      */
     public static void removeButtonFromMenuBar(JButton button) {
@@ -227,8 +237,10 @@ public class Andie {
     }
 
     /**
+     * <p>
      * Changes the cursor in use to a new cursor 
      * e.g. for drawing with a pencil as the cursor
+     * </p>
      * @param c the new cursor to be used
      */
     public static void setCursor(Cursor c) {
@@ -236,7 +248,9 @@ public class Andie {
     }
 
     /**
+     * <p>
      * Sets the ImageIcon of the pencil button
+     * </p>
      * @param icon the new icon for the pencil button
      */
     public static void setPencilIcon(ImageIcon icon) {
@@ -245,7 +259,9 @@ public class Andie {
     }
 
     /**
+     * <p>
      * Sets the ImageIcon of the select button
+     * </p>
      * @param icon the new icon for the select button
      */
     public static void setSelectIcon(ImageIcon icon){
@@ -254,11 +270,24 @@ public class Andie {
     }
 
     /**
+     * <p>
      * Obtains the current mouse cursor in use
+     * </p>
      * @return the cursor
      */
     public static Cursor getCursor() {
         return f.getCursor();
+    }
+
+    /**
+     * <p>
+     * Throws a generic warning when ANDIE encounters an error
+     * </p>
+     */
+    public static void throwGenericError() {
+        JOptionPane.showMessageDialog(null, lang.text("genericerrorwarning"),
+        lang.text("error"),
+        JOptionPane.WARNING_MESSAGE);
     }
 
     /**

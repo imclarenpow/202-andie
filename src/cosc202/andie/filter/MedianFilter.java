@@ -45,8 +45,8 @@ public class MedianFilter implements ImageOperation, java.io.Serializable{
         //Creates an instance of the output, inputing the width & height.
         BufferedImage output = new BufferedImage(width, height, input.getType());
 
-        for (int i = radius; i < height - radius; ++i) {
-            for (int j = radius; j < width - radius; ++j) {
+        for (int i = 0; i < height; ++i) {
+            for (int j = 0; j < width; ++j) {
                 //Method uses arrays to store the rgb values of neighbouring pixels
                 int[] r1 = new int[dimension * dimension];
                 int[] g1 = new int[dimension * dimension];
@@ -56,11 +56,11 @@ public class MedianFilter implements ImageOperation, java.io.Serializable{
                 int index = 0;
                 for (int k = i - radius; k <= i + radius; ++k) {
                     for (int l = j - radius; l <= j + radius; ++l) {
-                        if (k < 0 || k >= height || l < 0 || l >= width) {
-                            continue;
-                        }
+                        // Handle edge pixels by setting their RGB values to the corresponding values of the current pixel
+                        int k2 = Math.max(0, Math.min(height - 1, k));
+                        int l2 = Math.max(0, Math.min(width - 1, l));
                         //Extracts the rgb & x (transparency) values from each pixel
-                        int rgbx = input.getRGB(l, k);
+                        int rgbx = input.getRGB(l2, k2);
                         // >> (Bit shift operator) shifts the extracted value to the right by the specified number of bits
                         int x = (rgbx & 0xFF000000) >> 24;
                         int r = (rgbx & 0x00FF0000) >> 16;

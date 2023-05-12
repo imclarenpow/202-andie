@@ -55,7 +55,8 @@ public class HelpActions {
         LanguageAction(String name, ImageIcon icon, String desc, Integer mnemonic){
             super(name, icon, desc, mnemonic);
             //Options for the dropdown menu
-            String[] options = {lang.text("english"), lang.text("maori"), lang.text("japanese")};
+            String[] options = {lang.text("english"), lang.text("maori"), lang.text("japanese"), lang.text("german"),
+                lang.text("mongolian"), lang.text("italian"), lang.text("spanish"), lang.text("ukranian"), lang.text("urdu")};
             JComboBox<String> dropdown = new JComboBox<>(options);
             JPanel panel = new JPanel();
             panel.add(dropdown);
@@ -64,7 +65,7 @@ public class HelpActions {
             public void actionPerformed(ActionEvent e) {
                 // have to reference indirectly as static by extension
                 LanguageSupport l = new LanguageSupport();
-                String[] options = {"English", "Maori", "Japanese"};
+                String[] options = {"English", "Maori", "Japanese", "German", "Mongolian", "Italian", "Spanish", "Ukranian", "Urdu"};
                 JComboBox<String> dropdown = new JComboBox<>(options);
                 JPanel panel = new JPanel();
                 panel.add(dropdown);

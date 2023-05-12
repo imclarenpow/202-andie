@@ -137,6 +137,7 @@ public class FileActions {
             target.getParent().revalidate();
         }
 
+
     }
 
     /**
@@ -185,7 +186,13 @@ public class FileActions {
                 System.exit(1);
             }
         }
-
+        public boolean imageOpen(){
+            if(!target.getImage().hasImage()){
+                return true;
+            }else{
+                return false;
+            }
+        }
     }
 
     /**

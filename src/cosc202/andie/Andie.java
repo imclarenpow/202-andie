@@ -159,25 +159,30 @@ public class Andie {
             
             @Override
             public void windowClosing(WindowEvent e) {
-                int option = JOptionPane.showOptionDialog(
-                    frame,
-                    lang.text("doyouwanttosave"),
-                    lang.text("save"),
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    new String[] {lang.text("save"), lang.text("dontsave"), lang.text("cancel")},
-                    lang.text("save")
-                );
+                if(saveAction.imageOpen()){
+                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                }else{
+                    int option = JOptionPane.showOptionDialog(
+                        frame,
+                        lang.text("doyouwanttosave"),
+                        lang.text("save"),
+                        JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        new String[] {lang.text("save"), lang.text("dontsave"), lang.text("cancel")},
+                        lang.text("save")
+                    );
 
-                if (option == JOptionPane.YES_OPTION) {
-                    // User wants to save changes
-                    saveAction.actionPerformed(null);
-                    frame.dispose();
-                } else if (option == JOptionPane.NO_OPTION) {
-                    // User does not want to save changes
-                    frame.dispose();
-            }
+                    if (option == JOptionPane.YES_OPTION) {
+                        // User wants to save changes
+                        saveAction.actionPerformed(null);
+                        frame.dispose();
+                    } else if (option == JOptionPane.NO_OPTION) {
+                        // User does not want to save changes
+                        frame.dispose();
+                    }
+                    // if cancel is selected window will not close
+                }
         }});
     }
 

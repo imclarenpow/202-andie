@@ -83,7 +83,7 @@ public class Andie {
         f = frame;
         Image image = ImageIO.read(Andie.class.getClassLoader().getResource("icon.png"));
         frame.setIconImage(image);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         // The main content area is an ImagePanel
         ImagePanel imagePanel = new ImagePanel();
@@ -163,10 +163,10 @@ public class Andie {
                     frame,
                     lang.text("doyouwanttosave"),
                     lang.text("save"),
-                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.YES_NO_CANCEL_OPTION,
                     JOptionPane.QUESTION_MESSAGE,
                     null,
-                    new String[] {lang.text("save"), lang.text("dontsave")},
+                    new String[] {lang.text("save"), lang.text("dontsave"), lang.text("cancel")},
                     lang.text("save")
                 );
 

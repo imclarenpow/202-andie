@@ -1,14 +1,16 @@
-File
-What Each Action in the File Menu Does:
-> Open
+<body>
+<p><h1>File</h1>
+<h2>What Each Action in the File Menu Does:</h2></p>
+<p><b>Open</b>
 Opens an image
 If the image has previously been edited and saved in ANDIE,
-then the edits will appear 
-> Save
-Saves an image and any image operations applied in separate files
-> Save a Copy
-Saves an image and any image operations applied in separate files at a new location/name
-> Export a Copy
-Saves the edited version of an image to some given location
-> Exit
-Closes ANDIE  
+then the edits will appear</p>
+<p><b>Save</b><
+Saves an image and any image operations applied in separate files</p>
+<p><b>Save a Copy</b>
+Saves an image and any image operations applied in separate files at a new location/name</p>
+<p><b>Export a Copy</b>
+Saves the edited version of an image to some given location</p>
+<p><b>Exit</b>
+Closes ANDIE</p>
+</body>

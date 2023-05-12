@@ -1,6 +1,8 @@
-Colour
-What Each Button in the Colour Menu Does:
-> Greyscale
-Converts the image to black and white (greyscale)
-> Brightness and Contrast
-Provides options to adjust image brightness and contrast
+<body>
+<p><h1>Colour</h1>
+<h2>What Each Button in the Colour Menu Does:</h2></p>
+<p><b>Greyscale</b>
+Converts the image to black and white (greyscale)</p>
+<p><b>Brightness and Contrast</b>
+Provides options to adjust image brightness and contrast</p>
+</body>

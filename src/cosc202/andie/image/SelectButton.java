@@ -70,7 +70,6 @@ public class SelectButton {
         public void actionPerformed(ActionEvent e){
             Select select = new Select();
             select.setTarget(target);
-            target.getImage().apply(select);
             target.repaint();
             target.getParent().revalidate();
         }
@@ -87,6 +86,7 @@ public class SelectButton {
                 }else{
                     SelectAction selectAction = new SelectAction(null, icon, null, null);
                     selectAction.actionPerformed(e);
+                    enableSelectMode();
                 }
         }
     }

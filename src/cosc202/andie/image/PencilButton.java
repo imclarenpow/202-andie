@@ -135,7 +135,7 @@ public class PencilButton {
                 Pencil.setListening(true);
 
                 // Enables draw mode, updates the cursor and pencil icon
-                Andie.setPencilIcon(new ImageIcon("assets/exit.png", null)); // retrieved from https://icon-icons.com/icon/cancel-close-cross-delete-exit/114048 (free to use license)
+                Andie.setPencilIcon(new ImageIcon("assets/exit26.png", null)); // retrieved from https://icon-icons.com/icon/cancel-close-cross-delete-exit/114048 (free to use license)
                 isDrawMode = true;
                 reenableListener(e);
 

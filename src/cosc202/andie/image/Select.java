@@ -21,8 +21,10 @@ public class Select implements ImageOperation{
 
     private SelectMouseMotionListener selectListener;
 
-    private Point start; 
+    private Point start;
     private Point end;
+
+    //Still need to handle case where user doesnt deselect Select Button
 
     Select() {
         this.isSelectionApplied = false;
@@ -31,13 +33,18 @@ public class Select implements ImageOperation{
     public void setTarget(ImagePanel target) {
         this.target = target;
         selectListener = new SelectMouseMotionListener(this);
-        target.addMouseListener(selectListener);
-        target.addMouseMotionListener(selectListener);
+        //target.addMouseListener(selectListener);
+        //target.addMouseMotionListener(selectListener);
     }
 
     public void stopListening(){
         target.removeMouseListener(selectListener);
-        target.removeMouseListener(selectListener);
+        target.removeMouseMotionListener(selectListener);
+    }
+
+    public void startListening(){
+        target.addMouseListener(selectListener);
+        target.addMouseMotionListener(selectListener);
     }
 
     public BufferedImage apply(BufferedImage input) {
@@ -82,6 +89,14 @@ public class Select implements ImageOperation{
             // Repaint the target panel
             target.repaint();
         }
+    }
+
+    public Point getStartPoint(){
+        return start;
+    }
+
+    public Point getEndPoint(){
+        return end;
     }
 
     /**

@@ -19,6 +19,8 @@ public class Select implements ImageOperation{
     private ImagePanel target;
     private boolean isSelectionApplied;
 
+    private SelectMouseMotionListener selectListener;
+
     private Point start; 
     private Point end;
 
@@ -28,9 +30,14 @@ public class Select implements ImageOperation{
 
     public void setTarget(ImagePanel target) {
         this.target = target;
-        SelectMouseMotionListener selectListener = new SelectMouseMotionListener(this);
+        selectListener = new SelectMouseMotionListener(this);
         target.addMouseListener(selectListener);
         target.addMouseMotionListener(selectListener);
+    }
+
+    public void stopListening(){
+        target.removeMouseListener(selectListener);
+        target.removeMouseListener(selectListener);
     }
 
     public BufferedImage apply(BufferedImage input) {
@@ -77,6 +84,12 @@ public class Select implements ImageOperation{
         }
     }
 
+    /**
+     * Creates a deep copy of a BufferedImage, copied from EditableImage implementation
+     * Used by revert method
+     * @param bi
+     * @return
+     */
     private static BufferedImage deepCopy(BufferedImage bi) {
         ColorModel cm = bi.getColorModel();
         boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();

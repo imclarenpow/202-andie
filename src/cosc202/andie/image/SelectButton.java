@@ -20,6 +20,7 @@ public class SelectButton {
    // private static Cursor defaultCursor;
     private static ImageIcon icon;
     private static boolean isSelectMode;
+    private static Select select;
     
     /**
      * <p>
@@ -34,6 +35,7 @@ public class SelectButton {
     }
 
     public static void disableSelectMode() {
+        select.stopListening();
         isSelectMode = false;
     }
 
@@ -68,7 +70,7 @@ public class SelectButton {
         }
 
         public void actionPerformed(ActionEvent e){
-            Select select = new Select();
+            select = new Select();
             select.setTarget(target);
             target.repaint();
             target.getParent().revalidate();

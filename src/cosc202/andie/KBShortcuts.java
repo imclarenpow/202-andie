@@ -6,8 +6,12 @@ import cosc202.andie.file.FileActions;
 import cosc202.andie.file.FileActions.*;
 import cosc202.andie.edit.EditActions;
 import cosc202.andie.edit.EditActions.*;
+import cosc202.andie.view.ViewActions;
+import cosc202.andie.view.ViewActions.*;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
-public class KBShortcuts{
+public class KBShortcuts implements MouseWheelListener{
     private KeyAdapter keyAdapter;
     private int[] konamiCode = {KeyEvent.VK_UP, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_B, KeyEvent.VK_A, KeyEvent.VK_ENTER};
     private int currentKonamiIndex = 0;
@@ -60,5 +64,20 @@ public class KBShortcuts{
     // Expose the keyAdapter field as a public method
     public KeyAdapter getKeyAdapter() {
         return keyAdapter;
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        ViewActions viewActions = new ViewActions();
+        ZoomInAction zoomInAction = viewActions.new ZoomInAction(null, null, null, null);
+        ZoomOutAction zoomOutAction = viewActions.new ZoomOutAction(null, null, null, null);
+        if(e.getWheelRotation()<0 && e.isControlDown()){
+            // scroll wheel moved upwards & control is being held down
+            zoomInAction.actionPerformed(null);
+        }else if(e.getWheelRotation()>0 && e.isControlDown()){
+            // scroll wheel moved downwards & control is being held down
+            zoomOutAction.actionPerformed(null);
+        }
+        throw new UnsupportedOperationException("Unimplemented method 'mouseWheelMoved'");
     }
 }

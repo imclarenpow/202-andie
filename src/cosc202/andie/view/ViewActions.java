@@ -89,7 +89,8 @@ public class ViewActions {
          * @param desc A brief description of the action  (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
          */
-        ZoomInAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+        public ZoomInAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            // made public so KBShortcuts can use it
             super(name, icon, desc, mnemonic);
         }
 
@@ -179,7 +180,8 @@ public class ViewActions {
          * @param desc A brief description of the action  (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
          */
-        ZoomOutAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+        public ZoomOutAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            // made public so that KBShortcuts can use it
             super(name, icon, desc, mnemonic);
         }
 

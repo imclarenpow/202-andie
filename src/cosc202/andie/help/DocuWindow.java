@@ -21,9 +21,9 @@ import javax.swing.text.html.*;
 public class DocuWindow extends JFrame implements ActionListener {
     private JEditorPane editorPane;
     private JList<String> categoryList;
-    private String[] files = {"FileHelp.txt",
-        "EditHelp.txt", "FilterHelp.txt", "ColourHelp.txt", "HelpHelp.txt", "ViewHelp.txt" };
-    private String[] category = {"File","Edit","Filter", "Colour", "Help","View"};
+    private String[] files = {"FileHelp.html",
+        "EditHelp.html", "FilterHelp.html", "ColourHelp.html", "HelpHelp.html", "ViewHelp.html" };
+    private String[] category = {"File","Edit","Filter", "Colour", "Help", "View"};
     private String[] categoryText = new String[files.length];
 
     /** sets up JFrame, currently set size of 600x400 open to change. */
@@ -50,7 +50,7 @@ public class DocuWindow extends JFrame implements ActionListener {
 
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                updateText();
+                actionPerformed(null);
             }
         });
 

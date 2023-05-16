@@ -13,10 +13,7 @@ import java.awt.*;
 import javax.imageio.*;
 import javax.swing.*;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 /**
  * <p>
@@ -147,6 +144,7 @@ public class Andie {
         frame.requestFocusInWindow();
         KBShortcuts kbShortcuts = new KBShortcuts();
         frame.addKeyListener(kbShortcuts.getKeyAdapter());
+        frame.addMouseWheelListener(kbShortcuts);
         
         /** @author Isaac
          * Add a WindowAdapter to detect when the user is trying to close the window */
@@ -206,6 +204,7 @@ public class Andie {
     public static void addButtonsToMenuBar(JButton[] buttons) {
         for (JButton button : buttons) {
             menuBar.add(button);
+            f.pack();
         }
     }
 
@@ -217,6 +216,7 @@ public class Andie {
      */
     public static void addButtonToMenuBar(JButton button) {
         menuBar.add(button);
+        f.pack();
     }
 
     /**
@@ -228,6 +228,7 @@ public class Andie {
     public static void removeButtonsFromMenuBar(JButton[] buttons) {
         for (JButton button : buttons) {
             menuBar.remove(button);
+            f.pack();
         }
     }
 
@@ -239,6 +240,7 @@ public class Andie {
      */
     public static void removeButtonFromMenuBar(JButton button) {
         menuBar.remove(button);
+        f.pack();
     }
 
     /**

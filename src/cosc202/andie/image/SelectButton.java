@@ -21,11 +21,11 @@ import cosc202.andie.Andie;
  * @version 1.0
  */
 public class SelectButton {
-   // private static Cursor defaultCursor;
+    //private static Cursor defaultCursor;
     private static ImageIcon icon;
     private static boolean isSelectMode;
     private static Select select;
-    //private static JButton cropJButton;
+    private static JButton cropJButton;
     
     /**
      * <p>
@@ -36,20 +36,22 @@ public class SelectButton {
     public SelectButton() {
        // defaultCursor = Andie.getCursor();
         icon = new ImageIcon("assets/selecticon.jpg"); // retrieved from https://cdn-icons-png.flaticon.com/512/1046/1046346.png (free to use license)
-        //CropButton cropButton = new CropButton();
-        //cropJButton = cropButton.createButton();
     }
     
     public static void disableSelectMode() {
         Andie.setSelectIcon(icon);
         select.stopListening();
-        //Andie.removeButtonFromMenuBar(cropJButton);
+        Andie.removeButtonFromMenuBar(cropJButton);
         isSelectMode = false;
     }
 
     public static void enableSelectMode() {
+        if(cropJButton == null){
+            CropButton cropButton = new CropButton(select);
+            cropJButton = cropButton.createButton();
+        }
         select.startListening();
-        //Andie.addButtonToMenuBar(cropJButton);
+        Andie.addButtonToMenuBar(cropJButton);
         isSelectMode = true;
     }
     

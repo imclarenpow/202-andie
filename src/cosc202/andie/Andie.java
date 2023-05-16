@@ -230,6 +230,7 @@ public class Andie {
             menuBar.remove(button);
             f.pack();
         }
+        f.pack();
     }
 
     /**

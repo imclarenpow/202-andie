@@ -27,8 +27,9 @@ public class CropButton {
      * The constructor sets the icon of the CropButton
      * </p>
      */
-    public CropButton() {
+    public CropButton(Select select) {
         icon = new ImageIcon("assets/cropicon.png"); // Retrieved from https://png.pngtree.com/png-clipart/20230105/original/pngtree-eraser-clipart-png-image_8875456.png (free to use) and modified with Microsoft Publisher + Microsoft Word
+        this.select = select;
     }
     
     /**
@@ -59,6 +60,7 @@ public class CropButton {
             if (cropper == null) {
                 cropper = new Crop(select.getStartPoint(), select.getEndPoint());
             }
+            select.revert();
             target.getImage().apply(cropper);
             target.repaint();
             target.getParent().revalidate();
@@ -67,7 +69,7 @@ public class CropButton {
 
     /**
      * <p>
-     * An implementation of the ActionListener interface that responds to clicks of the eraser button
+     * An implementation of the ActionListener interface that responds to clicks of the crop button
      * </p>
      */
     private class CropListener implements ActionListener {

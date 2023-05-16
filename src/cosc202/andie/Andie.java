@@ -204,8 +204,8 @@ public class Andie {
     public static void addButtonsToMenuBar(JButton[] buttons) {
         for (JButton button : buttons) {
             menuBar.add(button);
-            f.pack();
         }
+        f.pack();
     }
 
     /**
@@ -228,7 +228,6 @@ public class Andie {
     public static void removeButtonsFromMenuBar(JButton[] buttons) {
         for (JButton button : buttons) {
             menuBar.remove(button);
-            f.pack();
         }
         f.pack();
     }

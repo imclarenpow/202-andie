@@ -82,7 +82,9 @@ public class DocuWindow extends JFrame implements ActionListener {
             categoryText[i] = "";   
             try{
                 File f = new File("src/cosc202/andie/help/documentation", files[i]);
-                Scanner sc = new Scanner(f);
+                /* added charsetName: "UTF-8" to solve not reading ViewHelp.html due to macron.
+                credit to Reuben for helping fing this issue */
+                Scanner sc = new Scanner(f, "UTF-8");
                 while (sc.hasNextLine()) {
                     String line = sc.nextLine();
                     if (!line.isEmpty()) {

@@ -15,11 +15,11 @@ import cosc202.andie.Andie;
  public class LanguageSupport {
 
     private String defLang = "language.txt";
-    private ResourceBundle bundle = ResourceBundle.getBundle("cosc202.andie.lang.MessageBundle");
+    private ResourceBundle bundle = ResourceBundle.getBundle("cosc202.andie.lang.MessageBundles.MessageBundle");
     
     /** Constructor that sets default (currently not working) language string overrides */
     public LanguageSupport(){
-        
+        loadDefaultLanguage();
     }
     /** Deals with replacing the text into the wanted language */
     public String text(String txt){
@@ -76,6 +76,11 @@ import cosc202.andie.Andie;
         Andie a = new Andie();
         a.langSet();
         loadDefaultLanguage();
+    }
+    /* added so DocuWindow is able to get the language code to change the directory
+        to the correct language for the documentation popup */
+    public String langCode(){
+        return Locale.getDefault().getLanguage();
     }
  }
     

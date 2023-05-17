@@ -45,7 +45,7 @@ unit-test-job:
     - javac -d bin -classpath
       bin:lib/junit-platform-console-standalone-1.9.2.jar
       src/test/cosc202/andie/*.java src/cosc202/andie/lang/*.java
-    - cp -r src/cosc202/andie/lang/*.properties bin/cosc202/andie/lang 
+    - cp -r src/cosc202/andie/lang/MessageBundles/*.properties bin/cosc202/andie/lang
     - java -jar lib/junit-platform-console-standalone-1.9.2.jar -classpath
       bin --select-package test.cosc202.andie
 

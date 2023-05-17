@@ -41,11 +41,15 @@ unit-test-job:
   stage: test
   script:
     - echo "Attempting to run unit tests..."    
-    - javac -d bin src/cosc202/andie/*.java src/cosc202/andie/lang/*.java src/cosc202/andie/colour/*.java src/cosc202/andie/edit/*.java src/cosc202/andie/file/*.java src/cosc202/andie/filter/*.java src/cosc202/andie/help/*.java src/cosc202/andie/image/*.java src/cosc202/andie/view/*.java
+    - javac -d bin src/cosc202/andie/*.java src/cosc202/andie/lang/*.java 
+    - java c -d bin src/cosc202/andie/colour/*.java src/cosc202/andie/edit/*.java 
+    - java c -d bin src/cosc202/andie/file/*.java src/cosc202/andie/filter/*.java 
+    - java c -d src/cosc202/andie/help/*.java src/cosc202/andie/image/*.java 
+    - java c -d src/cosc202/andie/view/*.java
     - javac -d bin -classpath
       bin:lib/junit-platform-console-standalone-1.9.2.jar
       src/test/cosc202/andie/*.java src/cosc202/andie/lang/*.java
-    - cp -r src/cosc202/andie/lang/*.properties bin/cosc202/andie/lang 
+    - cp -r src/cosc202/andie/lang/MessageBundles*.properties bin/cosc202/andie/lang/MessageBundles
     - java -jar lib/junit-platform-console-standalone-1.9.2.jar -classpath
       bin --select-package test.cosc202.andie
 

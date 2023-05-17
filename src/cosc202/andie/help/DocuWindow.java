@@ -10,6 +10,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.html.*;
 
+import cosc202.andie.lang.LanguageSupport;
+
 /**
  * The DocuWindow class displays a JFrame window with help documentation for Andie.
  * 
@@ -19,16 +21,22 @@ import javax.swing.text.html.*;
  * - modified updateText() method to set the text of the JEditorPane as HTML
  */
 public class DocuWindow extends JFrame implements ActionListener {
+    private LanguageSupport l;
     private JEditorPane editorPane;
     private JList<String> categoryList;
-    private String[] files = {"FileHelp.html",
-        "EditHelp.html", "FilterHelp.html", "ColourHelp.html", "HelpHelp.html", "ViewHelp.html" };
-    private String[] category = {"File","Edit","Filter", "Colour", "Help", "View"};
+    private String[] files = {"FileHelp.html", "EditHelp.html", "FilterHelp.html",
+        "ColourHelp.html", "HelpHelp.html", "ViewHelp.html" };
+    private String[] category = new String [files.length];
     private String[] categoryText = new String[files.length];
 
     /** sets up JFrame, currently set size of 600x400 open to change. */
     public DocuWindow() {
         super("Documentation Window");
+        l = new LanguageSupport();
+        // setting categories to language
+        String[] setCats = {l.text("file"),l.text("edit"),l.text("filter"),
+            l.text("colour"), l.text("help"), l.text("view")};
+        category = setCats;
         fileReader();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(600, 400);
@@ -75,13 +83,14 @@ public class DocuWindow extends JFrame implements ActionListener {
     }
 
     /** Reads the text stored in documentation, as outlined in the private array above.
-     *  Spent ages milling over why it wasn't working, had a file mentioned twice. Be sure to Check this in future.
+     *  Spent ages milling over why it wasn't working, had a file mentioned twice.
+     *  Be sure to Check this in future.
      */
     public void fileReader(){
         for(int i=0; i<files.length; i++){
             categoryText[i] = "";   
             try{
-                File f = new File("src/cosc202/andie/help/documentation", files[i]);
+                File f = new File("src/cosc202/andie/help/documentation/" + l.langCode(), files[i]);
                 /* added charsetName: "UTF-8" to solve not reading ViewHelp.html due to macron.
                 credit to Reuben for helping fing this issue */
                 Scanner sc = new Scanner(f, "UTF-8");

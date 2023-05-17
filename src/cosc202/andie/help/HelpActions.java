@@ -65,11 +65,13 @@ public class HelpActions {
             public void actionPerformed(ActionEvent e) {
                 // have to reference indirectly as static by extension
                 LanguageSupport l = new LanguageSupport();
-                String[] options = {"English", "Maori", "Japanese", "German", "Mongolian", "Italian", "Spanish", "Ukranian", "Urdu"};
+                String[] options = {"English", "Maori", "Japanese", "German", "Mongolian",
+                    "Italian", "Spanish", "Ukranian", "Urdu"};
                 JComboBox<String> dropdown = new JComboBox<>(options);
                 JPanel panel = new JPanel();
                 panel.add(dropdown);
-                int result = JOptionPane.showOptionDialog(null, panel, l.text("select"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, // icon
+                int result = JOptionPane.showOptionDialog(null, panel, l.text("select"), 
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                             // internationalisationing the buttons                
                                 new Object[] {
                                     l.text("ok"),
@@ -78,12 +80,28 @@ public class HelpActions {
                                 lang.text("cancel")); //default selection (if window is closed)
                 if (result == JOptionPane.OK_OPTION) {
                     String selectedOption = (String) dropdown.getSelectedItem();
+                    /* This load of if statements are crunchy but its really easy to 
+                    read and tbh can't be bothered changing it its not super inefficient */
                     if(selectedOption == "English"){
                         l.setDefaultLanguage("en", "NZ");
                     }else if(selectedOption == "Maori"){
                         l.setDefaultLanguage("mi", "NZ");
                     }else if(selectedOption == "Japanese"){
                         l.setDefaultLanguage("ja", "JP");
+                    }else if(selectedOption == "German"){
+                        l.setDefaultLanguage("de", "DE");
+                    }else if(selectedOption == "Mongolian"){
+                        l.setDefaultLanguage("mn", "MN");
+                    }else if(selectedOption == "Italian"){
+                        l.setDefaultLanguage("it", "IT");
+                    }else if(selectedOption == "Spanish"){
+                        l.setDefaultLanguage("es", "ES");
+                    }else if(selectedOption == "Ukranian"){
+                        l.setDefaultLanguage("uk", "UK");
+                        JOptionPane.showMessageDialog(null, "Слава Україні!",
+                            "Slava Ukrani", JOptionPane.INFORMATION_MESSAGE);
+                    }else if(selectedOption == "Urdu"){
+                        l.setDefaultLanguage("ur", "PK");
                     }
                 }
             }

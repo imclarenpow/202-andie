@@ -144,8 +144,6 @@ public class Andie {
         frame.requestFocusInWindow();
         KBShortcuts kbShortcuts = new KBShortcuts();
         frame.addKeyListener(kbShortcuts.getKeyAdapter());
-        frame.addMouseWheelListener(kbShortcuts);
-        
         /** @author Isaac
          * Add a WindowAdapter to detect when the user is trying to close the window */
         frame.addWindowListener(new WindowAdapter() {
@@ -154,7 +152,11 @@ public class Andie {
                 null, 
                 lang.text("savethefile"), 
                 Integer.valueOf(KeyEvent.VK_S));
-            
+            /** windowClosing method inside the window listener
+             *  on instance that image is open and window is trying to be closed,
+             *  Save popup will give you the option to Save, Not Save or Cancel Closing.
+             *  If no image is open, this popup will not appear.
+             */
             @Override
             public void windowClosing(WindowEvent e) {
                 if(saveAction.imageOpen()){

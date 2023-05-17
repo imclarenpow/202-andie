@@ -3,6 +3,8 @@ package cosc202.andie.image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.awt.event.MouseEvent;
+import javax.swing.event.MouseInputAdapter;
 
 import cosc202.andie.Andie;
 
@@ -25,7 +27,9 @@ public class SelectButton {
     private static ImageIcon icon;
     private static boolean isSelectMode;
     private static Select select;
+    private static CropButton cropButton;
     private static JButton cropJButton;
+    private static SelectMouseMotionListener selectListener;
     
     /**
      * <p>
@@ -37,23 +41,29 @@ public class SelectButton {
        // defaultCursor = Andie.getCursor();
         icon = new ImageIcon("assets/selecticon.jpg"); // retrieved from https://cdn-icons-png.flaticon.com/512/1046/1046346.png (free to use license)
     }
+
+    public static void enableSelectMode() {
+        if(selectListener == null){
+            selectListener = new SelectMouseMotionListener();
+        }
+        if(cropJButton == null){
+            cropButton = new CropButton(select);
+            cropJButton = cropButton.createButton();
+        }
+        startListening();
+        Andie.addButtonToMenuBar(cropJButton);
+        isSelectMode = true;
+    }
     
     public static void disableSelectMode() {
+        select.revert(); //check for selection applied already in revert()
         Andie.setSelectIcon(icon);
-        select.stopListening();
+        stopListening();
         Andie.removeButtonFromMenuBar(cropJButton);
         isSelectMode = false;
     }
 
-    public static void enableSelectMode() {
-        if(cropJButton == null){
-            CropButton cropButton = new CropButton(select);
-            cropJButton = cropButton.createButton();
-        }
-        select.startListening();
-        Andie.addButtonToMenuBar(cropJButton);
-        isSelectMode = true;
-    }
+    
     
     /**
      * <p>
@@ -75,23 +85,15 @@ public class SelectButton {
         return selectButton;
     }
 
-    private class SelectAction extends ImageAction{
-        SelectAction(String name, ImageIcon icon, String desc, Integer mnemonic){
-            super(name, icon, desc, mnemonic);
-        }
-
-        public void actionPerformed(ActionEvent e){
-            if(select == null){
-                select = new Select();
-            }
-            select.setTarget(target);
-            target.repaint();
-            target.getParent().revalidate();
-        }
-        
-        
+    public static void startListening(){
+        select.getTarget().addMouseListener(selectListener);
+        select.getTarget().addMouseMotionListener(selectListener);
     }
 
+    public static void stopListening(){
+        select.getTarget().removeMouseListener(selectListener);
+        select.getTarget().removeMouseMotionListener(selectListener);
+    }
 
     /**
      * <p>
@@ -110,7 +112,59 @@ public class SelectButton {
                 selectAction.actionPerformed(e);
                 enableSelectMode();
             }
+        }
     }
+
+    private class SelectAction extends ImageAction{
+        SelectAction(String name, ImageIcon icon, String desc, Integer mnemonic){
+            super(name, icon, desc, mnemonic);
+        }
+
+        public void actionPerformed(ActionEvent e){
+            if(select == null){
+                select = new Select();
+            }
+            select.setTarget(target);
+            target.repaint();
+            target.getParent().revalidate();
+        }
+        
+        
+    }
+
+    private static class SelectMouseMotionListener extends MouseInputAdapter {
+        /**
+         * Identifies the initial coordinates when the mouse is pressed/dragged
+         */
+        public void mousePressed(MouseEvent e) {
+            select.setStart(e.getPoint());
+            //System.out.println(e.getPoint().getX() + ", " + e.getPoint().getY()); 
+            // For bug-fixing co-ordinate problems
+        }
+
+        /**
+         * Identifies the final co-ordinates where the mouse is released
+         */
+        public void mouseReleased(MouseEvent e) {
+            if(select.isSelectionApplied()){
+                select.revert();
+                cropButton.stopListening();
+            }else{
+                select.setEnd(e.getPoint());
+                select.getTarget().getImage().apply(select);
+                select.getTarget().repaint();
+                select.getTarget().getParent().revalidate();
+                cropButton.startListening();
+            }
+        }
+
+        /**
+         * Responds to mouse drags by drawing a rectangle onto the target image
+         */
+        public void mouseDragged(MouseEvent e) {
+            select.setEnd(e.getPoint());
+        }
+
     }
 
 }

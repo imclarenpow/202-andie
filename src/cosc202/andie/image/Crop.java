@@ -12,7 +12,7 @@ import java.awt.Point;
  */
 
 public class Crop implements ImageOperation {
-    private BufferedImage input;
+    private BufferedImage cropped; 
     private Point start;
     private Point end;
     
@@ -22,14 +22,26 @@ public class Crop implements ImageOperation {
     }
 
     public BufferedImage apply(BufferedImage input){
-        this.input = input;
         // Calculate the rectangle to crop based on the start and end points
         int x = Math.min(start.x, end.x);
         int y = Math.min(start.y, end.y);
         int width = Math.abs(start.x - end.x);
         int height = Math.abs(start.y - end.y);
         // Crop the image using the rectangle
-        BufferedImage cropped = input.getSubimage(x, y, width, height);
+        cropped = input.getSubimage(x, y, width, height);
         return cropped; 
+    }
+
+    //NullException
+    public BufferedImage getCropped(){
+        return cropped; 
+    }
+
+    public void setStart(Point start){
+        this.start = start;
+    }
+
+    public void setEnd(Point end){
+        this.end = end;
     }
 }

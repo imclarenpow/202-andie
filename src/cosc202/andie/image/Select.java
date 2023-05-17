@@ -1,6 +1,5 @@
 package cosc202.andie.image;
 
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
@@ -9,17 +8,15 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import javax.swing.event.MouseInputAdapter;
-
 import cosc202.andie.ImagePanel;
 
 public class Select implements ImageOperation{
     private BufferedImage input;
     private BufferedImage original;
     private ImagePanel target;
-    private boolean isSelectionApplied;
+    private boolean SelectionApplied;
 
-    private SelectMouseMotionListener selectListener;
+    //private SelectMouseMotionListener selectListener;
 
     private Point start;
     private Point end;
@@ -27,24 +24,24 @@ public class Select implements ImageOperation{
     //Still need to handle case where user doesnt deselect Select Button
 
     Select() {
-        this.isSelectionApplied = false;
+        this.SelectionApplied = false;
     }
 
     public void setTarget(ImagePanel target) {
         this.target = target;
-        selectListener = new SelectMouseMotionListener(this);
-        //target.addMouseListener(selectListener);
-        //target.addMouseMotionListener(selectListener);
     }
 
-    public void stopListening(){
-        target.removeMouseListener(selectListener);
-        target.removeMouseMotionListener(selectListener);
+    public ImagePanel getTarget(){
+        return target;
     }
 
-    public void startListening(){
-        target.addMouseListener(selectListener);
-        target.addMouseMotionListener(selectListener);
+    //only used in case of cropped image
+    public void setOriginal(BufferedImage original){
+        this.original = original;
+    }
+
+    public boolean isSelectionApplied(){
+        return SelectionApplied;
     }
 
     public BufferedImage apply(BufferedImage input) {
@@ -70,12 +67,12 @@ public class Select implements ImageOperation{
         // Dispose of the graphics context to free up resources
         g2d.dispose();
 
-        isSelectionApplied = true;
+        SelectionApplied = true;
         return input;
     }
 
     public void revert() {
-        if (isSelectionApplied) {
+        if (SelectionApplied) {
             // Copy the original image to the input image to restore it
             Graphics2D g2d = input.createGraphics();
             g2d.drawImage(original, 0, 0, null);
@@ -84,7 +81,8 @@ public class Select implements ImageOperation{
             // Reset selection variables
             start = null;
             end = null;
-            isSelectionApplied = false;
+            original = null; 
+            SelectionApplied = false;
     
             // Repaint the target panel
             target.repaint();
@@ -98,6 +96,13 @@ public class Select implements ImageOperation{
     public Point getEndPoint(){
         return end;
     }
+    public void setStart(Point p) {
+        start = p;
+    }
+
+    public void setEnd(Point p) {
+        end = p;
+    }
 
     /**
      * Creates a deep copy of a BufferedImage, copied from EditableImage implementation
@@ -108,52 +113,18 @@ public class Select implements ImageOperation{
     private static BufferedImage deepCopy(BufferedImage bi) {
         ColorModel cm = bi.getColorModel();
         boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
-        WritableRaster raster = bi.copyData(null);
+
+        int width = bi.getWidth();
+        int height = bi.getHeight();
+
+        WritableRaster raster = cm.createCompatibleWritableRaster(width, height);
+        bi.copyData(raster);
+
         return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
     }
 
-    private class SelectMouseMotionListener extends MouseInputAdapter {
-        private Select select;
-
-        public SelectMouseMotionListener(Select select) {
-            this.select = select;
-        }
-        /**
-         * Identifies the initial coordinates when the mouse is pressed/dragged
-         */
-        public void mousePressed(MouseEvent e) {
-            setStart(e.getPoint());
-        }
-
-        /**
-         * Identifies the final co-ordinates where the mouse is released
-         */
-        public void mouseReleased(MouseEvent e) {
-            if(isSelectionApplied){
-                revert();
-            }else{
-                setEnd(e.getPoint());
-                target.getImage().apply(select);
-                target.repaint();
-                target.getParent().revalidate();
-            }
-        }
-
-        /**
-         * Responds to mouse drags by drawing a rectangle onto the target image
-         */
-        public void mouseDragged(MouseEvent e) {
-            setEnd(e.getPoint());
-        }
-
-        public void setStart(Point p) {
-            start = p;
-        }
     
-        public void setEnd(Point p) {
-            end = p;
-        }
 
-    }
-    
 }
+    
+

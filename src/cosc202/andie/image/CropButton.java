@@ -17,9 +17,12 @@ import javax.swing.*;
  */
 public class CropButton {
     // Data fields 
-    private ImageIcon icon;
+    private final ImageIcon ICON = new ImageIcon ("assets/cropicon.png");
+    private final ImageIcon GRAYEDICON = new ImageIcon("assets/grayscalecropicon.png"); 
+    private static JButton cropJButton;
     private static Crop cropper;
     private static Select select; 
+    private CropListener cropListener = new CropListener();
 
     /**
      * <p>
@@ -28,8 +31,15 @@ public class CropButton {
      * </p>
      */
     public CropButton(Select select) {
-        icon = new ImageIcon("assets/cropicon.png"); // Retrieved from https://png.pngtree.com/png-clipart/20230105/original/pngtree-eraser-clipart-png-image_8875456.png (free to use) and modified with Microsoft Publisher + Microsoft Word
         this.select = select;
+    }
+
+    public ImageIcon getIcon(){
+        return ICON;
+    }
+
+    public ImageIcon getGrayedIcon(){
+        return GRAYEDICON;
     }
     
     /**
@@ -42,13 +52,22 @@ public class CropButton {
      * @return a JButton representing the eraser button
      */
     public JButton createButton() {
-        JButton cropJButton = new JButton(icon);
-        cropJButton.addActionListener(new CropListener());
+        cropJButton = new JButton(GRAYEDICON);
         cropJButton.setOpaque(false);
         cropJButton.setContentAreaFilled(false);
         cropJButton.setBorderPainted(false);
 
         return cropJButton;
+    }
+
+    public void startListening(){
+        cropJButton.setIcon(getIcon());
+        cropJButton.addActionListener(cropListener);
+    }
+
+    public void stopListening(){
+        cropJButton.setIcon(getGrayedIcon());
+        cropJButton.removeActionListener(cropListener);
     }
 
     private class CropAction extends ImageAction{
@@ -59,11 +78,16 @@ public class CropButton {
         public void actionPerformed(ActionEvent e){
             if (cropper == null) {
                 cropper = new Crop(select.getStartPoint(), select.getEndPoint());
+            }else{
+                cropper.setStart(select.getStartPoint());
+                cropper.setEnd(select.getEndPoint());
             }
             select.revert();
             target.getImage().apply(cropper);
             target.repaint();
             target.getParent().revalidate();
+            select.setOriginal(cropper.getCropped());
+            select.setTarget(target);
         }
     }
 
@@ -84,8 +108,9 @@ public class CropButton {
          * @param e the ActionEvent triggering this method call (created by the click)
          */
         public void actionPerformed(ActionEvent e) {
-            CropAction cropAction = new CropAction(null, icon, null, null);
+            CropAction cropAction = new CropAction(null, null, null, null);
             cropAction.actionPerformed(e);
+            stopListening();
         }
     }
 }

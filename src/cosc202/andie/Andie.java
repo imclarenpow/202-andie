@@ -245,6 +245,17 @@ public class Andie {
         f.pack();
     }
 
+    public static void addMenu(JMenu menu){
+        menuBar.add(menu);
+        f.pack();   
+    }
+
+    public static void removeMenu(JMenu menu) {
+        menuBar.remove(menu);
+        f.pack();
+    }
+
+
     /**
      * <p>
      * Changes the cursor in use to a new cursor 

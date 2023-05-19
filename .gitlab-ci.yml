@@ -68,7 +68,6 @@ pages: # publish Javadoc website
         - echo 'test' >public/test.txt
         - mv docs public/
         - ls -R public | head
-        - echo 'first ten public/ files listed'
     artifacts:
         paths:
         - public

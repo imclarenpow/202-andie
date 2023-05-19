@@ -7,21 +7,23 @@ import javax.swing.*;
 import cosc202.andie.image.*;
 import cosc202.andie.lang.*;
 
+/*
+ * Needs to check if Select is applied, before allowing shapes to be drawn
+ */
 public class ShapesActions {
+    private boolean selectionApplied = false;
+    private static Select select;
     protected ArrayList<Action> actions; 
     private static JMenu shapesMenu;
-    private static Select select;
     private final ImageIcon ICON = new ImageIcon("assets/shapesicon.png"); // retrieved from https://www.pngfind.com/mpng/ibTmJxT_shapes-clipart-png-transparent-png/ (free to use license)
     private final ImageIcon GRAYEDICON = new ImageIcon("assets/grayscaleshapesicon.png");
 
     public ShapesActions(Select select) {
         this.select = select;
         actions = new ArrayList<Action>();
-
-        actions.add(new OutLinedRectangleAction("Outlined Rectangle", null, null, null));
-        actions.add(new FilledRectangleAction("Filled Rectangle", null, null, null));
-        actions.add(new OutLinedEllipseAction("Outlined Ellipse", null, null, null));
-        actions.add(new FilledEllipseAction("Filled Ellipse", null, null, null));
+        
+        actions.add(new RectangleAction("Filled Rectangle", null, null, null));
+        actions.add(new EllipseAction("Filled Ellipse", null, null, null));
         actions.add(new LineAction("Line", null, null, null));
     }
 
@@ -37,49 +39,41 @@ public class ShapesActions {
 
     public void startListening() {
         shapesMenu.setIcon(ICON);
+        selectionApplied = true; // only called in SelectButton when Select is applied, no need to check Select variable
     }
 
     public void stopListening() {
         shapesMenu.setIcon(GRAYEDICON);
+        selectionApplied = false; // only called in SelectButton when Select is not applied, no need to check Select variable
     }
 
-    public class OutLinedRectangleAction extends ImageAction {
-        OutLinedRectangleAction(String name, ImageIcon icon, String desc, Integer mnemonic){
+    public class RectangleAction extends ImageAction {
+        RectangleAction(String name, ImageIcon icon, String desc, Integer mnemonic){
             super(name, icon, desc, mnemonic);
         }
 
         public void actionPerformed(ActionEvent e) {
-            //select.setShapeType(Select.ShapeType.OUTLINEDRECTANGLE);
+            Rectangle rectangle = new Rectangle(select.getStartPoint(), select.getEndPoint());
+            select.revert();
+            target.getImage().apply(rectangle);
+            target.repaint();
+            target.getParent().revalidate();
+            //Needs pop-up menu for outline/fill selection & color picker 
         }
     }
 
-    public class FilledRectangleAction extends ImageAction {
-        FilledRectangleAction(String name, ImageIcon icon, String desc, Integer mnemonic){
-            super(name, icon, desc, mnemonic);
-        }
-
-        public void actionPerformed(ActionEvent e) {
-           // select.setShapeType(Select.ShapeType.FILLEDRECTANGLE);
-        }
-    }
-
-    public class OutLinedEllipseAction extends ImageAction {
-        OutLinedEllipseAction(String name, ImageIcon icon, String desc, Integer mnemonic){
+    public class EllipseAction extends ImageAction {
+        EllipseAction(String name, ImageIcon icon, String desc, Integer mnemonic){
            super(name, icon, desc, mnemonic);
         }
 
         public void actionPerformed(ActionEvent e) {
-            //select.setShapeType(Select.ShapeType.OUTLINEDELLIPSE);
-        }
-    }
-
-    public class FilledEllipseAction extends ImageAction {
-        public FilledEllipseAction(String name, ImageIcon icon, String desc, Integer mnemonic){
-            super(name, icon, desc, mnemonic);
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            //select.setShapeType(Select.ShapeType.FILLEDELLIPSE);
+            Ellipse ellipse = new Ellipse(select.getStartPoint(), select.getEndPoint());
+            select.revert();
+            target.getImage().apply(ellipse);
+            target.repaint();
+            target.getParent().revalidate();
+            //Needs pop-up menu for outline/fill selection & color picker 
         }
     }
 
@@ -89,7 +83,12 @@ public class ShapesActions {
         }
 
         public void actionPerformed(ActionEvent e) {
-            //select.setShapeType(Select.ShapeType.LINE);
+            Line line = new Line(select.getStartPoint(), select.getEndPoint());
+            select.revert();
+            target.getImage().apply(line);
+            target.repaint();
+            target.getParent().revalidate();
+            //Needs pop-up menu for outline/fill selection & color picker 
         }
     }
 }

@@ -42,7 +42,7 @@ public class MedianFilter implements ImageOperation, java.io.Serializable {
     /**
      * <p>
      * Applies a Median Filter to an Image
-     * <p>
+     * </p>
      * 
      * @param input Is the image that the Median filter is applied to.
      * @return The result of the of image post filter application.

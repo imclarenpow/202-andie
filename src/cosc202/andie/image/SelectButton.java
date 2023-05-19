@@ -29,6 +29,8 @@ public class SelectButton {
     private static Select select;
     private static CropButton cropButton;
     private static JButton cropJButton;
+    private static ShapesActions shapesActions;
+    private static JMenu shapesMenu;
     private static SelectMouseMotionListener selectListener;
     
     /**
@@ -50,8 +52,13 @@ public class SelectButton {
             cropButton = new CropButton(select);
             cropJButton = cropButton.createButton();
         }
+        if(shapesMenu == null){
+            shapesActions = new ShapesActions(select);
+            shapesMenu = shapesActions.createMenu();
+        }
         startListening();
         Andie.addButtonToMenuBar(cropJButton);
+        Andie.addMenu(shapesMenu);
         isSelectMode = true;
     }
     
@@ -60,6 +67,7 @@ public class SelectButton {
         Andie.setSelectIcon(icon);
         stopListening();
         Andie.removeButtonFromMenuBar(cropJButton);
+        Andie.removeMenu(shapesMenu);
         isSelectMode = false;
     }
 
@@ -149,12 +157,14 @@ public class SelectButton {
             if(select.isSelectionApplied()){
                 select.revert();
                 cropButton.stopListening();
+                shapesActions.stopListening();
             }else{
                 select.setEnd(e.getPoint());
                 select.getTarget().getImage().apply(select);
                 select.getTarget().repaint();
                 select.getTarget().getParent().revalidate();
                 cropButton.startListening();
+                shapesActions.startListening();
             }
         }
 

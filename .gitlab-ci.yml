@@ -67,7 +67,7 @@ pages: # publish Javadoc website
         - mkdir public
         - echo 'test' >public/test.txt
         - mv docs public/
-        - ls -R public | head
+        - ls -R public 
     artifacts:
         paths:
         - public

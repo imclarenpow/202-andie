@@ -4,10 +4,24 @@ import java.awt.Color;
 import java.awt.image.*;
 import cosc202.andie.image.*;
 
+/**
+ * <p>
+ * A class for the Emboss Filter
+ * Used to apply an Emboss Filter to a particular image
+ * Specifies a filter index
+ * </p>
+ */
 public class EmbossFilter implements ImageOperation, java.io.Serializable {
 
+    // Data field
     private int filterIndex;
 
+    /**
+     * <p>
+     * A constructor for an Emboss Filter
+     * </p>
+     * @param filterIndex the index of the Emboss Filter
+     */
     public EmbossFilter(int filterIndex) {
         this.filterIndex = filterIndex;
     }

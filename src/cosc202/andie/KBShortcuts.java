@@ -7,11 +7,22 @@ import cosc202.andie.file.FileActions.*;
 import cosc202.andie.edit.EditActions;
 import cosc202.andie.edit.EditActions.*;
 
+/**
+ * <p>
+ * A class to represent the keyboard shortcuts used in ANDIE
+ * </p>
+ */
 public class KBShortcuts{
     private KeyAdapter keyAdapter;
     private int[] konamiCode = {KeyEvent.VK_UP, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_B, KeyEvent.VK_A, KeyEvent.VK_ENTER};
     private int currentKonamiIndex = 0;
 
+    /**
+     * <p>
+     * Instantiates a new KBShortcuts object
+     * Responds to presses of particular keys with particular ImageActions
+     * </p> 
+     */
     public KBShortcuts(){
         // Create a new KeyAdapter and assign it to the keyAdapter field
         keyAdapter = new KeyAdapter() {

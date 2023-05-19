@@ -4,17 +4,47 @@ import java.awt.Graphics;
 import java.awt.image.*;
 import cosc202.andie.image.*;
 
+/**
+ * <p>
+ * Image Operation to apply a Sobel Filter.
+ * </p>
+ * 
+ * <p>
+ * Applies a Sobel Filter to a given image
+ * </p>
+ * 
+ * @author James Larkin
+ */
 public class SobelFilter implements ImageOperation, java.io.Serializable {
 
+    /**
+     * <p>
+     * A default constructor for a Sobel Filter
+     * </p>
+     */
     SobelFilter() {
     }
 
+    // Data field
     private String sobelType;
 
+    /**
+     * <p>
+     * Takes a type of Sobel filter to apply to an image
+     * @param sobelType the type of Sobel filter
+     * </p>
+     */
     public SobelFilter(String sobelType) {
         this.sobelType = sobelType;
     }
 
+    /**
+     * <p>
+     * Applies the Sobel filter to a given image
+     * </p>
+     * 
+     * @param input the image onto which the filter is to be applied
+     */
     public BufferedImage apply(BufferedImage input) {
         // Create BufferedImage of type INT_RGB
         BufferedImage inputRGB = new BufferedImage(input.getWidth(), input.getHeight(), BufferedImage.TYPE_INT_RGB);
@@ -42,5 +72,4 @@ public class SobelFilter implements ImageOperation, java.io.Serializable {
             throw new IllegalArgumentException("Invalid sobelType: " + sobelType);
         }
     }
-
 }

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import cosc202.andie.ImagePanel;
 
 public class ImagePanelTest {
-    /*
+
     @Test
     void getZoomInitialValue() {
         ImagePanel testPanel = new ImagePanel();
@@ -20,5 +20,4 @@ public class ImagePanelTest {
         Assertions.assertFalse(testPanel.getZoom() == 100.0);
         Assertions.assertTrue(testPanel.getZoom() >= 50);
     }
-    */
 }

@@ -63,7 +63,7 @@ pages: # publish Javadoc website
     image: eclipse-temurin:17
     stage: build
     script:
-        - javadoc -Xdoclint:syntax,html -d docs src/cosc202/andie/*.java src/cosc202/andie/lang/*.java src/cosc202/andie/colour/*.java src/cosc202/andie/edit/*.java src/cosc202/andie/file/*.java src/cosc202/andie/filter/*.java src/cosc202/andie/help/*.java src/cosc202/andie/image/*.java src/cosc202/andie/view/*.java src/test/cosc202/andie/*.java
+        - javadoc -Xdoclint:syntax,html -d docs src/cosc202/andie/*.java src/cosc202/andie/lang/*.java src/cosc202/andie/colour/*.java src/cosc202/andie/edit/*.java src/cosc202/andie/file/*.java src/cosc202/andie/filter/*.java src/cosc202/andie/help/*.java src/cosc202/andie/image/*.java src/cosc202/andie/view/*.java 
         - mkdir public
         - echo 'test' >public/test.txt
         - mv docs public/

@@ -59,6 +59,8 @@ public class Andie {
      * @see ImageOperation
      * @see FileActions
      * @see EditActions
+     * @see FlipActions
+     * @see RotateActions
      * @see ViewActions
      * @see FilterActions
      * @see ColourActions
@@ -97,6 +99,14 @@ public class Andie {
         // Likewise Edit menus are very common, so should be clear what might go here.
         EditActions editActions = new EditActions();
         menuBar.add(editActions.createMenu());
+
+        // Rotate actions rotate the image a given number of degrees
+        RotateActions rotateActions = new RotateActions();
+        menuBar.add(rotateActions.createMenu());
+
+        // Flipping actions mirror the image across a vertical or horizontal axis
+        FlipActions flipActions = new FlipActions();
+        menuBar.add(flipActions.createMenu());
 
         // View actions control how the image is displayed, but do not alter its actual content
         ViewActions viewActions = new ViewActions();

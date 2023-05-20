@@ -103,7 +103,8 @@ public class PencilButton {
     private class PencilListener implements ActionListener {
         private PencilAction pencilAction;
 
-        public void reenableListener(ActionEvent e) {
+        public boolean reenableListener(ActionEvent e) {
+            boolean result = true;
             // Code to change the cursor to a pencil
             // Adapted from https://stackoverflow.com/questions/4274606/how-to-change-cursor-icon-in-java
             /*if (pencilAction != null) {
@@ -111,13 +112,17 @@ public class PencilButton {
                 pencilAction.stopListening();
             }*/
 
-            Toolkit toolkit = Toolkit.getDefaultToolkit();
-            Cursor newCursor = toolkit.createCustomCursor(new ImageIcon("assets/pencil.png").getImage(), new Point(0, 0), "pencil");
-            Andie.setCursor(newCursor);
-
             // Prompts a pencilAction enabling the user to draw
             this.pencilAction = new PencilAction(null, icon, null, null);
+            if (pencilAction.hasImageToDraw()) {
+                Toolkit toolkit = Toolkit.getDefaultToolkit();
+                Cursor newCursor = toolkit.createCustomCursor(new ImageIcon("assets/pencil.png").getImage(), new Point(0, 0), "pencil");
+                Andie.setCursor(newCursor);
+            } else {
+                result = false;
+            }
             pencilAction.actionPerformed(e);
+            return result;
         }
 
         /**
@@ -137,13 +142,15 @@ public class PencilButton {
                 // Enables draw mode, updates the cursor and pencil icon
                 Andie.setPencilIcon(new ImageIcon("assets/exit26.png", null)); // retrieved from https://icon-icons.com/icon/cancel-close-cross-delete-exit/114048 (free to use license)
                 isDrawMode = true;
-                reenableListener(e);
+                boolean enabled = reenableListener(e);
 
-                // Adds buttons for setting pencil width to the menu bar
-                Andie.addButtonsToMenuBar(widthJButtons);
+                if (enabled) {
+                    // Adds buttons for setting pencil width to the menu bar
+                    Andie.addButtonsToMenuBar(widthJButtons);
 
-                // Adds the eraser button to the menu bar
-                Andie.addButtonToMenuBar(eraserJButton);
+                    // Adds the eraser button to the menu bar
+                    Andie.addButtonToMenuBar(eraserJButton);
+                }
             }
         }
     }
@@ -168,6 +175,10 @@ public class PencilButton {
          */
         PencilAction(String name, ImageIcon icon, String desc, Integer mnemonic){
             super(name, icon, desc, mnemonic);
+        }
+
+        public boolean hasImageToDraw() {
+            return target.getImage().hasImage();
         }
 
         /**

@@ -374,7 +374,7 @@ public class FilterActions {
             JComboBox<String> comboBox = new JComboBox<>(filters);
             panel.add(comboBox);
 
-            Object[] message = { lang.text("enterfiltrad"), panel };
+            Object[] message = { lang.text("enterembossmode"), panel };
             int option = JOptionPane.showConfirmDialog(null, message, lang.text("embossfilter"),
                     JOptionPane.OK_CANCEL_OPTION);
 
@@ -388,7 +388,10 @@ public class FilterActions {
             target.getImage().apply(new EmbossFilter(filterIndex));
             target.repaint();
             target.getParent().revalidate();
-            JOptionPane.showMessageDialog(null, lang.text("embossfiltrun"));
+            
+            if (target.getImage().hasImage()) {
+                JOptionPane.showMessageDialog(null, lang.text("embossfiltrun"));
+            }
         }
     }
 
@@ -428,7 +431,7 @@ public class FilterActions {
             JComboBox<String> comboBox = new JComboBox<>(filters);
             panel.add(comboBox);
 
-            Object[] message = { lang.text("enterfiltrad"), panel };
+            Object[] message = { lang.text("entersobelmode"), panel };
             int option = JOptionPane.showConfirmDialog(null, message, lang.text("sobelfilter"),
                     JOptionPane.OK_CANCEL_OPTION);
 
@@ -439,7 +442,9 @@ public class FilterActions {
                 target.getImage().apply(sobelFilter);
                 target.repaint();
                 target.getParent().revalidate();
-                JOptionPane.showMessageDialog(null, lang.text("sobelfiltrun"));
+                if (target.getImage().hasImage()) {
+                    JOptionPane.showMessageDialog(null, lang.text("sobelfiltrun"));
+                }
             }
         }
 

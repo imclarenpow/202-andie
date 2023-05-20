@@ -90,7 +90,6 @@ public class Andie {
         
         // Add in menus for various types of action the user may perform.
         menuBar = new JMenuBar();
-
         // File menus are pretty standard, so things that usually go in File menus go here.
         FileActions fileActions = new FileActions();
         menuBar.add(fileActions.createMenu());
@@ -128,7 +127,6 @@ public class Andie {
         SelectButton selectButton = new SelectButton();
         selectJButton = selectButton.createButton();
         menuBar.add(selectJButton);
-
         
         // Sets the minimum size for warning messages
         // Adapted from https://stackoverflow.com/questions/14299741/setting-size-of-jpanel-or-joptionpane

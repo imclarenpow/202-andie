@@ -407,7 +407,7 @@ public class FilterActions {
 
     /**
          * <p>
-         * Generates an image icon for previewing the effects of applying wmboss and sobel filters
+         * Generates an image icon for previewing the effects of applying various filters
          * </p>
          * 
          * @param image the image for which a preview is to be generated
@@ -416,8 +416,14 @@ public class FilterActions {
          */
         private ImageIcon getPreviewImage(EditableImage image, int filterIndex, String mode) {
             if (filterIndex != -1) {
-                if (mode == "emboss") {
+                if (mode.equals("emboss")) {
                     image.apply(new EmbossFilter(filterIndex));
+                } else if (mode.equals("mean")) {
+                    //x
+                } else if (mode.equals("median")) {
+                    //x
+                } else if (mode.equals("gaussian")) {
+                    //x
                 } else { // assumes a sobel filter
                     if (filterIndex == 0) {
                         image.apply(new SobelFilter("vertical"));

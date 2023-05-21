@@ -3,6 +3,8 @@ package cosc202.andie;
 import java.awt.*;
 import javax.swing.*;
 
+import cosc202.andie.image.PencilButton;
+
 /**
  * <p>
  * UI display element for {@link EditableImage}s.
@@ -50,6 +52,15 @@ public class ImagePanel extends JPanel {
      */
     public ImagePanel() {
         image = new EditableImage();
+        scale = 1.0;
+    }
+
+    /**
+     * <p>
+     * An 'if all else fails' method to reset zoom to its default value
+     * </p>
+     */
+    public void defaultZoom() {
         scale = 1.0;
     }
 
@@ -109,15 +120,16 @@ public class ImagePanel extends JPanel {
      * @param zoomPercent The new zoom level as a percentage.
      */
     public void setZoom(double zoomPercent) {
-        if (zoomPercent < 50) {
-            zoomPercent = 50;
+        if (!PencilButton.isDraw()) {
+            if (zoomPercent < 50) {
+                zoomPercent = 50;
+            }
+            if (zoomPercent > 200) {
+                zoomPercent = 200;
+            }
+            scale = zoomPercent / 100;
         }
-        if (zoomPercent > 200) {
-            zoomPercent = 200;
-        }
-        scale = zoomPercent / 100;
     }
-
 
     /**
      * <p>
@@ -132,7 +144,7 @@ public class ImagePanel extends JPanel {
      */
     @Override
     public Dimension getPreferredSize() {
-        if (image.hasImage()) {
+        if (image.hasImage() && !PencilButton.isDraw()) {
             return new Dimension((int)Math.round(image.getCurrentImage().getWidth()*scale), 
                                  (int)Math.round(image.getCurrentImage().getHeight()*scale));
         } else {
@@ -140,7 +152,7 @@ public class ImagePanel extends JPanel {
             // Adapted from https://stackoverflow.com/questions/3680221/how-can-i-get-screen-resolution-in-java
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             return new Dimension((int)Math.round(screenSize.getWidth() / 2.0), (int)Math.round(screenSize.getHeight() / 2.0));
-        }
+        } 
     }
 
     /**

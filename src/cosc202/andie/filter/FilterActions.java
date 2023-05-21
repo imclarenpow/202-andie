@@ -108,15 +108,22 @@ public class FilterActions {
             tonyHawk.setPaintTicks(true);
             tonyHawk.setPaintLabels(true);
 
-            // Pop-up dialog box to ask for the radius value.
-            int option = JOptionPane.showOptionDialog(null, tonyHawk, lang.text("enterfiltrad"),
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+            int option = 10;
+            String[] options = {lang.text("ok"), lang.text("preview"), lang.text("cancel")};
+            ImageIcon previewIcon = getPreviewImage(target.getImage(), -1, "sobel");
 
-            // Check the return value from the dialog box.
-            if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
-                radius = tonyHawk.getValue();
+            while (option != JOptionPane.OK_OPTION) {
+                // Pop-up dialog box to ask for the radius value.
+                option = JOptionPane.showOptionDialog(null, tonyHawk, lang.text("enterfiltrad"),
+                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, previewIcon, options, options[2]);
+
+                // Check the return value from the dialog box.
+                if (option == JOptionPane.CANCEL_OPTION) {
+                    return;
+                } else {
+                    radius = tonyHawk.getValue();
+                    previewIcon = getPreviewImage(target.getImage(), radius, "gaussian");
+                }
             }
 
             // Create and apply the filter
@@ -171,14 +178,20 @@ public class FilterActions {
             // Pop-up dialog box to ask for the radius value.
             SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 10, 1);
             JSpinner radiusSpinner = new JSpinner(radiusModel);
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, lang.text("enterfiltrad"),
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+            int option = 10;
+            ImageIcon previewIcon = getPreviewImage(target.getImage(), -1, "emboss"); // Gets the image with no filter applied
+            String[] options = {lang.text("ok"), lang.text("preview"), lang.text("cancel")};
 
-            // Check the return value from the dialog box.
-            if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
-                radius = radiusModel.getNumber().intValue();
+            while (option != JOptionPane.OK_OPTION) {
+                option = JOptionPane.showOptionDialog(null, radiusSpinner, lang.text("enterfiltrad"),
+                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, previewIcon, options, options[2]);
+                // Check the return value from the dialog box.
+                if (option == JOptionPane.CANCEL_OPTION) {
+                    return;
+                } else {
+                    radius = radiusModel.getNumber().intValue();
+                    previewIcon = getPreviewImage(target.getImage(), radius, "mean");
+                }
             }
 
             // Create and apply the filter
@@ -279,15 +292,22 @@ public class FilterActions {
             panel.add(medianSlider);
 
             Object[] message = { lang.text("enterfiltrad"), panel };
-            int option = JOptionPane.showConfirmDialog(null, message, lang.text("medianfilter"),
-                    JOptionPane.OK_CANCEL_OPTION);
+            int option = 10;
+            String[] options = {lang.text("ok"), lang.text("preview"), lang.text("cancel")};
+            ImageIcon previewIcon = getPreviewImage(target.getImage(), -1, "emboss"); // Gets the image with no filter applied
+            while (option != JOptionPane.OK_OPTION) {
+                option = JOptionPane.showOptionDialog(null, message, lang.text("medianfilter"),
+                        1, JOptionPane.YES_NO_CANCEL_OPTION, previewIcon, options, options[2]);
 
-            // Check the return value from the dialog box.
-            if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
-                radius = medianSlider.getValue();
+                // Check the return value from the dialog box.
+                if (option == JOptionPane.CANCEL_OPTION) {
+                    return;
+                } else {
+                    radius = medianSlider.getValue();
+                }
+                previewIcon = getPreviewImage(target.getImage(), radius, "median");
             }
+
 
             // Create and apply the filter
             target.getImage().apply(new MedianFilter(radius));
@@ -419,11 +439,11 @@ public class FilterActions {
                 if (mode.equals("emboss")) {
                     image.apply(new EmbossFilter(filterIndex));
                 } else if (mode.equals("mean")) {
-                    //x
+                    image.apply(new MeanFilter(filterIndex, 0));
                 } else if (mode.equals("median")) {
-                    //x
+                    image.apply(new MedianFilter(filterIndex));
                 } else if (mode.equals("gaussian")) {
-                    //x
+                    image.apply(new GaussianBlur(filterIndex, 0));
                 } else { // assumes a sobel filter
                     if (filterIndex == 0) {
                         image.apply(new SobelFilter("vertical"));

@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.*;
 
 import cosc202.andie.Andie;
+import cosc202.andie.ImagePanel;
 import cosc202.andie.view.ViewActions;
 import cosc202.andie.view.ViewActions.ZoomFullAction;
 
@@ -107,6 +108,7 @@ public class PencilButton {
         Andie.setPencilIcon(icon); // retrieved from https://cdn-icons-png.flaticon.com/512/1046/1046346.png (free to use license)
         Andie.removeButtonsFromMenuBar(widthJButtons);
         Andie.removeButtonFromMenuBar(eraserJButton);
+        ImagePanel.screenSizeOverride = new Dimension(0, 0); // removes the screen size override
     }
 
     /**
@@ -214,6 +216,9 @@ public class PencilButton {
                 pencil.setTarget(target);
                 target.defaultZoom();
                 target.repaint();
+
+                Dimension currentScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                ImagePanel.screenSizeOverride = new Dimension((int)Math.round(currentScreenSize.getWidth() / 1.2), (int)Math.round(currentScreenSize.getHeight() / 1.2));
                 
                 target.repaint();
                 target.getImage().apply(pencil);

@@ -23,6 +23,9 @@ import cosc202.andie.image.PencilButton;
  * @version 1.0
  */
 public class ImagePanel extends JPanel {
+
+    // Overrides the Panel's size
+    public static Dimension screenSizeOverride = new Dimension(0, 0);
     
     /**
      * The image to display in the ImagePanel.
@@ -144,7 +147,10 @@ public class ImagePanel extends JPanel {
      */
     @Override
     public Dimension getPreferredSize() {
-        if (image.hasImage() && !PencilButton.isDraw()) {
+        if (screenSizeOverride.width != 0) {
+            return screenSizeOverride;
+        }
+        else if (image.hasImage() && !PencilButton.isDraw()) {
             return new Dimension((int)Math.round(image.getCurrentImage().getWidth()*scale), 
                                  (int)Math.round(image.getCurrentImage().getHeight()*scale));
         } else {

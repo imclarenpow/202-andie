@@ -199,23 +199,26 @@ public class ColourActions {
          * @param contrast the contrast % change to be applied
          */
         private ImageIcon getPreviewImage(EditableImage image, int brightness, int contrast) {
-            image.apply(new BrightnessAndContrast(brightness, contrast));
+            ImageIcon resultIcon = null;
+            if (image.getCurrentImage() != null) {
+                image.apply(new BrightnessAndContrast(brightness, contrast)); 
+                // Resizes the current image to match the desired preview image size
+                BufferedImage previewImage = image.getCurrentImage();
+                int width = previewImage.getWidth();
+                int height = previewImage.getHeight();
+                double ratio = (double)height / (double)width;
+                width = 400;
+                height  = (int)((double)width * ratio);
+                
+                // Draws the resized image onto a new BufferedImage
+                // Adapted from http://underpop.online.fr/j/java/help/java-converting-an-image-to-a-bufferedimage.html.gz
+                BufferedImage result = new BufferedImage(width, height, previewImage.getType());
+                Graphics2D g2 = result.createGraphics();
+                g2.drawImage(previewImage.getScaledInstance(width, height, 0), 0, 0, null);
+                resultIcon = new ImageIcon(result);
+                image.undo(); // Undoes the change to ensure the actual image isn't modified
+            }
             
-            // Resizes the current image to match the desired preview image size
-            BufferedImage previewImage = image.getCurrentImage();
-            int width = previewImage.getWidth();
-            int height = previewImage.getHeight();
-            double ratio = (double)height / (double)width;
-            width = 400;
-            height  = (int)((double)width * ratio);
-            
-            // Draws the resized image onto a new BufferedImage
-            // Adapted from http://underpop.online.fr/j/java/help/java-converting-an-image-to-a-bufferedimage.html.gz
-            BufferedImage result = new BufferedImage(width, height, previewImage.getType());
-            Graphics2D g2 = result.createGraphics();
-            g2.drawImage(previewImage.getScaledInstance(width, height, 0), 0, 0, null);
-            ImageIcon resultIcon = new ImageIcon(result);
-            image.undo(); // Undoes the change to ensure the actual image isn't modified
             return resultIcon;
         }
     }

@@ -435,41 +435,44 @@ public class FilterActions {
          * @param mode the overarching filter type (emboss or sobel)
          */
         private ImageIcon getPreviewImage(EditableImage image, int filterIndex, String mode) {
-            if (filterIndex != -1) {
-                if (mode.equals("emboss")) {
-                    image.apply(new EmbossFilter(filterIndex));
-                } else if (mode.equals("mean")) {
-                    image.apply(new MeanFilter(filterIndex, 0));
-                } else if (mode.equals("median")) {
-                    image.apply(new MedianFilter(filterIndex));
-                } else if (mode.equals("gaussian")) {
-                    image.apply(new GaussianBlur(filterIndex, 0));
-                } else { // assumes a sobel filter
-                    if (filterIndex == 0) {
-                        image.apply(new SobelFilter("vertical"));
-                    } else {
-                        image.apply(new SobelFilter("horizontal"));
+            ImageIcon resultIcon = null;
+            if (image.getCurrentImage() != null) {
+                if (filterIndex != -1) {
+                    if (mode.equals("emboss")) {
+                        image.apply(new EmbossFilter(filterIndex));
+                    } else if (mode.equals("mean")) {
+                        image.apply(new MeanFilter(filterIndex, 0));
+                    } else if (mode.equals("median")) {
+                        image.apply(new MedianFilter(filterIndex));
+                    } else if (mode.equals("gaussian")) {
+                        image.apply(new GaussianBlur(filterIndex, 0));
+                    } else { // assumes a sobel filter
+                        if (filterIndex == 0) {
+                            image.apply(new SobelFilter("vertical"));
+                        } else {
+                            image.apply(new SobelFilter("horizontal"));
+                        }
                     }
                 }
+                
+                // Resizes the current image to match the desired preview image size
+                BufferedImage previewImage = image.getCurrentImage();
+                int width = previewImage.getWidth();
+                int height = previewImage.getHeight();
+                double ratio = (double)height / (double)width;
+                width = 400; // Desired preview size
+                height  = (int)((double)width * ratio);
+                
+                // Draws the resized image onto a new BufferedImage
+                // Adapted from http://underpop.online.fr/j/java/help/java-converting-an-image-to-a-bufferedimage.html.gz
+                BufferedImage result = new BufferedImage(width, height, previewImage.getType());
+                Graphics2D g2 = result.createGraphics();
+                g2.drawImage(previewImage.getScaledInstance(width, height, 0), 0, 0, null);
+                resultIcon = new ImageIcon(result);
+                if (filterIndex != -1) {
+                    image.undo(); // Undoes the change to ensure the actual image isn't modified
+                }   
             }
-            
-            // Resizes the current image to match the desired preview image size
-            BufferedImage previewImage = image.getCurrentImage();
-            int width = previewImage.getWidth();
-            int height = previewImage.getHeight();
-            double ratio = (double)height / (double)width;
-            width = 400; // Desired preview size
-            height  = (int)((double)width * ratio);
-            
-            // Draws the resized image onto a new BufferedImage
-            // Adapted from http://underpop.online.fr/j/java/help/java-converting-an-image-to-a-bufferedimage.html.gz
-            BufferedImage result = new BufferedImage(width, height, previewImage.getType());
-            Graphics2D g2 = result.createGraphics();
-            g2.drawImage(previewImage.getScaledInstance(width, height, 0), 0, 0, null);
-            ImageIcon resultIcon = new ImageIcon(result);
-            if (filterIndex != -1) {
-                image.undo(); // Undoes the change to ensure the actual image isn't modified
-            }   
             
             return resultIcon;
         }

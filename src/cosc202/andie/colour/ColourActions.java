@@ -1,9 +1,13 @@
 package cosc202.andie.colour;
 
 import java.util.*;
+import java.awt.Graphics2D;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+
 import javax.swing.*;
 
+import cosc202.andie.EditableImage;
 import cosc202.andie.image.*;
 import cosc202.andie.lang.*;
 
@@ -163,19 +167,56 @@ public class ColourActions {
             };
 
             // Show the option dialog and get the user's response
-            int option = JOptionPane.showConfirmDialog(null, message, lang.text("dispbrightcont"), JOptionPane.OK_CANCEL_OPTION);
+            ImageIcon previewIcon = getPreviewImage(target.getImage(), 0, 0);
+            String[] options = {lang.text("ok"), lang.text("preview"), lang.text("cancel")};
+            int option = 5;
 
             // Check the return value from the dialog box.
-            if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
-                brightness = brightnessSlider.getValue();
-                contrast = contrastSlider.getValue();
+            while (option != JOptionPane.CANCEL_OPTION && option != JOptionPane.OK_OPTION) {
+                option = JOptionPane.showOptionDialog(null, message, lang.text("dispbrightcont"), JOptionPane.YES_NO_CANCEL_OPTION, 1, previewIcon, options, options[2]);
+                if (option == JOptionPane.CANCEL_OPTION) {
+                    return;
+                } else {
+                    brightness = brightnessSlider.getValue();
+                    contrast = contrastSlider.getValue();
+                }
+
+                previewIcon = getPreviewImage(target.getImage(), brightness, contrast);
             }
 
             target.getImage().apply(new BrightnessAndContrast(brightness, contrast));
             target.repaint();
             target.getParent().revalidate();
+        }
+
+        /**
+         * <p>
+         * Generates an image icon for previewing the effects of changing brightness and contrast
+         * </p>
+         * 
+         * @param image the image for which a preview is to be generated
+         * @param brightness the brightness % change to be applied
+         * @param contrast the contrast % change to be applied
+         */
+        private ImageIcon getPreviewImage(EditableImage image, int brightness, int contrast) {
+            image.apply(new BrightnessAndContrast(brightness, contrast));
+            
+            // Resizes the current image to match the desired preview image size
+            BufferedImage previewImage = image.getCurrentImage();
+            int width = previewImage.getWidth();
+            int height = previewImage.getHeight();
+            double ratio = (double)height / (double)width;
+            width = 400;
+            height  = (int)((double)width * ratio);
+            
+            // Draws the resized image onto a new BufferedImage
+            // Adapted from http://underpop.online.fr/j/java/help/java-converting-an-image-to-a-bufferedimage.html.gz
+            BufferedImage result = new BufferedImage(width, height, previewImage.getType());
+            Graphics2D g2 = result.createGraphics();
+            g2.drawImage(previewImage.getScaledInstance(width, height, 0), 0, 0, null);
+            ImageIcon resultIcon = new ImageIcon(result);
+            image.undo(); // Undoes the change to ensure the actual image isn't modified
+            return resultIcon;
         }
     }
 

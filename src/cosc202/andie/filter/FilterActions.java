@@ -2,11 +2,16 @@ package cosc202.andie.filter;
 
 import java.util.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+
 import javax.swing.*;
+
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 //import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
+import cosc202.andie.EditableImage;
 import cosc202.andie.image.*;
 import cosc202.andie.lang.*;
 //import cosc202.andie.EditableImage.*;
@@ -103,15 +108,22 @@ public class FilterActions {
             tonyHawk.setPaintTicks(true);
             tonyHawk.setPaintLabels(true);
 
-            // Pop-up dialog box to ask for the radius value.
-            int option = JOptionPane.showOptionDialog(null, tonyHawk, lang.text("enterfiltrad"),
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+            int option = 10;
+            String[] options = {lang.text("ok"), lang.text("preview"), lang.text("cancel")};
+            ImageIcon previewIcon = getPreviewImage(target.getImage(), -1, "sobel");
 
-            // Check the return value from the dialog box.
-            if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
-                radius = tonyHawk.getValue();
+            while (option != JOptionPane.OK_OPTION) {
+                // Pop-up dialog box to ask for the radius value.
+                option = JOptionPane.showOptionDialog(null, tonyHawk, lang.text("enterfiltrad"),
+                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, previewIcon, options, options[2]);
+
+                // Check the return value from the dialog box.
+                if (option == JOptionPane.CANCEL_OPTION) {
+                    return;
+                } else {
+                    radius = tonyHawk.getValue();
+                    previewIcon = getPreviewImage(target.getImage(), radius, "gaussian");
+                }
             }
 
             // Create and apply the filter
@@ -166,14 +178,20 @@ public class FilterActions {
             // Pop-up dialog box to ask for the radius value.
             SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 10, 1);
             JSpinner radiusSpinner = new JSpinner(radiusModel);
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, lang.text("enterfiltrad"),
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+            int option = 10;
+            ImageIcon previewIcon = getPreviewImage(target.getImage(), -1, "emboss"); // Gets the image with no filter applied
+            String[] options = {lang.text("ok"), lang.text("preview"), lang.text("cancel")};
 
-            // Check the return value from the dialog box.
-            if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
-                radius = radiusModel.getNumber().intValue();
+            while (option != JOptionPane.OK_OPTION) {
+                option = JOptionPane.showOptionDialog(null, radiusSpinner, lang.text("enterfiltrad"),
+                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, previewIcon, options, options[2]);
+                // Check the return value from the dialog box.
+                if (option == JOptionPane.CANCEL_OPTION) {
+                    return;
+                } else {
+                    radius = radiusModel.getNumber().intValue();
+                    previewIcon = getPreviewImage(target.getImage(), radius, "mean");
+                }
             }
 
             // Create and apply the filter
@@ -274,15 +292,22 @@ public class FilterActions {
             panel.add(medianSlider);
 
             Object[] message = { lang.text("enterfiltrad"), panel };
-            int option = JOptionPane.showConfirmDialog(null, message, lang.text("medianfilter"),
-                    JOptionPane.OK_CANCEL_OPTION);
+            int option = 10;
+            String[] options = {lang.text("ok"), lang.text("preview"), lang.text("cancel")};
+            ImageIcon previewIcon = getPreviewImage(target.getImage(), -1, "emboss"); // Gets the image with no filter applied
+            while (option != JOptionPane.OK_OPTION) {
+                option = JOptionPane.showOptionDialog(null, message, lang.text("medianfilter"),
+                        1, JOptionPane.YES_NO_CANCEL_OPTION, previewIcon, options, options[2]);
 
-            // Check the return value from the dialog box.
-            if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
-                radius = medianSlider.getValue();
+                // Check the return value from the dialog box.
+                if (option == JOptionPane.CANCEL_OPTION) {
+                    return;
+                } else {
+                    radius = medianSlider.getValue();
+                }
+                previewIcon = getPreviewImage(target.getImage(), radius, "median");
             }
+
 
             // Create and apply the filter
             target.getImage().apply(new MedianFilter(radius));
@@ -375,25 +400,79 @@ public class FilterActions {
             panel.add(comboBox);
 
             Object[] message = { lang.text("enterembossmode"), panel };
-            int option = JOptionPane.showConfirmDialog(null, message, lang.text("embossfilter"),
-                    JOptionPane.OK_CANCEL_OPTION);
+            ImageIcon previewIcon = getPreviewImage(target.getImage(), -1, "emboss");
+            String[] options = {lang.text("ok"), lang.text("preview"), lang.text("cancel")};
+            int option = 5;
+            while (option != JOptionPane.OK_OPTION) {
+                option = JOptionPane.showOptionDialog(null, message, lang.text("embossfilter"), 1,
+                JOptionPane.YES_NO_CANCEL_OPTION, previewIcon, options, options[2]);
 
-            if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
-                String selectedItem = (String) comboBox.getSelectedItem();
-                filterIndex = Integer.parseInt(selectedItem) - 1; // Adjust the index
+                if (option == JOptionPane.CANCEL_OPTION) {
+                    return;
+                } else {
+                    String selectedItem = (String) comboBox.getSelectedItem();
+                    filterIndex = Integer.parseInt(selectedItem) - 1; // Adjust the index
+                }
+                previewIcon = getPreviewImage(target.getImage(), filterIndex, "emboss");
             }
-
-            target.getImage().apply(new EmbossFilter(filterIndex));
-            target.repaint();
-            target.getParent().revalidate();
-            
-            if (target.getImage().hasImage()) {
-                JOptionPane.showMessageDialog(null, lang.text("embossfiltrun"));
-            }
+                target.getImage().apply(new EmbossFilter(filterIndex));
+                target.repaint();
+                target.getParent().revalidate();
+                
+                if (target.getImage().hasImage()) {
+                    JOptionPane.showMessageDialog(null, lang.text("embossfiltrun"));
+                }
         }
     }
+
+    /**
+         * <p>
+         * Generates an image icon for previewing the effects of applying various filters
+         * </p>
+         * 
+         * @param image the image for which a preview is to be generated
+         * @param filterindex the index of the specific filter mode to be applied (-1 for no filter)
+         * @param mode the overarching filter type (emboss or sobel)
+         */
+        private ImageIcon getPreviewImage(EditableImage image, int filterIndex, String mode) {
+            if (filterIndex != -1) {
+                if (mode.equals("emboss")) {
+                    image.apply(new EmbossFilter(filterIndex));
+                } else if (mode.equals("mean")) {
+                    image.apply(new MeanFilter(filterIndex, 0));
+                } else if (mode.equals("median")) {
+                    image.apply(new MedianFilter(filterIndex));
+                } else if (mode.equals("gaussian")) {
+                    image.apply(new GaussianBlur(filterIndex, 0));
+                } else { // assumes a sobel filter
+                    if (filterIndex == 0) {
+                        image.apply(new SobelFilter("vertical"));
+                    } else {
+                        image.apply(new SobelFilter("horizontal"));
+                    }
+                }
+            }
+            
+            // Resizes the current image to match the desired preview image size
+            BufferedImage previewImage = image.getCurrentImage();
+            int width = previewImage.getWidth();
+            int height = previewImage.getHeight();
+            double ratio = (double)height / (double)width;
+            width = 400; // Desired preview size
+            height  = (int)((double)width * ratio);
+            
+            // Draws the resized image onto a new BufferedImage
+            // Adapted from http://underpop.online.fr/j/java/help/java-converting-an-image-to-a-bufferedimage.html.gz
+            BufferedImage result = new BufferedImage(width, height, previewImage.getType());
+            Graphics2D g2 = result.createGraphics();
+            g2.drawImage(previewImage.getScaledInstance(width, height, 0), 0, 0, null);
+            ImageIcon resultIcon = new ImageIcon(result);
+            if (filterIndex != -1) {
+                image.undo(); // Undoes the change to ensure the actual image isn't modified
+            }   
+            
+            return resultIcon;
+        }
 
     /**
      * <p>
@@ -430,22 +509,32 @@ public class FilterActions {
             panel.setLayout(new GridLayout(2, 1));
             JComboBox<String> comboBox = new JComboBox<>(filters);
             panel.add(comboBox);
-
+            ImageIcon previewIcon = getPreviewImage(target.getImage(), -1, "sobel");
             Object[] message = { lang.text("entersobelmode"), panel };
-            int option = JOptionPane.showConfirmDialog(null, message, lang.text("sobelfilter"),
-                    JOptionPane.OK_CANCEL_OPTION);
-
-            if (option == JOptionPane.OK_OPTION) {
+            int option = 10;
+            String[] options = {lang.text("ok"), lang.text("preview"), lang.text("cancel")};
+            while (option != JOptionPane.OK_OPTION && option != JOptionPane.CANCEL_OPTION) {
+                option = JOptionPane.showOptionDialog(null, message, lang.text("sobelfilter"), 1, 
+                JOptionPane.YES_NO_CANCEL_OPTION, previewIcon, options, options[2]);
                 String selectedItem = (String) comboBox.getSelectedItem();
-                SobelFilter sobelFilter = new SobelFilter(selectedItem);
-                // Apply the Sobel filter and repaint the image
-                target.getImage().apply(sobelFilter);
-                target.repaint();
-                target.getParent().revalidate();
-                if (target.getImage().hasImage()) {
-                    JOptionPane.showMessageDialog(null, lang.text("sobelfiltrun"));
+                if (option == JOptionPane.OK_OPTION) {
+                    selectedItem = (String) comboBox.getSelectedItem();
+                    SobelFilter sobelFilter = new SobelFilter(selectedItem);
+                    // Apply the Sobel filter and repaint the image
+                    target.getImage().apply(sobelFilter);
+                    target.repaint();
+                    target.getParent().revalidate();
+                    if (target.getImage().hasImage()) {
+                        JOptionPane.showMessageDialog(null, lang.text("sobelfiltrun"));
+                    }
                 }
-            }
+                
+                if (selectedItem.equals(lang.text("horizontal"))) {
+                    previewIcon = getPreviewImage(target.getImage(), 1, "sobel");
+                } else {
+                    previewIcon = getPreviewImage(target.getImage(), 0, "sobel");
+                }
+            }  
         }
 
     }

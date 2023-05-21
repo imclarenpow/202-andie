@@ -3,9 +3,13 @@ package cosc202.andie.image;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+
 import javax.swing.*;
 
 import cosc202.andie.Andie;
+import cosc202.andie.view.ViewActions;
+import cosc202.andie.view.ViewActions.ZoomFullAction;
 
 /** 
  * <p>
@@ -28,6 +32,17 @@ public class PencilButton {
     private static JButton[] widthJButtons;
     private static JButton eraserJButton;
     private PencilListener listener;
+
+    /** 
+     * <p>
+     * Checks if ANDIE is in draw mode
+     * </p>
+     * 
+     * @return true if ANDIE is in draw mode
+     */
+    public static boolean isDraw() {
+        return isDrawMode;
+    }
     
     /**
      * <p>
@@ -197,6 +212,10 @@ public class PencilButton {
             if (target.getImage().hasImage()) {
                 pencil = new Pencil();
                 pencil.setTarget(target);
+                target.defaultZoom();
+                target.repaint();
+                
+                target.repaint();
                 target.getImage().apply(pencil);
                 target.repaint();
                 target.getParent().revalidate();

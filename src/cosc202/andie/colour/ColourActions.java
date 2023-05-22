@@ -102,6 +102,10 @@ public class ColourActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            if (PencilButton.isDraw()) {
+                PencilButton.disableDrawMode();
+            }
+            
             target.getImage().apply(new ConvertToGrey());
             target.repaint();
             target.getParent().revalidate();
@@ -143,6 +147,10 @@ public class ColourActions {
          * @param e The event triggering this callback
          */
         public void actionPerformed(ActionEvent e) {
+            if (PencilButton.isDraw()) {
+                PencilButton.disableDrawMode();
+            }
+
             int brightness = 0;
             int contrast = 0;
             // Create the sliders for brightness and contrast

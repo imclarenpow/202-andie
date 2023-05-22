@@ -104,7 +104,7 @@ public class ImagePanel extends JPanel {
      * </p>
      */
     public void setZoomToImageSize() {
-        if (image.hasImage()) {
+        if (image.hasImage() && screenSizeOverride.width != 0) {
             double widthRatio = image.getCurrentImage().getWidth() / Andie.getFrameSize().getWidth();
             double heightRatio = image.getCurrentImage().getHeight() / Andie.getFrameSize().getWidth();
             scale = 1.0 / (Math.max(widthRatio, heightRatio));

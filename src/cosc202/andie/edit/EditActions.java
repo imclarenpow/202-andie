@@ -200,6 +200,10 @@ public class EditActions {
 
          
         public void actionPerformed(ActionEvent e) {
+            if (PencilButton.isDraw()) {
+                PencilButton.disableDrawMode();
+            }
+            
             if (target.getImage().hasImage()) {
                 // Determine the current width and height.
                 double scale = 0;

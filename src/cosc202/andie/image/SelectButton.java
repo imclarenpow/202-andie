@@ -47,16 +47,16 @@ public class SelectButton {
         icon = new ImageIcon("assets/selecticon.jpg"); // retrieved from https://cdn-icons-png.flaticon.com/512/1046/1046346.png (free to use license)
     }
 
-    public static void enableSelectMode() {
+    public void enableSelectMode() {
         if(selectListener == null){
             selectListener = new SelectMouseMotionListener();
         }
         if(cropJButton == null){
-            cropButton = new CropButton(select);
+            cropButton = new CropButton(this);
             cropJButton = cropButton.createButton();
         }
         if(shapesMenu == null){
-            shapesActions = new ShapesActions(select);
+            shapesActions = new ShapesActions(this);
             shapesMenu = shapesActions.createMenu();
         }
         startListening();
@@ -65,7 +65,7 @@ public class SelectButton {
         isSelectMode = true;
     }
     
-    public static void disableSelectMode() {
+    public void disableSelectMode() {
         select.revert(); //check for selection applied already in revert()
         Andie.setSelectIcon(icon);
         stopListening();
@@ -74,7 +74,9 @@ public class SelectButton {
         isSelectMode = false;
     }
 
-    
+    public static Select getSelect(){
+        return select;
+    }
     
     /**
      * <p>

@@ -10,14 +10,16 @@ import javax.swing.*;
 public class ShapesActions {
     private Color drawingColour;
     private boolean selectionApplied = false;
+    private static SelectButton selectButton;
     private static Select select;
     protected ArrayList<Action> actions; 
     private static JMenu shapesMenu;
     private final ImageIcon ICON = new ImageIcon("assets/shapesicon.png"); // retrieved from https://www.pngfind.com/mpng/ibTmJxT_shapes-clipart-png-transparent-png/ (free to use license)
     private final ImageIcon GRAYEDICON = new ImageIcon("assets/grayscaleshapesicon.png");
 
-    public ShapesActions(Select select) {
-        this.select = select;
+    public ShapesActions(SelectButton selectButton) {
+        this.selectButton = selectButton;
+        this.select = selectButton.getSelect();
         actions = new ArrayList<Action>();
         
         actions.add(new RectangleAction("Rectangle", null, null, null));
@@ -60,7 +62,7 @@ public class ShapesActions {
             target.repaint();
             target.getParent().revalidate();
             stopListening();
-            //Needs pop-up menu for outline/fill selection & color picker 
+            selectButton.disableSelectMode(); 
         }
     }
 
@@ -79,7 +81,7 @@ public class ShapesActions {
             target.repaint();
             target.getParent().revalidate();
             stopListening();
-            //Needs pop-up menu for outline/fill selection & color picker 
+            selectButton.disableSelectMode();
         }
     }
 
@@ -95,7 +97,7 @@ public class ShapesActions {
             target.getImage().apply(line);
             target.repaint();
             target.getParent().revalidate();
-            //Needs pop-up menu for outline/fill selection & color picker 
+            selectButton.disableSelectMode(); 
         }
     }
 }

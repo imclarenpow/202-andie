@@ -21,6 +21,7 @@ public class CropButton {
     private final ImageIcon GRAYEDICON = new ImageIcon("assets/grayscalecropicon.png"); 
     private static JButton cropJButton;
     private static Crop cropper;
+    private static SelectButton selectButton;
     private static Select select; 
     private CropListener cropListener = new CropListener();
 
@@ -30,8 +31,9 @@ public class CropButton {
      * The constructor sets the icon of the CropButton
      * </p>
      */
-    public CropButton(Select select) {
-        this.select = select;
+    public CropButton(SelectButton selectButton) {
+        this.selectButton = selectButton;
+        this.select = selectButton.getSelect();
     }
 
     public ImageIcon getIcon(){
@@ -88,6 +90,7 @@ public class CropButton {
             target.getParent().revalidate();
             select.setOriginal(cropper.getCropped());
             select.setTarget(target);
+            selectButton.disableSelectMode();
         }
     }
 

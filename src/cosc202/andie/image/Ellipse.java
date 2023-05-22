@@ -7,17 +7,20 @@ import java.awt.*;
 import java.awt.geom.*;
 
 public class Ellipse implements ImageOperation {
+    private Color drawingColour;
     private Point start;
     private Point end; 
     boolean filled = true;
 
-    public Ellipse(Point start, Point end){
+    public Ellipse(Point start, Point end, Color drawingColour){
+        this.drawingColour = drawingColour;
         this.start = start;
         this.end = end; 
     }
 
     public BufferedImage apply(BufferedImage input){
         Graphics2D g2d = input.createGraphics();
+        g2d.setColor(drawingColour);
         // Calculate the rectangle to crop based on the start and end points
         int x = Math.min(start.x, end.x);
         int y = Math.min(start.y, end.y);
@@ -32,8 +35,15 @@ public class Ellipse implements ImageOperation {
         return input; 
     }
 
-    public void setFilled(boolean filled){
-        this.filled = filled;
+    public void setFilled(int filled){
+        if(filled == 0){
+            this.filled = true;
+            return;
+        }
+        if(filled == 1){
+            this.filled = false;
+            return;
+        }
     }
 
     public boolean getFilled(){

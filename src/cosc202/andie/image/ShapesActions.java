@@ -1,16 +1,14 @@
 package cosc202.andie.image;
 
 import java.util.*;
+import java.awt.Color;
 import java.awt.event.*;
 import javax.swing.*;
-
-import cosc202.andie.image.*;
-import cosc202.andie.lang.*;
-
 /*
  * Needs to check if Select is applied, before allowing shapes to be drawn
  */
 public class ShapesActions {
+    private Color drawingColour;
     private boolean selectionApplied = false;
     private static Select select;
     protected ArrayList<Action> actions; 
@@ -22,8 +20,8 @@ public class ShapesActions {
         this.select = select;
         actions = new ArrayList<Action>();
         
-        actions.add(new RectangleAction("Filled Rectangle", null, null, null));
-        actions.add(new EllipseAction("Filled Ellipse", null, null, null));
+        actions.add(new RectangleAction("Rectangle", null, null, null));
+        actions.add(new EllipseAction("Ellipse", null, null, null));
         actions.add(new LineAction("Line", null, null, null));
     }
 
@@ -53,11 +51,15 @@ public class ShapesActions {
         }
 
         public void actionPerformed(ActionEvent e) {
-            Rectangle rectangle = new Rectangle(select.getStartPoint(), select.getEndPoint());
+            int filled = JOptionPane.showConfirmDialog(null, "Do you want your shape filled?", "Shape Fill", JOptionPane.YES_NO_OPTION);
+            drawingColour = JColorChooser.showDialog(null, "Select a colour", drawingColour);
+            Rectangle rectangle = new Rectangle(select.getStartPoint(), select.getEndPoint(), drawingColour);
+            rectangle.setFilled(filled);
             select.revert();
             target.getImage().apply(rectangle);
             target.repaint();
             target.getParent().revalidate();
+            stopListening();
             //Needs pop-up menu for outline/fill selection & color picker 
         }
     }
@@ -68,11 +70,15 @@ public class ShapesActions {
         }
 
         public void actionPerformed(ActionEvent e) {
-            Ellipse ellipse = new Ellipse(select.getStartPoint(), select.getEndPoint());
+            int filled = JOptionPane.showConfirmDialog(null, "Do you want your shape filled?", "Shape Fill", JOptionPane.YES_NO_OPTION);
+            drawingColour = JColorChooser.showDialog(null, "Select a colour", drawingColour);
+            Ellipse ellipse = new Ellipse(select.getStartPoint(), select.getEndPoint(), drawingColour);
+            ellipse.setFilled(filled);
             select.revert();
             target.getImage().apply(ellipse);
             target.repaint();
             target.getParent().revalidate();
+            stopListening();
             //Needs pop-up menu for outline/fill selection & color picker 
         }
     }
@@ -83,7 +89,8 @@ public class ShapesActions {
         }
 
         public void actionPerformed(ActionEvent e) {
-            Line line = new Line(select.getStartPoint(), select.getEndPoint());
+            drawingColour = JColorChooser.showDialog(null, "Select a colour", drawingColour);
+            Line line = new Line(select.getStartPoint(), select.getEndPoint(), drawingColour);
             select.revert();
             target.getImage().apply(line);
             target.repaint();

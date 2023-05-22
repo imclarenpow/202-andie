@@ -1,5 +1,7 @@
 package cosc202.andie.image;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -7,6 +9,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.event.MouseInputAdapter;
 
 import cosc202.andie.Andie;
+import cosc202.andie.ImagePanel;
 
 
 /** 
@@ -112,6 +115,7 @@ public class SelectButton {
      */
     private class SelectListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
             if(isSelectMode){
                 disableSelectMode();
             }else{
@@ -133,6 +137,8 @@ public class SelectButton {
                 select = new Select();
             }
             select.setTarget(target);
+            Dimension currentScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            ImagePanel.screenSizeOverride = new Dimension((int)Math.round(currentScreenSize.getWidth() / 1.2), (int)Math.round(currentScreenSize.getHeight() / 1.2));
             target.repaint();
             target.getParent().revalidate();
         }

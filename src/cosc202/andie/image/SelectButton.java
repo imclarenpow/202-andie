@@ -121,10 +121,15 @@ public class SelectButton {
             if(isSelectMode){
                 disableSelectMode();
             }else{
-                Andie.setSelectIcon(new ImageIcon("assets/exit26.png",null));
                 SelectAction selectAction = new SelectAction(null, icon, null, null);
                 selectAction.actionPerformed(e);
-                enableSelectMode();
+                int fullscreen = JOptionPane.showConfirmDialog(null, "Select features must be used in a fullscreen window, do you want to continue?", "Confirm Fullscreen", JOptionPane.OK_CANCEL_OPTION);
+                if(fullscreen == 0){
+                    Andie.setSelectIcon(new ImageIcon("assets/exit26.png",null));
+                    Dimension currentScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                    ImagePanel.screenSizeOverride = new Dimension((int)Math.round(currentScreenSize.getWidth()), (int)Math.round(currentScreenSize.getHeight()));
+                    enableSelectMode();
+                }
             }
         }
     }
@@ -135,14 +140,16 @@ public class SelectButton {
         }
 
         public void actionPerformed(ActionEvent e){
-            if(select == null){
-                select = new Select();
+            if(target.getImage().hasImage()){
+                    if(select == null){
+                        select = new Select();
+                    }
+                    select.setTarget(target);
+                    target.repaint();
+                    target.getParent().revalidate();
+            }else{
+                target.getImage().ShowNoImageError();
             }
-            select.setTarget(target);
-            Dimension currentScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            ImagePanel.screenSizeOverride = new Dimension((int)Math.round(currentScreenSize.getWidth() / 1.2), (int)Math.round(currentScreenSize.getHeight() / 1.2));
-            target.repaint();
-            target.getParent().revalidate();
         }
         
         

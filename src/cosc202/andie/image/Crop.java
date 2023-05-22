@@ -3,44 +3,89 @@ package cosc202.andie.image;
 import java.awt.image.BufferedImage;
 import java.awt.Point;
 
-/*
- * Select opens submenu
-	Crop - pressed when area selected, will need edge handling for mouselistener
-	     - check if area selected? 
-	     - when selected, change icon from grayed out to clickable
-	     - when clicked, pass points from Select to Crop
+/**
+ * <p>
+ * A class that handles the user cropping a selected area of an image
+ * </p>
+ * 
+ * <p>
+ * Uses coordinates to identify the area to crop, passed to the constructor from an instance of Select
+ * </p>
+ * 
+ * @author Nic Scott
+ * @version 1.0
  */
 
 public class Crop implements ImageOperation {
+    //Data fields
     private BufferedImage cropped; 
     private Point start;
     private Point end;
     
+    /**
+     * <p>
+     * Create a new Crop operation.
+     * </p>
+     * @param start a point representing the top left corner of the area to crop
+     * @param end a point representing the bottom right corner of the area to crop
+     */
     Crop(Point start, Point end){
         this.start = start;
         this.end = end;
     }
 
+    /**
+     * <p>
+     * Apply the crop operation to the input image
+     * </p>
+     * 
+     * <p> 
+     * Calculates the rectangle to crop based on the start and end points
+     * Uses the min and max functions to ensure that the rectangle is always drawn correctly from the top left corner
+     * Crops the image using the rectangle
+     * </p>
+     * 
+     * @param input the image to crop
+     * @return the cropped image
+     */
     public BufferedImage apply(BufferedImage input){
-        // Calculate the rectangle to crop based on the start and end points
         int x = Math.min(start.x, end.x);
         int y = Math.min(start.y, end.y);
         int width = Math.abs(start.x - end.x);
         int height = Math.abs(start.y - end.y);
-        // Crop the image using the rectangle
+
         cropped = input.getSubimage(x, y, width, height);
         return cropped; 
     }
 
-    //NullException
+    /**
+     * <p>
+     * Get the cropped image
+     * </p>
+     * 
+     * @return the cropped image
+     */
     public BufferedImage getCropped(){
         return cropped; 
     }
 
+    /**
+     * <p>
+     * Set the coordinates of the start point
+     * 
+     * @return the start point
+     */
     public void setStart(Point start){
         this.start = start;
     }
 
+    /**
+     * <p>
+     * Set the coordinates of the end point
+     * </p>
+     * 
+     * @return the end point
+     */
     public void setEnd(Point end){
         this.end = end;
     }

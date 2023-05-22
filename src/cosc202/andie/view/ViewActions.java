@@ -202,7 +202,6 @@ public class ViewActions {
             target.repaint();
             target.getParent().revalidate();
         }
-
     }
 
     /**

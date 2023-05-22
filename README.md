@@ -232,6 +232,7 @@ A user-friendly alternative to the automatically generated Javadoc site that use
 Lets the user draw on images  
 Several different pencil widths are available  
 Of course, the pencil's colour can also be set with the colour selector
+The eraser can be used to erase all drawings
 
 ## Current progress  
 

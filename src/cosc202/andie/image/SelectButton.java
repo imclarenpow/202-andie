@@ -10,6 +10,7 @@ import javax.swing.event.MouseInputAdapter;
 
 import cosc202.andie.Andie;
 import cosc202.andie.ImagePanel;
+import cosc202.andie.lang.LanguageSupport;
 
 
 /** 
@@ -35,6 +36,7 @@ public class SelectButton {
     private static ShapesActions shapesActions;
     private static JMenu shapesMenu;
     private static SelectMouseMotionListener selectListener;
+    private static boolean hasImage; 
     
     /**
      * <p>
@@ -59,6 +61,7 @@ public class SelectButton {
             shapesActions = new ShapesActions(this);
             shapesMenu = shapesActions.createMenu();
         }
+
         startListening();
         Andie.addButtonToMenuBar(cropJButton);
         Andie.addMenu(shapesMenu);
@@ -99,13 +102,17 @@ public class SelectButton {
     }
 
     public static void startListening(){
-        select.getTarget().addMouseListener(selectListener);
-        select.getTarget().addMouseMotionListener(selectListener);
+        if (select != null && select.getTarget().getImage().hasImage()) {
+            select.getTarget().addMouseListener(selectListener);
+            select.getTarget().addMouseMotionListener(selectListener);
+        } 
     }
 
     public static void stopListening(){
-        select.getTarget().removeMouseListener(selectListener);
-        select.getTarget().removeMouseMotionListener(selectListener);
+        if (select != null && select.getTarget().getImage().hasImage()) {
+            select.getTarget().removeMouseListener(selectListener);
+            select.getTarget().removeMouseMotionListener(selectListener);
+        } 
     }
 
     /**
@@ -118,19 +125,21 @@ public class SelectButton {
     private class SelectListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             Toolkit toolkit = Toolkit.getDefaultToolkit();
-            if(isSelectMode){
+            if(isSelectMode) {
                 disableSelectMode();
-            }else{
+            } else {
                 SelectAction selectAction = new SelectAction(null, icon, null, null);
                 selectAction.actionPerformed(e);
-                int fullscreen = JOptionPane.showConfirmDialog(null, "Select features must be used in a fullscreen window, do you want to continue?", "Confirm Fullscreen", JOptionPane.OK_CANCEL_OPTION);
-                if(fullscreen == 0){
-                    Andie.setSelectIcon(new ImageIcon("assets/exit26.png",null));
-                    Dimension currentScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
-                    ImagePanel.screenSizeOverride = new Dimension((int)Math.round(currentScreenSize.getWidth()), (int)Math.round(currentScreenSize.getHeight()));
-                    enableSelectMode();
+                if (hasImage) {
+                    int fullscreen = JOptionPane.showConfirmDialog(null, "Select features must be used in a fullscreen window, do you want to continue?", "Confirm Fullscreen", JOptionPane.OK_CANCEL_OPTION);
+                    if(fullscreen == 0){
+                        Andie.setSelectIcon(new ImageIcon("assets/exit26.png",null));
+                        Dimension currentScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                        ImagePanel.screenSizeOverride = new Dimension((int)Math.round(currentScreenSize.getWidth()), (int)Math.round(currentScreenSize.getHeight()));
+                        enableSelectMode();
+                    }
                 }
-            }
+            } 
         }
     }
 
@@ -147,8 +156,10 @@ public class SelectButton {
                     select.setTarget(target);
                     target.repaint();
                     target.getParent().revalidate();
+                    hasImage = true;
             }else{
                 target.getImage().ShowNoImageError();
+                hasImage = false;
             }
         }
         

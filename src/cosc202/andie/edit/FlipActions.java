@@ -94,6 +94,10 @@ public class FlipActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            if (PencilButton.isDraw()) {
+                PencilButton.disableDrawMode();
+            }
+            
             target.getImage().apply(new Flip("Horizontal"));
             target.repaint();
             target.getParent().revalidate();
@@ -135,6 +139,10 @@ public class FlipActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            if (PencilButton.isDraw()) {
+                PencilButton.disableDrawMode();
+            }
+
             target.getImage().apply(new Flip("Vertical"));
             target.repaint();
             target.getParent().revalidate();

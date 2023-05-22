@@ -96,6 +96,10 @@ public class RotateActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            if (PencilButton.isDraw()) {
+                PencilButton.disableDrawMode();
+            }
+            
             target.getImage().apply(new Rotate("ClockwiseNinety"));
             target.repaint();
             target.getParent().revalidate();
@@ -136,6 +140,10 @@ public class RotateActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            if (PencilButton.isDraw()) {
+                PencilButton.disableDrawMode();
+            }
+
             target.getImage().apply(new Rotate("AntiClockwiseNinety"));
             target.repaint();
             target.getParent().revalidate();
@@ -176,6 +184,10 @@ public class RotateActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            if (PencilButton.isDraw()) {
+                PencilButton.disableDrawMode();
+            }
+
             target.getImage().apply(new Rotate("HundredEighty"));
             target.repaint();
             target.getParent().revalidate();

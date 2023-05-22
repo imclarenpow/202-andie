@@ -11,6 +11,7 @@ import java.awt.GridLayout;
 //import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
+import cosc202.andie.Andie;
 import cosc202.andie.EditableImage;
 import cosc202.andie.image.*;
 import cosc202.andie.lang.*;
@@ -96,6 +97,9 @@ public class FilterActions {
         }
 
         public void actionPerformed(ActionEvent e) {
+            if (PencilButton.isDraw()) {
+                PencilButton.disableDrawMode();
+            }
 
             // Default rad of 1.
             int radius = 1;
@@ -170,6 +174,9 @@ public class FilterActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            if (PencilButton.isDraw()) {
+                PencilButton.disableDrawMode();
+            }
 
             // Determine the radius - ask the user.
             int radius = 1;
@@ -231,6 +238,9 @@ public class FilterActions {
          * </p>
          */
         public void actionPerformed(ActionEvent e) {
+            if (PencilButton.isDraw()) {
+                PencilButton.disableDrawMode();
+            }
 
             boolean success = target.getImage().apply(new SharpenFilter());
             target.repaint();
@@ -278,6 +288,9 @@ public class FilterActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            if (PencilButton.isDraw()) {
+                PencilButton.disableDrawMode();
+            }
 
             // Determine the radius - ask the user.
             int radius = 1;
@@ -352,6 +365,10 @@ public class FilterActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            if (PencilButton.isDraw()) {
+                PencilButton.disableDrawMode();
+            }
+
             boolean success = target.getImage().apply(new SoftBlur());
             target.repaint();
             target.getParent().revalidate();
@@ -390,6 +407,10 @@ public class FilterActions {
          * </p>
          */
         public void actionPerformed(ActionEvent e) {
+            if (PencilButton.isDraw()) {
+                PencilButton.disableDrawMode();
+            }
+
             int filterIndex = 1;
             String[] filters = {"1", "2", "3", "4", "5", "6", "7", "8" };
 
@@ -506,6 +527,9 @@ public class FilterActions {
          * </p>
          */
         public void actionPerformed(ActionEvent e) {
+            if (PencilButton.isDraw()) {
+                PencilButton.disableDrawMode();
+            }
 
             String[] filters = { lang.text("horizontal"), lang.text("vertical") };
             JPanel panel = new JPanel();

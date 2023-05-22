@@ -12,11 +12,13 @@ import cosc202.andie.image.*;
  * 
  * <p>
  * A Mean filter blurs an image by replacing each pixel by the average of the
- * pixels in a surrounding neighbourhood, and can be implemented by a convoloution.
+ * pixels in a surrounding neighbourhood, and can be implemented by a
+ * convoloution.
  * </p>
  * 
- * <p> 
- * <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+ * <p>
+ * <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA
+ * 4.0</a>
  * </p>
  * 
  * @see java.awt.image.ConvolveOp
@@ -24,11 +26,13 @@ import cosc202.andie.image.*;
  * @version 1.0
  */
 public class MeanFilter implements ImageOperation, java.io.Serializable {
-    
+
     /**
-     * The size of filter to apply. A radius of 1 is a 3x3 filter, a radius of 2 a 5x5 filter, and so forth.
+     * The size of filter to apply. A radius of 1 is a 3x3 filter, a radius of 2 a
+     * 5x5 filter, and so forth.
      */
     private int radius;
+    private double offset;
 
     /**
      * <p>
@@ -43,8 +47,9 @@ public class MeanFilter implements ImageOperation, java.io.Serializable {
      * 
      * @param radius The radius of the newly constructed MeanFilter
      */
-    MeanFilter(int radius) {
-        this.radius = radius;    
+    MeanFilter(int radius, double offset) {
+        this.radius = radius;
+        this.offset = offset;
     }
 
     /**
@@ -59,7 +64,7 @@ public class MeanFilter implements ImageOperation, java.io.Serializable {
      * @see MeanFilter(int)
      */
     MeanFilter() {
-        this(1);
+        this(1, 0.00);
     }
 
     /**
@@ -69,7 +74,7 @@ public class MeanFilter implements ImageOperation, java.io.Serializable {
      * 
      * <p>
      * As with many filters, the Mean filter is implemented via convolution.
-     * The size of the convolution kernel is specified by the {@link radius}.  
+     * The size of the convolution kernel is specified by the {@link radius}.
      * Larger radii lead to stronger blurring.
      * </p>
      * 
@@ -77,14 +82,34 @@ public class MeanFilter implements ImageOperation, java.io.Serializable {
      * @return The resulting (blurred) image.
      */
     public BufferedImage apply(BufferedImage input) {
-        int size = (2*radius+1) * (2*radius+1);
-        float [] array = new float[size];
-        Arrays.fill(array, 1.0f/size);
+        int size = (2 * radius + 1) * (2 * radius + 1);
+        float[] array = new float[size];
+        Arrays.fill(array, 1.0f / size);
 
-        Kernel kernel = new Kernel(2*radius+1, 2*radius+1, array);
+        Kernel kernel = new Kernel(2 * radius + 1, 2 * radius + 1, array);
         ConvolveOp convOp = new ConvolveOp(kernel, ConvolveOp.EDGE_ZERO_FILL, null);
-        BufferedImage output = new BufferedImage(input.getColorModel(), input.copyData(null), input.isAlphaPremultiplied(), null);
+        BufferedImage output = new BufferedImage(input.getColorModel(), input.copyData(null),
+                input.isAlphaPremultiplied(), null);
         convOp.filter(input, output);
+
+        // Add offset to each pixel
+        for (int x = 0; x < output.getWidth(); x++) {
+            for (int y = 0; y < output.getHeight(); y++) {
+                int rgb = output.getRGB(x, y);
+                int red = (rgb >> 16) & 0xFF;
+                int green = (rgb >> 8) & 0xFF;
+                int blue = rgb & 0xFF;
+
+                // Add offset and clamp values between 0 and 255
+                red = (int) Math.max(0, Math.min(255, red + offset));
+                green = (int) Math.max(0, Math.min(255, green + offset));
+                blue = (int) Math.max(0, Math.min(255, blue + offset));
+
+                // Set the new RGB value
+                int newRGB = (red << 16) | (green << 8) | blue;
+                output.setRGB(x, y, newRGB);
+            }
+        }
 
         return output;
     }

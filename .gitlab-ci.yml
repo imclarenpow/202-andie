@@ -45,7 +45,8 @@ unit-test-job:
     - javac -d bin -classpath
       bin:lib/junit-platform-console-standalone-1.9.2.jar
       src/test/cosc202/andie/*.java src/cosc202/andie/lang/*.java
-    - cp -r src/cosc202/andie/lang/MessageBundles/*.properties bin/cosc202/andie/lang
+    - mkdir bin/cosc202/andie/lang/MessageBundles
+    - cp -r src/cosc202/andie/lang/MessageBundles/*.properties bin/cosc202/andie/lang/MessageBundles
     - java -jar lib/junit-platform-console-standalone-1.9.2.jar -classpath
       bin --select-package test.cosc202.andie
 
@@ -62,12 +63,11 @@ pages: # publish Javadoc website
     image: eclipse-temurin:17
     stage: build
     script:
-        - javadoc -Xdoclint:syntax,html -d docs src/cosc202/andie/*.java src/cosc202/andie/lang/*.java src/cosc202/andie/colour/*.java src/cosc202/andie/edit/*.java src/cosc202/andie/file/*.java src/cosc202/andie/filter/*.java src/cosc202/andie/help/*.java src/cosc202/andie/image/*.java src/cosc202/andie/view/*.java src/test/cosc202/andie/*.java
+        - javadoc -Xdoclint:syntax,html -d docs src/cosc202/andie/*.java src/cosc202/andie/lang/*.java src/cosc202/andie/colour/*.java src/cosc202/andie/edit/*.java src/cosc202/andie/file/*.java src/cosc202/andie/filter/*.java src/cosc202/andie/help/*.java src/cosc202/andie/image/*.java src/cosc202/andie/view/*.java 
         - mkdir public
         - echo 'test' >public/test.txt
         - mv docs public/
-        - ls -R public | head
-        - echo 'first ten public/ files listed'
+        - ls -R public 
     artifacts:
         paths:
         - public

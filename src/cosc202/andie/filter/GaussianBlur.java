@@ -14,13 +14,16 @@ import cosc202.andie.image.*;
  */
 public class GaussianBlur implements ImageOperation, java.io.Serializable {
     private int radius;
+    private double offset; //new code for the offset
 
-    GaussianBlur(int radius) {
+    GaussianBlur(int radius, double offset) {
         this.radius = radius;
+        this.offset = offset;
     }
 
     GaussianBlur() {
-        this(1);
+        this(1, 0.0); //the default offset is 0.0
+
     }
 
     public BufferedImage apply(BufferedImage input) {
@@ -46,40 +49,40 @@ public class GaussianBlur implements ImageOperation, java.io.Serializable {
         int paddedHeight = paddedInput.getHeight();
         BufferedImage output = new BufferedImage(input.getWidth(), input.getHeight(), BufferedImage.TYPE_INT_RGB);
 
-        // Scanning colour of each pixel
-        for (int x = 0; x < input.getWidth(); x++) {
-            for (int y = 0; y < input.getHeight(); y++) {
-                // Compute weighted average of colors in the neighborhood
-                double red = 0.0;
-                double green = 0.0;
-                double blue = 0.0;
-                double weightSum = 0.0;
-                for (int i = -radius; i <= radius; i++) {
-                    for (int j = -radius; j <= radius; j++) {
-                        int px = x + i + radius;
-                        int py = y + j + radius;
-                        int rgb = paddedInput.getRGB(px, py);
-                        double weight = kernel[i + radius][j + radius];
-                        red += weight * ((rgb >> 16) & 0xFF);
-                        green += weight * ((rgb >> 8) & 0xFF);
-                        blue += weight * (rgb & 0xFF);
-                        if (px >= 0 && px < paddedWidth && py >= 0 && py < paddedHeight) {
-                            weightSum += weight;
-                        }
+       // Scanning colour of each pixel
+       for (int x = 0; x < input.getWidth(); x++) {
+        for (int y = 0; y < input.getHeight(); y++) {
+            // Compute weighted average of colors in the neighborhood
+            double red = 0.0;
+            double green = 0.0;
+            double blue = 0.0;
+            double weightSum = 0.0;
+            for (int i = -radius; i <= radius; i++) {
+                for (int j = -radius; j <= radius; j++) {
+                    int px = x + i + radius;
+                    int py = y + j + radius;
+                    int rgb = paddedInput.getRGB(px, py);
+                    double weight = kernel[i + radius][j + radius];
+                    red += weight * ((rgb >> 16) & 0xFF) + offset;
+                    green += weight * ((rgb >> 8) & 0xFF) + offset;
+                    blue += weight * (rgb & 0xFF) + offset;
+                    if (px >= 0 && px < paddedWidth && py >= 0 && py < paddedHeight) {
+                        weightSum += weight;
                     }
                 }
-
-                // Normalize the color values by the total weight
-                int pixel = 0xFF000000 |
-                        (((int) (red / weightSum)) << 16) |
-                        (((int) (green / weightSum)) << 8) |
-                        ((int) (blue / weightSum));
-                output.setRGB(x, y, pixel);
             }
-        }
 
-        return output;
+            // Normalize the color values by the total weight
+            int pixel = 0xFF000000 |
+                    (((int) Math.max(0, Math.min(255, red / weightSum))) << 16) |
+                    (((int) Math.max(0, Math.min(255, green / weightSum))) << 8) |
+                    ((int) Math.max(0, Math.min(255, blue / weightSum)));
+            output.setRGB(x, y, pixel);
+        }
     }
+
+    return output;
+}
 
     /**
      * separate kernel creation method to make it easier to understand whats going

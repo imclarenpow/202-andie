@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -41,22 +42,32 @@ import cosc202.andie.Andie;
     /** Runs when ANDIE Starts, this checks what the current default is */
     public void loadDefaultLanguage() {
         // Load the language preference from the file
-        try (Scanner sc = new Scanner(new File("src/cosc202/andie/lang/", defLang))) {
+        try (Scanner sc = new Scanner(new File(defLang))) {
             String languageCode = sc.nextLine();
             String countryCode = sc.nextLine();
             Locale newLocale = new Locale(languageCode, countryCode);
             Locale.setDefault(newLocale);
-        } catch (IOException e) {
-            write();
-            e.printStackTrace();
+        } catch (Exception e) {
+            try (Scanner sc = new Scanner(new File("src/cosc202/andie/lang/" + defLang))) {
+                String languageCode = sc.nextLine();
+                String countryCode = sc.nextLine();
+                Locale newLocale = new Locale(languageCode, countryCode);
+                Locale.setDefault(newLocale);
+            } catch (Exception ex) {
+                write();
+                e.printStackTrace();
+            }
         }
     }
     //default write script
     public void write() {
         // makes english the language if no default file is found
-        try (PrintWriter fr = new PrintWriter("src/cosc202/andie/lang/"+defLang)) {
-            fr.println("en");
-            fr.println("NZ");
+        System.out.println(System.getProperty("user.dir") + "\\" + defLang);
+        try (FileWriter fr = new FileWriter(System.getProperty("user.dir") + "\\" + defLang)) {
+            fr.write("en");
+            fr.write("\n");
+            fr.write("NZ");
+            fr.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -67,6 +78,14 @@ import cosc202.andie.Andie;
     //specified write script
     public void write(String languageCode, String countryCode) {
         // makes english the language if no default file is found
+
+        try (PrintWriter fr = new PrintWriter(defLang)) {
+            fr.println(languageCode);
+            fr.println(countryCode);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         try (PrintWriter fr = new PrintWriter("src/cosc202/andie/lang/"+defLang)) {
             fr.println(languageCode);
             fr.println(countryCode);

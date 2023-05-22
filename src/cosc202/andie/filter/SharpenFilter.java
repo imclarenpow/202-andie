@@ -22,11 +22,11 @@ public class SharpenFilter implements ImageOperation, java.io.Serializable {
     /**
      * <p> 
      * Applies a Sharpen Filter to an Image
-     * <p>
+     * </p>
      * 
      * <p> 
      * Sharpness filter is implemented through the use of convolution.
-     * <p>
+     * </p>
      * 
      * @param input Is the image that the Sharpess filter is applied to.
      * @return The result of the of image post filter application.

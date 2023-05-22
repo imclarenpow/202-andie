@@ -30,7 +30,7 @@ public class EraserButton {
      * </p>
      */
     public EraserButton() {
-        icon = new ImageIcon("assets/eraser.png"); // Retrieved from https://png.pngtree.com/png-clipart/20230105/original/pngtree-eraser-clipart-png-image_8875456.png (free to use) and modified with Microsoft Publisher + Microsoft Word
+        icon = new ImageIcon("assets/eraser26.png"); // Retrieved from https://png.pngtree.com/png-clipart/20230105/original/pngtree-eraser-clipart-png-image_8875456.png (free to use) and modified with Microsoft Publisher + Microsoft Word
     }
     
     /**

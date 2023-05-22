@@ -3,9 +3,12 @@ package cosc202.andie.image;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 import cosc202.andie.Andie;
+import cosc202.andie.ImagePanel;
+import cosc202.andie.filter.FilterActions;
 
 /** 
  * <p>
@@ -28,6 +31,17 @@ public class PencilButton {
     private static JButton[] widthJButtons;
     private static JButton eraserJButton;
     private PencilListener listener;
+
+    /** 
+     * <p>
+     * Checks if ANDIE is in draw mode
+     * </p>
+     * 
+     * @return true if ANDIE is in draw mode
+     */
+    public static boolean isDraw() {
+        return isDrawMode;
+    }
     
     /**
      * <p>
@@ -92,6 +106,7 @@ public class PencilButton {
         Andie.setPencilIcon(icon); // retrieved from https://cdn-icons-png.flaticon.com/512/1046/1046346.png (free to use license)
         Andie.removeButtonsFromMenuBar(widthJButtons);
         Andie.removeButtonFromMenuBar(eraserJButton);
+        ImagePanel.screenSizeOverride = new Dimension(0, 0); // removes the screen size override
     }
 
     /**
@@ -103,7 +118,8 @@ public class PencilButton {
     private class PencilListener implements ActionListener {
         private PencilAction pencilAction;
 
-        public void reenableListener(ActionEvent e) {
+        public boolean reenableListener(ActionEvent e) {
+            boolean result = true;
             // Code to change the cursor to a pencil
             // Adapted from https://stackoverflow.com/questions/4274606/how-to-change-cursor-icon-in-java
             /*if (pencilAction != null) {
@@ -111,13 +127,17 @@ public class PencilButton {
                 pencilAction.stopListening();
             }*/
 
-            Toolkit toolkit = Toolkit.getDefaultToolkit();
-            Cursor newCursor = toolkit.createCustomCursor(new ImageIcon("assets/pencil.png").getImage(), new Point(0, 0), "pencil");
-            Andie.setCursor(newCursor);
-
             // Prompts a pencilAction enabling the user to draw
             this.pencilAction = new PencilAction(null, icon, null, null);
+            if (pencilAction.hasImageToDraw()) {
+                Toolkit toolkit = Toolkit.getDefaultToolkit();
+                Cursor newCursor = toolkit.createCustomCursor(new ImageIcon("assets/pencil.png").getImage(), new Point(0, 0), "pencil");
+                Andie.setCursor(newCursor);
+            } else {
+                result = false;
+            }
             pencilAction.actionPerformed(e);
+            return result;
         }
 
         /**
@@ -137,13 +157,15 @@ public class PencilButton {
                 // Enables draw mode, updates the cursor and pencil icon
                 Andie.setPencilIcon(new ImageIcon("assets/exit26.png", null)); // retrieved from https://icon-icons.com/icon/cancel-close-cross-delete-exit/114048 (free to use license)
                 isDrawMode = true;
-                reenableListener(e);
+                boolean enabled = reenableListener(e);
 
-                // Adds buttons for setting pencil width to the menu bar
-                Andie.addButtonsToMenuBar(widthJButtons);
+                if (enabled) {
+                    // Adds buttons for setting pencil width to the menu bar
+                    Andie.addButtonsToMenuBar(widthJButtons);
 
-                // Adds the eraser button to the menu bar
-                Andie.addButtonToMenuBar(eraserJButton);
+                    // Adds the eraser button to the menu bar
+                    Andie.addButtonToMenuBar(eraserJButton);
+                }
             }
         }
     }
@@ -170,6 +192,10 @@ public class PencilButton {
             super(name, icon, desc, mnemonic);
         }
 
+        public boolean hasImageToDraw() {
+            return target.getImage().hasImage();
+        }
+
         /**
          * <p>
          * Callback for when the pencil action is triggered.
@@ -186,6 +212,13 @@ public class PencilButton {
             if (target.getImage().hasImage()) {
                 pencil = new Pencil();
                 pencil.setTarget(target);
+                target.defaultZoom();
+                target.repaint();
+
+                Dimension currentScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                ImagePanel.screenSizeOverride = new Dimension((int)Math.round(currentScreenSize.getWidth() / 1.2), (int)Math.round(currentScreenSize.getHeight() / 1.2));
+                
+                target.repaint();
                 target.getImage().apply(pencil);
                 target.repaint();
                 target.getParent().revalidate();

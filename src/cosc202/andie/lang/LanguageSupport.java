@@ -78,6 +78,14 @@ import cosc202.andie.Andie;
     //specified write script
     public void write(String languageCode, String countryCode) {
         // makes english the language if no default file is found
+
+        try (PrintWriter fr = new PrintWriter(defLang)) {
+            fr.println(languageCode);
+            fr.println(countryCode);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         try (PrintWriter fr = new PrintWriter("src/cosc202/andie/lang/"+defLang)) {
             fr.println(languageCode);
             fr.println(countryCode);

@@ -1,5 +1,7 @@
 package cosc202.andie.image;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -7,6 +9,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.event.MouseInputAdapter;
 
 import cosc202.andie.Andie;
+import cosc202.andie.ImagePanel;
+import cosc202.andie.lang.LanguageSupport;
 
 
 /** 
@@ -32,6 +36,7 @@ public class SelectButton {
     private static ShapesActions shapesActions;
     private static JMenu shapesMenu;
     private static SelectMouseMotionListener selectListener;
+    private static boolean hasImage; 
     
     /**
      * <p>
@@ -44,25 +49,26 @@ public class SelectButton {
         icon = new ImageIcon("assets/selecticon.jpg"); // retrieved from https://cdn-icons-png.flaticon.com/512/1046/1046346.png (free to use license)
     }
 
-    public static void enableSelectMode() {
+    public void enableSelectMode() {
         if(selectListener == null){
             selectListener = new SelectMouseMotionListener();
         }
         if(cropJButton == null){
-            cropButton = new CropButton(select);
+            cropButton = new CropButton(this);
             cropJButton = cropButton.createButton();
         }
         if(shapesMenu == null){
-            shapesActions = new ShapesActions(select);
+            shapesActions = new ShapesActions(this);
             shapesMenu = shapesActions.createMenu();
         }
+
         startListening();
         Andie.addButtonToMenuBar(cropJButton);
         Andie.addMenu(shapesMenu);
         isSelectMode = true;
     }
     
-    public static void disableSelectMode() {
+    public void disableSelectMode() {
         select.revert(); //check for selection applied already in revert()
         Andie.setSelectIcon(icon);
         stopListening();
@@ -71,7 +77,9 @@ public class SelectButton {
         isSelectMode = false;
     }
 
-    
+    public static Select getSelect(){
+        return select;
+    }
     
     /**
      * <p>
@@ -94,13 +102,17 @@ public class SelectButton {
     }
 
     public static void startListening(){
-        select.getTarget().addMouseListener(selectListener);
-        select.getTarget().addMouseMotionListener(selectListener);
+        if (select != null && select.getTarget().getImage().hasImage()) {
+            select.getTarget().addMouseListener(selectListener);
+            select.getTarget().addMouseMotionListener(selectListener);
+        } 
     }
 
     public static void stopListening(){
-        select.getTarget().removeMouseListener(selectListener);
-        select.getTarget().removeMouseMotionListener(selectListener);
+        if (select != null && select.getTarget().getImage().hasImage()) {
+            select.getTarget().removeMouseListener(selectListener);
+            select.getTarget().removeMouseMotionListener(selectListener);
+        } 
     }
 
     /**
@@ -112,14 +124,22 @@ public class SelectButton {
      */
     private class SelectListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            if(isSelectMode){
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+            if(isSelectMode) {
                 disableSelectMode();
-            }else{
-                Andie.setSelectIcon(new ImageIcon("assets/exit26.png",null));
+            } else {
                 SelectAction selectAction = new SelectAction(null, icon, null, null);
                 selectAction.actionPerformed(e);
-                enableSelectMode();
-            }
+                if (hasImage) {
+                    int fullscreen = JOptionPane.showConfirmDialog(null, "Select features must be used in a fullscreen window, do you want to continue?", "Confirm Fullscreen", JOptionPane.OK_CANCEL_OPTION);
+                    if(fullscreen == 0){
+                        Andie.setSelectIcon(new ImageIcon("assets/exit26.png",null));
+                        Dimension currentScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                        ImagePanel.screenSizeOverride = new Dimension((int)Math.round(currentScreenSize.getWidth()), (int)Math.round(currentScreenSize.getHeight()));
+                        enableSelectMode();
+                    }
+                }
+            } 
         }
     }
 
@@ -129,12 +149,18 @@ public class SelectButton {
         }
 
         public void actionPerformed(ActionEvent e){
-            if(select == null){
-                select = new Select();
+            if(target.getImage().hasImage()){
+                    if(select == null){
+                        select = new Select();
+                    }
+                    select.setTarget(target);
+                    target.repaint();
+                    target.getParent().revalidate();
+                    hasImage = true;
+            }else{
+                target.getImage().ShowNoImageError();
+                hasImage = false;
             }
-            select.setTarget(target);
-            target.repaint();
-            target.getParent().revalidate();
         }
         
         

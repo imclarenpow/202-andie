@@ -32,9 +32,9 @@ public class WidthButtons {
      * </p>
      */
     public WidthButtons() {
-        smallButton = new JButton(new ImageIcon("assets/smallWidth.png"));
-        mediumButton = new JButton(new ImageIcon("assets/mediumWidth.png"));
-        largeButton = new JButton(new ImageIcon("assets/largeWidth.png"));
+        smallButton = new JButton(new ImageIcon("assets/smallWidth10.png"));
+        mediumButton = new JButton(new ImageIcon("assets/mediumWidth17.png"));
+        largeButton = new JButton(new ImageIcon("assets/largeWidth26.png"));
     }
     
     /**

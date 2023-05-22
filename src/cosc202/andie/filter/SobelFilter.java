@@ -31,8 +31,8 @@ public class SobelFilter implements ImageOperation, java.io.Serializable {
     /**
      * <p>
      * Takes a type of Sobel filter to apply to an image
-     * @param sobelType the type of Sobel filter
      * </p>
+     * @param sobelType the type of Sobel filter
      */
     public SobelFilter(String sobelType) {
         this.sobelType = sobelType;

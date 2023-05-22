@@ -1,4 +1,5 @@
 package cosc202.andie;
+import cosc202.andie.Macros.MacroActions;
 import cosc202.andie.colour.*;
 import cosc202.andie.edit.*;
 import cosc202.andie.file.*;
@@ -14,6 +15,7 @@ import javax.imageio.*;
 import javax.swing.*;
 
 import java.awt.event.*;
+import java.awt.BorderLayout;
 
 /**
  * <p>
@@ -82,6 +84,14 @@ public class Andie {
         frame.setIconImage(image);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
+        //Toolbar for quick actions
+        JToolBar andiesToolBar = new JToolBar("Quick Actions");
+        frame.add(andiesToolBar);
+        ToolBarDetails.buttons(andiesToolBar);
+        frame.pack();
+        frame.setVisible(true);
+
+
         // The main content area is an ImagePanel
         ImagePanel imagePanel = new ImagePanel();
         ImageAction.setTarget(imagePanel);
@@ -110,6 +120,10 @@ public class Andie {
         // Actions that affect the representation of colour in the image
         ColourActions colourActions = new ColourActions();
         menuBar.add(colourActions.createMenu());
+
+        // Macro feature buttons
+        MacroActions macroActions = new MacroActions();
+        menuBar.add(macroActions.createMenu());
 
         // Adds help menu to JFrame
         HelpActions helpActions = new HelpActions();

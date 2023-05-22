@@ -86,7 +86,7 @@ public class ShapesActions {
 
     /**
      * <p>
-     * Action to draw a rectangle on an image, with the user selecting color & fill
+     * Action to draw a rectangle on an image, with the user selecting color and fill
      * </p>
      * 
      * @see Rectangle
@@ -141,7 +141,7 @@ public class ShapesActions {
 
     /**
      * <p>
-     * Action to draw an ellipse on an image, with the user selecting color & fill
+     * Action to draw an ellipse on an image, with the user selecting color and fill
      * </p>
      * 
      * @see Ellipse

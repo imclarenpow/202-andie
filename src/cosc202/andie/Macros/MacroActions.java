@@ -1,4 +1,4 @@
-package cosc202.andie.Macros;
+package cosc202.andie.macros;
 
 import java.util.*;
 import java.awt.event.*;
@@ -40,13 +40,13 @@ public class MacroActions {
 
     public MacroActions() {
         actions = new ArrayList<Action>();
-        actions.add(new MacroStartAction("Start macro", null, "Start", KeyEvent.VK_P));
-        actions.add(new MacroStopAction("Stop and save macro", null, "Stop and save", KeyEvent.VK_R));
-        actions.add(new MacroOpenAction("Open macro", null, "Open saved Macro", KeyEvent.VK_R));
+        actions.add(new MacroStartAction(lang.text("startmac"), null, lang.text("startmac"), KeyEvent.VK_P));
+        actions.add(new MacroStopAction(lang.text("stopandsavemac"), null, lang.text("stopandsavemac"), KeyEvent.VK_R));
+        actions.add(new MacroOpenAction(lang.text("openmac"), null, lang.text("openmac"), KeyEvent.VK_R));
     }
 
     public JMenu createMenu() {
-        JMenu macroMenu = new JMenu("Macro");
+        JMenu macroMenu = new JMenu(lang.text("mac"));
 
         for (Action action : actions) {
             macroMenu.add(new JMenuItem(action));

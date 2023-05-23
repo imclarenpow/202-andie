@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.event.*;
 import javax.swing.*;
 
+import cosc202.andie.lang.LanguageSupport;
+
 /**
  * <p>
  * Actions provided by the Shapes Menu, which is a submenu of the SelectButton
@@ -21,6 +23,7 @@ import javax.swing.*;
  */
 public class ShapesActions {
     //Data fields 
+    private LanguageSupport lang = new LanguageSupport();
     private Color drawingColour;
     private boolean selectionApplied = false;
     private static SelectButton selectButton;
@@ -44,9 +47,9 @@ public class ShapesActions {
         this.select = selectButton.getSelect();
         actions = new ArrayList<Action>();
         
-        actions.add(new RectangleAction("Rectangle", null, null, null));
-        actions.add(new EllipseAction("Ellipse", null, null, null));
-        actions.add(new LineAction("Line", null, null, null));
+        actions.add(new RectangleAction(lang.text("rectangle"), null, null, null));
+        actions.add(new EllipseAction(lang.text("ellipse"), null, null, null));
+        actions.add(new LineAction(lang.text("line"), null, null, null));
     }
 
     /**
@@ -122,8 +125,8 @@ public class ShapesActions {
          */
         public void actionPerformed(ActionEvent e) {
             if(select.isSelectionApplied()){
-                int filled = JOptionPane.showConfirmDialog(null, "Do you want your shape filled?", "Shape Fill", JOptionPane.YES_NO_OPTION);
-                drawingColour = JColorChooser.showDialog(null, "Select a colour", drawingColour);
+                int filled = JOptionPane.showConfirmDialog(null, lang.text("shapefillqn"), lang.text("shapefill"), JOptionPane.YES_NO_OPTION);
+                drawingColour = JColorChooser.showDialog(null, lang.text("selcolour"), drawingColour);
                 Rectangle rectangle = new Rectangle(select.getStartPoint(), select.getEndPoint(), drawingColour);
                 rectangle.setFilled(filled);
                 select.revert();
@@ -133,7 +136,7 @@ public class ShapesActions {
                 stopListening();
                 selectButton.disableSelectMode(); 
             }else{
-                JOptionPane.showMessageDialog(null, "You must first select an area to apply a shape to", "No Selection", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, lang.text("firstselareashape"), lang.text("nosel"), JOptionPane.ERROR_MESSAGE);
             }
             
         }
@@ -177,8 +180,8 @@ public class ShapesActions {
          */
         public void actionPerformed(ActionEvent e) {
             if(select.isSelectionApplied()){
-                int filled = JOptionPane.showConfirmDialog(null, "Do you want your shape filled?", "Shape Fill", JOptionPane.YES_NO_OPTION);
-                drawingColour = JColorChooser.showDialog(null, "Select a colour", drawingColour);
+                int filled = JOptionPane.showConfirmDialog(null, lang.text("shapefillqn"), lang.text("shapefill"), JOptionPane.YES_NO_OPTION);
+                drawingColour = JColorChooser.showDialog(null, lang.text("selcolour"), drawingColour);
                 Ellipse ellipse = new Ellipse(select.getStartPoint(), select.getEndPoint(), drawingColour);
                 ellipse.setFilled(filled);
                 select.revert();
@@ -188,7 +191,7 @@ public class ShapesActions {
                 stopListening();
                 selectButton.disableSelectMode();
             }else{
-                JOptionPane.showMessageDialog(null, "You must first select an area to apply a shape to", "No Selection", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, lang.text("firstselareashape"), lang.text("nosel"), JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -231,7 +234,7 @@ public class ShapesActions {
          */
         public void actionPerformed(ActionEvent e) {
             if(select.isSelectionApplied()){
-                drawingColour = JColorChooser.showDialog(null, "Select a colour", drawingColour);
+                drawingColour = JColorChooser.showDialog(null, lang.text("selcolour"), drawingColour);
                 Line line = new Line(select.getStartPoint(), select.getEndPoint(), drawingColour);
                 select.revert();
                 target.getImage().apply(line);
@@ -239,7 +242,7 @@ public class ShapesActions {
                 target.getParent().revalidate();
                 selectButton.disableSelectMode(); 
             }else{
-                JOptionPane.showMessageDialog(null, "You must first select an area to apply a shape to", "No Selection", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, lang.text("firstselareashape"), lang.text("nosel"), JOptionPane.ERROR_MESSAGE);
             }
         }
     }

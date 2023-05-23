@@ -7,6 +7,7 @@ import cosc202.andie.filter.*;
 import cosc202.andie.help.HelpActions;
 import cosc202.andie.image.*;
 import cosc202.andie.lang.*;
+import cosc202.andie.macros.MacroActions;
 import cosc202.andie.view.*;
 
 import java.awt.*;
@@ -14,6 +15,7 @@ import javax.imageio.*;
 import javax.swing.*;
 
 import java.awt.event.*;
+import java.util.ArrayList;
 
 /**
  * <p>
@@ -37,8 +39,11 @@ public class Andie {
     private static PencilButton pencilButton;
     private static JButton pencilJButton;
     private static JButton selectJButton;
+    private static JToolBar andiesToolBar;
     private static LanguageSupport lang = new LanguageSupport();
     private static JMenuBar menuBar;
+    private static ArrayList<JButton> toolbarButtons;
+    private static ArrayList<JButton> zoomButtons;
     // Sets the maximum dimension of images for resize 
     public static final double MAX_DIMENSION_LIMIT = 20000;
     
@@ -84,6 +89,21 @@ public class Andie {
         frame.setIconImage(image);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
+        //Toolbar for quick actions
+        andiesToolBar = new JToolBar("Quick Actions");
+        zoomButtons = new ArrayList<JButton>();
+        ToolBarDetails toolBarDetails = new ToolBarDetails();
+        toolbarButtons = toolBarDetails.buttons();
+        for (JButton button : toolbarButtons) {
+            andiesToolBar.add(button);
+        }
+
+        frame.add(andiesToolBar);
+
+        frame.pack();
+        frame.setVisible(true);
+
+
         // The main content area is an ImagePanel
         ImagePanel imagePanel = new ImagePanel();
         ImageAction.setTarget(imagePanel);
@@ -123,6 +143,10 @@ public class Andie {
         // Adds help menu to JFrame
         HelpActions helpActions = new HelpActions();
         menuBar.add(helpActions.createMenu());
+
+        // Adds macro menu to JFrame
+        MacroActions macroActions = new MacroActions();
+        menuBar.add(macroActions.createMenu());
 
         // Adds the colour wheel for drawing tools to the menu bar
         JSeparator separator = new JSeparator(); // Credit to https://stackoverflow.com/questions/12212254/adding-spacing-between-elements-in-jmenubar for separator idea
@@ -220,6 +244,42 @@ public class Andie {
 
     /**
      * <p>
+     * Repaints the JFrame to make ANDIE's toolbar visible
+     * </p>
+     */
+    public static void makeToolBarVisible() {
+        f.revalidate();
+        f.repaint();
+        andiesToolBar.setVisible(true);
+        andiesToolBar.revalidate();
+        andiesToolBar.repaint();
+        for (JButton button : toolbarButtons) {
+            button.setVisible(true);
+            button.revalidate();
+            button.repaint();
+        }
+        
+        f.pack();
+    }
+
+    public static void removeZoomFromToolBar() {
+        for (JButton button : toolbarButtons) {
+            if (ToolBarDetails.isZoomButton(button)) {
+                andiesToolBar.remove(button);
+                zoomButtons.add(button);
+            }
+        }
+    }
+
+    public static void addZoomToToolBar() {
+        for (JButton button : zoomButtons) {
+            andiesToolBar.add(button);
+            makeToolBarVisible();
+        }
+    }
+
+    /**
+     * <p>
      * Adds a given button to ANDIE's menu bar
      * </p>
      * @param button the button to be added to the menu bar
@@ -256,11 +316,13 @@ public class Andie {
     public static void addMenu(JMenu menu){
         menuBar.add(menu);
         f.pack();   
+        makeToolBarVisible();
     }
 
     public static void removeMenu(JMenu menu) {
         menuBar.remove(menu);
         f.pack();
+        makeToolBarVisible();
     }
 
 
@@ -295,6 +357,7 @@ public class Andie {
     public static void setSelectIcon(ImageIcon icon){
         selectJButton.setIcon(icon);
         selectJButton.repaint();
+        makeToolBarVisible();
     }
 
     /**

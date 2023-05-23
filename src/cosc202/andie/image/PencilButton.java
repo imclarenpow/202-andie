@@ -105,7 +105,9 @@ public class PencilButton {
         Andie.setPencilIcon(icon); // retrieved from https://cdn-icons-png.flaticon.com/512/1046/1046346.png (free to use license)
         Andie.removeButtonsFromMenuBar(widthJButtons);
         Andie.removeButtonFromMenuBar(eraserJButton);
+        Andie.addZoomToToolBar();
         ImagePanel.screenSizeOverride = new Dimension(0, 0); // removes the screen size override
+        Andie.makeToolBarVisible();
     }
 
     /**
@@ -150,11 +152,13 @@ public class PencilButton {
             if (isDrawMode) {
                 // Disables ANDIE's draw mode
                 disableDrawMode();
+                Andie.makeToolBarVisible();
             } else {
                 Pencil.setListening(true);
 
                 // Enables draw mode, updates the cursor and pencil icon
                 Andie.setPencilIcon(new ImageIcon("assets/exit26.png", null)); // retrieved from https://icon-icons.com/icon/cancel-close-cross-delete-exit/114048 (free to use license)
+                Andie.removeZoomFromToolBar();
                 isDrawMode = true;
                 boolean enabled = reenableListener(e);
 
@@ -224,7 +228,7 @@ public class PencilButton {
             } else {
                 target.getImage().ShowNoImageError();
             }
-           
+            Andie.makeToolBarVisible();
         }
     }
 }

@@ -28,7 +28,6 @@ public class MacroActions {
     private ArrayList<Action> actions;
     private Stack <ImageOperation> imageOps;
     private Stack <ImageOperation> macroOps;
-    private EditableImage editableImage = new EditableImage();
     private int size;
     
     
@@ -93,8 +92,8 @@ public class MacroActions {
         if(target.getImage().hasImage() ){
             System.out.println("Macro start");
             recording = true;
-            if(editableImage.getImageOps() != null){
-            size = editableImage.getImageOps().size();
+            if(target.getImage().getImageOps() != null){
+            size = target.getImage().getImageOps().size();
             }
         }
         else{
@@ -123,31 +122,26 @@ public class MacroActions {
 
         public void actionPerformed(ActionEvent e) {
             macroOps = new Stack<ImageOperation>();
+            JFileChooser fileChooser = new JFileChooser();
+            String filePath = "";
             // TODO: Implement macro record logic
             System.out.println("Macro Record");
+
             if (recording) {
-                imageOps = editableImage.getImageOps();
+                imageOps = target.getImage().getImageOps();
                 for (int i = size; i < imageOps.size(); i++) {
                     macroOps.push(imageOps.get(i));
                 }
-                String userInput = JOptionPane.showInputDialog(null, "Enter your macro file name:");
-
-                try {
-                    saveMacro(userInput);
-                    JOptionPane.showMessageDialog(null, "Macro saved: " + userInput, "Macro Saved", JOptionPane.INFORMATION_MESSAGE);
-
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Warning! Error saving macro" + ex.getMessage(), "Macro Saving Error", JOptionPane.ERROR_MESSAGE);
-                }
-
+                
+                saveMacro(macroOps);
                 // Print the user's input
-                System.out.println("User input: " + userInput);
+                System.out.println("User input: ");
             } else {
                 JOptionPane.showMessageDialog(null, "Warning! There is no macro recording!", "noMacroRecording", JOptionPane.WARNING_MESSAGE);
 
             }
+            recording = false;
            
-
         }
     }
 
@@ -222,15 +216,24 @@ target.getParent().revalidate();
         
          }
  
-    public void saveMacro(String macroName) throws Exception {        
+    public void saveMacro(Stack<ImageOperation> macroStack) {        
 
-        String macroFileName = macroName + ".macro";
+        JFileChooser fileChooser = new JFileChooser();
+    int result = fileChooser.showSaveDialog(null);
 
-        FileOutputStream fileOut = new FileOutputStream(macroFileName);
-        ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
-        objOut.writeObject(macroOps);
-        objOut.close();
-        fileOut.close();
+    if (result == JFileChooser.APPROVE_OPTION) {
+        try {
+            String filePath = fileChooser.getSelectedFile().getCanonicalPath()+ ".macro";
+            
+            // Save the stack to the chosen filePath
+            ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(filePath));
+            objOut.writeObject(macroStack);
+            objOut.close();
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
     }
 }
 

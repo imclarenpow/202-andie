@@ -268,6 +268,12 @@ public class Andie {
         }
     }
 
+    /**
+     * <p>
+     * Adds the zoom buttons back to the tool bar
+     * Does nothing if the buttons are already present on the tool bar
+     * </p>
+     */
     public static void addZoomToToolBar() {
         for (JButton button : zoomButtons) {
             andiesToolBar.add(button);

@@ -20,9 +20,13 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
+ * <p>
  * Actions provided by the Macro menu.
+ * </p>
  */
 public class MacroActions {
+
+    // Data fields
     private LanguageSupport lang = new LanguageSupport();
     private boolean recording = false;
     private ArrayList<Action> actions;
@@ -32,6 +36,15 @@ public class MacroActions {
     
     
 
+    /**
+     * <p>
+     * Fills the list of macro actions 
+     * Several different macro actions are added
+     * -An action to start recording a macro
+     * -An action to stop and save a macro
+     * -An action to open an existing macro
+     * </p>
+     */
     public MacroActions() {
         actions = new ArrayList<Action>();
         actions.add(new MacroStartAction(lang.text("startmac"), null, lang.text("startmac"), KeyEvent.VK_P));
@@ -39,6 +52,10 @@ public class MacroActions {
         actions.add(new MacroOpenAction(lang.text("openmac"), null, lang.text("openmac"), KeyEvent.VK_R));
     }
 
+    /**
+     * Creates an instance of a macros menu
+     * @return the menu for macros
+     */
     public JMenu createMenu() {
         JMenu macroMenu = new JMenu(lang.text("mac"));
 
@@ -104,11 +121,17 @@ public class MacroActions {
            }
         }
 
+        /**
+         * <p>
+         * A class that stops the recording of a macro
+         * A subclass of ImageAction
+         * </p>
+         */
         public class MacroStopAction extends ImageAction {
 
             /**
              * <p>
-             * Create a new file-open action.
+             * Create a new Macro-Stop action 
              * </p>
              * 
              * @param name The name of the action (ignored if null).
@@ -120,31 +143,42 @@ public class MacroActions {
                 super(name, icon, desc, mnemonic);
             }
 
-        public void actionPerformed(ActionEvent e) {
-            macroOps = new Stack<ImageOperation>();
-            JFileChooser fileChooser = new JFileChooser();
-            String filePath = "";
-            // TODO: Implement macro record logic
-            System.out.println("Macro Record");
+            /**
+             * <p>
+             * Called when a MacroStop action is triggered
+             * Stops the recording of a macro if one is in progress
+             * </p>
+             */
+            public void actionPerformed(ActionEvent e) {
+                macroOps = new Stack<ImageOperation>();
+                JFileChooser fileChooser = new JFileChooser();
+                String filePath = "";
+                // TODO: Implement macro record logic
+                System.out.println("Macro Record");
 
-            if (recording) {
-                imageOps = target.getImage().getImageOps();
-                for (int i = size; i < imageOps.size(); i++) {
-                    macroOps.push(imageOps.get(i));
+                if (recording) {
+                    imageOps = target.getImage().getImageOps();
+                    for (int i = size; i < imageOps.size(); i++) {
+                        macroOps.push(imageOps.get(i));
+                    }
+                    
+                    saveMacro(macroOps);
+                    // Print the user's input
+                    System.out.println("User input: ");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Warning! There is no macro recording!", "noMacroRecording", JOptionPane.WARNING_MESSAGE);
+
                 }
-                
-                saveMacro(macroOps);
-                // Print the user's input
-                System.out.println("User input: ");
-            } else {
-                JOptionPane.showMessageDialog(null, "Warning! There is no macro recording!", "noMacroRecording", JOptionPane.WARNING_MESSAGE);
-
+                recording = false;
             }
-            recording = false;
-           
-        }
     }
 
+    /**
+     * <p>
+     * A class that opens an existing macro
+     * A subclass of ImageAction
+     * </p>
+     */
     public class MacroOpenAction extends ImageAction {
 
         /**
@@ -163,12 +197,12 @@ public class MacroActions {
  
         /**
          * <p>
-         * Callback for when the file-open action is triggered.
+         * Callback for when the macro-open action is triggered.
          * </p>
          * 
          * <p>
-         * This method is called whenever the FileOpenAction is triggered.
-         * It prompts the user to select a file and opens it as an image.
+         * This method is called whenever the MacroOpenAction is triggered.
+         * It prompts the user to select a file and opens it as a macro.
          * </p>
          * 
          * @param e The event triggering this callback.
@@ -177,63 +211,67 @@ public class MacroActions {
          * @throws Exception For all other unhandled exceptions.
          */
         public void actionPerformed(ActionEvent e) {
-            JFileChooser fileChooser = new JFileChooser();
-int result = fileChooser.showOpenDialog(target);
+            // Prompting a user to select a file
+            JFileChooser fileChooser = new JFileChooser(); 
+            int result = fileChooser.showOpenDialog(target);
 
-if (result == JFileChooser.APPROVE_OPTION) {//taken from fileactions class and modified for reading macros.
-    try {
-        File selectedFile = fileChooser.getSelectedFile();
-        String imageFilePath = selectedFile.getCanonicalPath();
+            if (result == JFileChooser.APPROVE_OPTION) {//taken from fileactions class and modified for reading macros.
+                try {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    String imageFilePath = selectedFile.getCanonicalPath();
 
-        if (imageFilePath.toLowerCase().endsWith(".macro")) {
-            // File has the ".macro" extension, continue with processing
-            for (ImageOperation imageOperation : macroOps) {
-                target.getImage().apply(imageOperation);
+                    if (imageFilePath.toLowerCase().endsWith(".macro")) {
+                        // File has the ".macro" extension, continue with processing
+                        for (ImageOperation imageOperation : macroOps) {
+                            target.getImage().apply(imageOperation);
+                        }
+                        target.repaint();
+                        target.getParent().revalidate();
+                    } else {
+                        // File does not have the ".macro" extension, handle the error or display a message to the user
+                        JOptionPane.showMessageDialog(null, lang.text("invalidfilename"), lang.text("invalidfilename"), JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                } catch (IIOException noFile) {
+                    JOptionPane.showMessageDialog(null, lang.text("openfilenamewarning"), lang.text("invalidfilename"), JOptionPane.ERROR_MESSAGE);
+                    return;
+                } catch (SecurityException ex) {
+                    JOptionPane.showMessageDialog(null, lang.text("noaccesswarning"), lang.text("accessdenied"), JOptionPane.ERROR_MESSAGE);
+                    return;
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                    System.exit(1);
+                }
             }
+
             target.repaint();
             target.getParent().revalidate();
-        } else {
-            // File does not have the ".macro" extension, handle the error or display a message to the user
-            JOptionPane.showMessageDialog(null, lang.text("invalidfilename"), lang.text("invalidfilename"), JOptionPane.ERROR_MESSAGE);
-            return;
         }
-    } catch (IIOException noFile) {
-        JOptionPane.showMessageDialog(null, lang.text("openfilenamewarning"), lang.text("invalidfilename"), JOptionPane.ERROR_MESSAGE);
-        return;
-    } catch (SecurityException ex) {
-        JOptionPane.showMessageDialog(null, lang.text("noaccesswarning"), lang.text("accessdenied"), JOptionPane.ERROR_MESSAGE);
-        return;
-    } catch (Exception ex) {
-        System.out.println(ex);
-        System.exit(1);
     }
-}
-
-target.repaint();
-target.getParent().revalidate();
-
-        }
-        
-         }
  
+    /**
+     * <p>
+     * Saves a macro so it can later be reused on a different image
+     * </p>
+     * 
+     * @param macroStack the macro to be saved
+     */
     public void saveMacro(Stack<ImageOperation> macroStack) {        
-
         JFileChooser fileChooser = new JFileChooser();
-    int result = fileChooser.showSaveDialog(null);
+        int result = fileChooser.showSaveDialog(null);
 
-    if (result == JFileChooser.APPROVE_OPTION) {
-        try {
-            String filePath = fileChooser.getSelectedFile().getCanonicalPath()+ ".macro";
-            
-            // Save the stack to the chosen filePath
-            ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(filePath));
-            objOut.writeObject(macroStack);
-            objOut.close();
-            
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        if (result == JFileChooser.APPROVE_OPTION) {
+            try {
+                String filePath = fileChooser.getSelectedFile().getCanonicalPath()+ ".macro";
+                
+                // Save the stack to the chosen filePath
+                ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(filePath));
+                objOut.writeObject(macroStack);
+                objOut.close();
+                
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
     }
-    }
 }
-

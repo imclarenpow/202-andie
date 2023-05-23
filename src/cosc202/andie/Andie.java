@@ -14,6 +14,7 @@ import javax.imageio.*;
 import javax.swing.*;
 
 import java.awt.event.*;
+import java.util.ArrayList;
 
 /**
  * <p>
@@ -37,8 +38,10 @@ public class Andie {
     private static PencilButton pencilButton;
     private static JButton pencilJButton;
     private static JButton selectJButton;
+    private static JToolBar andiesToolBar;
     private static LanguageSupport lang = new LanguageSupport();
     private static JMenuBar menuBar;
+    private static ArrayList<JButton> toolbarButtons;
     // Sets the maximum dimension of images for resize 
     public static final double MAX_DIMENSION_LIMIT = 20000;
     
@@ -83,6 +86,20 @@ public class Andie {
         Image image = ImageIO.read(Andie.class.getClassLoader().getResource("icon.png"));
         frame.setIconImage(image);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        //Toolbar for quick actions
+        andiesToolBar = new JToolBar("Quick Actions");
+        ToolBarDetails toolBarDetails = new ToolBarDetails();
+        toolbarButtons = toolBarDetails.buttons();
+        for (JButton button : toolbarButtons) {
+            andiesToolBar.add(button);
+        }
+
+        frame.add(andiesToolBar);
+
+        frame.pack();
+        frame.setVisible(true);
+
 
         // The main content area is an ImagePanel
         ImagePanel imagePanel = new ImagePanel();
@@ -220,6 +237,28 @@ public class Andie {
 
     /**
      * <p>
+     * Repaints the JFrame to make ANDIE's toolbar visible
+     * </p>
+     */
+    public static void makeToolBarVisible() {
+        f.revalidate();
+        f.repaint();
+        andiesToolBar.revalidate();
+        andiesToolBar.repaint();
+        for (JButton button : toolbarButtons) {
+            button.setVisible(true);
+            button.revalidate();
+            button.repaint();
+        }
+        
+        andiesToolBar.setVisible(true);
+
+        f.pack();
+        f.setVisible(true);
+    }
+
+    /**
+     * <p>
      * Adds a given button to ANDIE's menu bar
      * </p>
      * @param button the button to be added to the menu bar
@@ -227,6 +266,7 @@ public class Andie {
     public static void addButtonToMenuBar(JButton button) {
         menuBar.add(button);
         f.pack();
+        makeToolBarVisible();
     }
 
     /**
@@ -240,6 +280,7 @@ public class Andie {
             menuBar.remove(button);
         }
         f.pack();
+        makeToolBarVisible();
     }
 
     /**
@@ -251,16 +292,19 @@ public class Andie {
     public static void removeButtonFromMenuBar(JButton button) {
         menuBar.remove(button);
         f.pack();
+        makeToolBarVisible();
     }
 
     public static void addMenu(JMenu menu){
         menuBar.add(menu);
         f.pack();   
+        makeToolBarVisible();
     }
 
     public static void removeMenu(JMenu menu) {
         menuBar.remove(menu);
         f.pack();
+        makeToolBarVisible();
     }
 
 
@@ -284,6 +328,7 @@ public class Andie {
     public static void setPencilIcon(ImageIcon icon) {
         pencilJButton.setIcon(icon);
         pencilJButton.repaint();
+        makeToolBarVisible();
     }
 
     /**
@@ -295,6 +340,7 @@ public class Andie {
     public static void setSelectIcon(ImageIcon icon){
         selectJButton.setIcon(icon);
         selectJButton.repaint();
+        makeToolBarVisible();
     }
 
     /**

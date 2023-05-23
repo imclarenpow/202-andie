@@ -25,7 +25,7 @@ public class ShapesActions {
     //Data fields 
     private LanguageSupport lang = new LanguageSupport();
     private Color drawingColour;
-    private boolean selectionApplied = false;
+    //private boolean selectionApplied = false;
     private static SelectButton selectButton;
     private static Select select;
     protected ArrayList<Action> actions; 
@@ -43,8 +43,8 @@ public class ShapesActions {
      * @param selectButton the SelectButton that this ShapesMenu is associated with
      */
     public ShapesActions(SelectButton selectButton) {
-        this.selectButton = selectButton;
-        this.select = selectButton.getSelect();
+        ShapesActions.selectButton = selectButton;
+        ShapesActions.select = SelectButton.getSelect();
         actions = new ArrayList<Action>();
         
         actions.add(new RectangleAction(lang.text("rectangle"), null, null, null));

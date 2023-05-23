@@ -1,20 +1,15 @@
 package cosc202.andie.macros;
 
 import java.util.*;
-import java.awt.event.*;
 import java.io.*;
 
 import javax.imageio.IIOException;
 import javax.swing.*;
 
-import cosc202.andie.Andie;
 import cosc202.andie.EditableImage;
-import cosc202.andie.ImagePanel;
-import cosc202.andie.file.FileActions;
 import cosc202.andie.image.*;
 import cosc202.andie.lang.*;
 
-import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;

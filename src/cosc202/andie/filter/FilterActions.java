@@ -11,7 +11,6 @@ import java.awt.GridLayout;
 //import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
-import cosc202.andie.Andie;
 import cosc202.andie.EditableImage;
 import cosc202.andie.image.*;
 import cosc202.andie.lang.*;

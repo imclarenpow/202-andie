@@ -20,6 +20,7 @@ public class EmbossFilter implements ImageOperation, java.io.Serializable {
      * <p>
      * A constructor for an Emboss Filter
      * </p>
+     * 
      * @param filterIndex the index of the Emboss Filter
      */
     public EmbossFilter(int filterIndex) {
@@ -89,10 +90,10 @@ public class EmbossFilter implements ImageOperation, java.io.Serializable {
 
         switch (filterIndex) {
             case 0:
-            kernel = new int[][] { { 0, 0, 0 }, { 1, 0, -1 }, { 0, 0, 0 } };
-            break;
-            case 1:
                 kernel = new int[][] { { 0, 0, 0 }, { 1, 0, -1 }, { 0, 0, 0 } };
+                break;
+            case 1:
+                kernel = new int[][] { { 0, 0, -1 }, { 0, 0, 0 }, { 1, 0, 0 } };
                 break;
             case 2:
                 kernel = new int[][] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, -1 } };

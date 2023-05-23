@@ -10,9 +10,12 @@ import java.util.ArrayList;
 
 import cosc202.andie.edit.EditActions;
 import cosc202.andie.view.ViewActions;
+import cosc202.andie.lang.LanguageSupport;
 
 
 public class ToolBarDetails {
+    // Language Instance
+    private LanguageSupport lang = new LanguageSupport();
 
     private static JButton undoB;
     private static JButton redoB;
@@ -30,10 +33,10 @@ public class ToolBarDetails {
         EditActions editActions = new EditActions();
         ViewActions viewActions = new ViewActions();
 
-        undoB = new JButton("Undo",buttonIcon("undoIcon"));
-        redoB = new JButton("Redo",buttonIcon("redoIcon"));
-        zoomIn = new JButton("Zoom In",buttonIcon("zoomInIcon"));
-        zoomOut = new JButton("Zoom Out",buttonIcon("zoomOutIcon"));
+        undoB = new JButton(lang.text("undo"),buttonIcon("undoIcon"));
+        redoB = new JButton(lang.text("redo"),buttonIcon("redoIcon"));
+        zoomIn = new JButton(lang.text("zoomin"),buttonIcon("zoomInIcon"));
+        zoomOut = new JButton(lang.text("zoomout"),buttonIcon("zoomOutIcon"));
 
         undoB.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

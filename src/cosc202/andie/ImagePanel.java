@@ -172,7 +172,7 @@ public class ImagePanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (image.hasImage()) {
-            this.setSize(getPreferredSize());
+            this.setMinimumSize(getPreferredSize());
             Graphics2D g2  = (Graphics2D) g.create();
             g2.scale(scale, scale);
             g2.drawImage(image.getCurrentImage(), null, 0, 0);

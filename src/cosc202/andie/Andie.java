@@ -248,8 +248,6 @@ public class Andie {
      * </p>
      */
     public static void makeToolBarVisible() {
-        f.revalidate();
-        f.repaint();
         andiesToolBar.setVisible(true);
         andiesToolBar.revalidate();
         andiesToolBar.repaint();
@@ -259,7 +257,6 @@ public class Andie {
             button.repaint();
         }
         
-        f.pack();
     }
 
     public static void removeZoomFromToolBar() {
@@ -398,6 +395,7 @@ public class Andie {
         if (size.width > Toolkit.getDefaultToolkit().getScreenSize().getWidth() || size.height > Toolkit.getDefaultToolkit().getScreenSize().getHeight()) {
             size = Toolkit.getDefaultToolkit().getScreenSize();
         }
+
         f.setSize(size);
     }
 

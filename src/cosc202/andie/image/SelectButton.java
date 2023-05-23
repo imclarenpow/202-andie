@@ -10,11 +10,12 @@ import javax.swing.event.MouseInputAdapter;
 
 import cosc202.andie.Andie;
 import cosc202.andie.ImagePanel;
+import cosc202.andie.lang.LanguageSupport;
 
 
 /** 
  * <p>
- * Adapted from Niamh's PencilButton implemntation
+ * Adapted from Niamh's PencilButton implementation
  * This class represents the SelectButton and its functionality, including calls to Select.java that allow the user to draw on an image
  * The SelectButton is placed on the menu bar 
  * It includes private classes for the SelectAction and a SelectListener to respond to button clicks
@@ -26,6 +27,7 @@ import cosc202.andie.ImagePanel;
  * @version 1.0
  */
 public class SelectButton {
+    private LanguageSupport lang = new LanguageSupport();
     //private static Cursor defaultCursor;
     private static ImageIcon icon;
     private static boolean isSelectMode;
@@ -35,6 +37,7 @@ public class SelectButton {
     private static ShapesActions shapesActions;
     private static JMenu shapesMenu;
     private static SelectMouseMotionListener selectListener;
+    private static boolean hasImage; 
     
     /**
      * <p>
@@ -59,6 +62,7 @@ public class SelectButton {
             shapesActions = new ShapesActions(this);
             shapesMenu = shapesActions.createMenu();
         }
+
         startListening();
         Andie.addButtonToMenuBar(cropJButton);
         Andie.addMenu(shapesMenu);
@@ -104,15 +108,19 @@ public class SelectButton {
     }
 
     public static void startListening(){
-        select.getTarget().addMouseListener(selectListener);
-        select.getTarget().addMouseMotionListener(selectListener);
+        if (select != null && select.getTarget().getImage().hasImage()) {
+            select.getTarget().addMouseListener(selectListener);
+            select.getTarget().addMouseMotionListener(selectListener);
+        } 
     }
 
     public static void stopListening(){
-        select.getTarget().removeMouseListener(selectListener);
-        select.getTarget().removeMouseMotionListener(selectListener);
+        if (select != null && select.getTarget().getImage().hasImage()) {
+            select.getTarget().removeMouseListener(selectListener);
+            select.getTarget().removeMouseMotionListener(selectListener);
         shapesActions.stopListening();
         cropButton.stopListening();
+        } 
     }
 
     /**
@@ -124,10 +132,10 @@ public class SelectButton {
      */
     private class SelectListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            Toolkit toolkit = Toolkit.getDefaultToolkit();
-            if(isSelectMode){
+            //Toolkit toolkit = Toolkit.getDefaultToolkit();
+            if(isSelectMode) {
                 disableSelectMode();
-            }else{
+            } else {
                 SelectAction selectAction = new SelectAction(null, icon, null, null);
                 selectAction.actionPerformed(e);
             }
@@ -151,8 +159,10 @@ public class SelectButton {
                     Dimension currentScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
                     ImagePanel.screenSizeOverride = new Dimension((int)Math.round(currentScreenSize.getWidth() / 1.2), (int)Math.round(currentScreenSize.getHeight() / 1.2));
                     enableSelectMode();
+                    hasImage = true;
             }else{
                 target.getImage().ShowNoImageError();
+                hasImage = false;
             }
         }
         

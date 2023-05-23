@@ -91,7 +91,6 @@ public class Pencil implements ImageOperation, java.io.Serializable {
         this.pencilListener = new PencilMouseMotionListener();
         target.addMouseListener(pencilListener);
         target.addMouseMotionListener(pencilListener);
-        Andie.makeToolBarVisible();
         return input; 
     }
     
@@ -136,10 +135,7 @@ public class Pencil implements ImageOperation, java.io.Serializable {
                 startX = x;
                 startY = y;
                 target.repaint();
-                Andie.makeToolBarVisible();
             }
-
-            Andie.makeToolBarVisible();
         }
 
         /**

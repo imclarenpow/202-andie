@@ -42,6 +42,7 @@ public class Andie {
     private static LanguageSupport lang = new LanguageSupport();
     private static JMenuBar menuBar;
     private static ArrayList<JButton> toolbarButtons;
+    private static ArrayList<JButton> zoomButtons;
     // Sets the maximum dimension of images for resize 
     public static final double MAX_DIMENSION_LIMIT = 20000;
     
@@ -89,6 +90,7 @@ public class Andie {
 
         //Toolbar for quick actions
         andiesToolBar = new JToolBar("Quick Actions");
+        zoomButtons = new ArrayList<JButton>();
         ToolBarDetails toolBarDetails = new ToolBarDetails();
         toolbarButtons = toolBarDetails.buttons();
         for (JButton button : toolbarButtons) {
@@ -243,6 +245,7 @@ public class Andie {
     public static void makeToolBarVisible() {
         f.revalidate();
         f.repaint();
+        andiesToolBar.setVisible(true);
         andiesToolBar.revalidate();
         andiesToolBar.repaint();
         for (JButton button : toolbarButtons) {
@@ -251,10 +254,23 @@ public class Andie {
             button.repaint();
         }
         
-        andiesToolBar.setVisible(true);
-
         f.pack();
-        f.setVisible(true);
+    }
+
+    public static void removeZoomFromToolBar() {
+        for (JButton button : toolbarButtons) {
+            if (ToolBarDetails.isZoomButton(button)) {
+                andiesToolBar.remove(button);
+                zoomButtons.add(button);
+            }
+        }
+    }
+
+    public static void addZoomToToolBar() {
+        for (JButton button : zoomButtons) {
+            andiesToolBar.add(button);
+            makeToolBarVisible();
+        }
     }
 
     /**
@@ -266,7 +282,6 @@ public class Andie {
     public static void addButtonToMenuBar(JButton button) {
         menuBar.add(button);
         f.pack();
-        makeToolBarVisible();
     }
 
     /**
@@ -280,7 +295,6 @@ public class Andie {
             menuBar.remove(button);
         }
         f.pack();
-        makeToolBarVisible();
     }
 
     /**
@@ -292,7 +306,6 @@ public class Andie {
     public static void removeButtonFromMenuBar(JButton button) {
         menuBar.remove(button);
         f.pack();
-        makeToolBarVisible();
     }
 
     public static void addMenu(JMenu menu){
@@ -328,7 +341,6 @@ public class Andie {
     public static void setPencilIcon(ImageIcon icon) {
         pencilJButton.setIcon(icon);
         pencilJButton.repaint();
-        makeToolBarVisible();
     }
 
     /**

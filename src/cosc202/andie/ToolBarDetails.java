@@ -13,6 +13,15 @@ import cosc202.andie.view.ViewActions;
 
 
 public class ToolBarDetails {
+
+    private static JButton undoB;
+    private static JButton redoB;
+    private static JButton zoomIn;
+    private static JButton zoomOut;
+
+    public static boolean isZoomButton(JButton button) {
+        return button == zoomIn || button == zoomOut;
+    }
     
     public ArrayList<JButton> buttons() {
         
@@ -21,10 +30,10 @@ public class ToolBarDetails {
         EditActions editActions = new EditActions();
         ViewActions viewActions = new ViewActions();
 
-        JButton undoB = new JButton("Undo",buttonIcon("undoIcon"));
-        JButton redoB = new JButton("Redo",buttonIcon("redoIcon"));
-        JButton zoomIn = new JButton("Zoom In",buttonIcon("zoomInIcon"));
-        JButton zoomOut = new JButton("Zoom Out",buttonIcon("zoomOutIcon"));
+        undoB = new JButton("Undo",buttonIcon("undoIcon"));
+        redoB = new JButton("Redo",buttonIcon("redoIcon"));
+        zoomIn = new JButton("Zoom In",buttonIcon("zoomInIcon"));
+        zoomOut = new JButton("Zoom Out",buttonIcon("zoomOutIcon"));
 
         undoB.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

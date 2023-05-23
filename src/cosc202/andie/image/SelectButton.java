@@ -72,6 +72,11 @@ public class SelectButton {
         Andie.removeButtonFromMenuBar(cropJButton);
         Andie.removeMenu(shapesMenu);
         isSelectMode = false;
+        ImagePanel.screenSizeOverride = new Dimension(0, 0); // removes the screen size override
+    }
+
+    public static boolean isSelectMode(){
+        return isSelectMode;
     }
 
     public static Select getSelect(){
@@ -106,6 +111,8 @@ public class SelectButton {
     public static void stopListening(){
         select.getTarget().removeMouseListener(selectListener);
         select.getTarget().removeMouseMotionListener(selectListener);
+        shapesActions.stopListening();
+        cropButton.stopListening();
     }
 
     /**
@@ -123,13 +130,6 @@ public class SelectButton {
             }else{
                 SelectAction selectAction = new SelectAction(null, icon, null, null);
                 selectAction.actionPerformed(e);
-                int fullscreen = JOptionPane.showConfirmDialog(null, "Select features must be used in a fullscreen window, do you want to continue?", "Confirm Fullscreen", JOptionPane.OK_CANCEL_OPTION);
-                if(fullscreen == 0){
-                    Andie.setSelectIcon(new ImageIcon("assets/exit26.png",null));
-                    Dimension currentScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
-                    ImagePanel.screenSizeOverride = new Dimension((int)Math.round(currentScreenSize.getWidth()), (int)Math.round(currentScreenSize.getHeight()));
-                    enableSelectMode();
-                }
             }
         }
     }
@@ -147,6 +147,10 @@ public class SelectButton {
                     select.setTarget(target);
                     target.repaint();
                     target.getParent().revalidate();
+                    Andie.setSelectIcon(new ImageIcon("assets/exit26.png",null));
+                    Dimension currentScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                    ImagePanel.screenSizeOverride = new Dimension((int)Math.round(currentScreenSize.getWidth() / 1.2), (int)Math.round(currentScreenSize.getHeight() / 1.2));
+                    enableSelectMode();
             }else{
                 target.getImage().ShowNoImageError();
             }

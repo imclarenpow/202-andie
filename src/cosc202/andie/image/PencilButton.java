@@ -214,7 +214,7 @@ public class PencilButton {
                 pencil.setTarget(target);
                 target.defaultZoom();
                 target.repaint();
-
+                
                 Dimension currentScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
                 ImagePanel.screenSizeOverride = new Dimension((int)Math.round(currentScreenSize.getWidth() / 1.2), (int)Math.round(currentScreenSize.getHeight() / 1.2));
                 

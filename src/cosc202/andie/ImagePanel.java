@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import cosc202.andie.image.PencilButton;
+import cosc202.andie.image.SelectButton;
 
 /**
  * <p>
@@ -123,7 +124,7 @@ public class ImagePanel extends JPanel {
      * @param zoomPercent The new zoom level as a percentage.
      */
     public void setZoom(double zoomPercent) {
-        if (!PencilButton.isDraw()) {
+        if (!PencilButton.isDraw() || !SelectButton.isSelectMode()) {
             if (zoomPercent < 50) {
                 zoomPercent = 50;
             }
@@ -150,7 +151,7 @@ public class ImagePanel extends JPanel {
         if (screenSizeOverride.width != 0) {
             return screenSizeOverride;
         }
-        else if (image.hasImage() && !PencilButton.isDraw()) {
+        else if (image.hasImage() && (!PencilButton.isDraw() || !SelectButton.isSelectMode())) {
             return new Dimension((int)Math.round(image.getCurrentImage().getWidth()*scale), 
                                  (int)Math.round(image.getCurrentImage().getHeight()*scale));
         } else {

@@ -107,6 +107,7 @@ public class PencilButton {
         Andie.removeButtonsFromMenuBar(widthJButtons);
         Andie.removeButtonFromMenuBar(eraserJButton);
         ImagePanel.screenSizeOverride = new Dimension(0, 0); // removes the screen size override
+        Andie.makeToolBarVisible();
     }
 
     /**
@@ -137,6 +138,7 @@ public class PencilButton {
                 result = false;
             }
             pencilAction.actionPerformed(e);
+            Andie.makeToolBarVisible();
             return result;
         }
 
@@ -151,6 +153,7 @@ public class PencilButton {
             if (isDrawMode) {
                 // Disables ANDIE's draw mode
                 disableDrawMode();
+                Andie.makeToolBarVisible();
             } else {
                 Pencil.setListening(true);
 
@@ -190,6 +193,7 @@ public class PencilButton {
          */
         PencilAction(String name, ImageIcon icon, String desc, Integer mnemonic){
             super(name, icon, desc, mnemonic);
+            Andie.makeToolBarVisible();
         }
 
         public boolean hasImageToDraw() {
@@ -225,7 +229,7 @@ public class PencilButton {
             } else {
                 target.getImage().ShowNoImageError();
             }
-           
+            Andie.makeToolBarVisible();
         }
     }
 }

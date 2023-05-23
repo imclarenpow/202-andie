@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JToolBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import cosc202.andie.edit.EditActions;
 import cosc202.andie.view.ViewActions;
@@ -13,8 +14,10 @@ import cosc202.andie.view.ViewActions;
 
 public class ToolBarDetails {
     
-    public static void buttons(JToolBar toolBar) {
-    
+    public ArrayList<JButton> buttons() {
+        
+        ArrayList<JButton> toolbarButtons = new ArrayList<JButton>();
+
         EditActions editActions = new EditActions();
         ViewActions viewActions = new ViewActions();
 
@@ -26,34 +29,40 @@ public class ToolBarDetails {
         undoB.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 editActions.new UndoAction("", null, "", null).actionPerformed(e);
+                Andie.makeToolBarVisible();
             }
         });
 
         redoB.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 editActions.new RedoAction("", null, "", null).actionPerformed(e);
+                Andie.makeToolBarVisible();
             }
         });
 
         zoomIn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 viewActions.new ZoomInAction("", null, "", null).actionPerformed(e);
+                Andie.makeToolBarVisible();
             }
         });
 
         zoomOut.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 viewActions.new ZoomOutAction("", null, "", null).actionPerformed(e);
+                Andie.makeToolBarVisible();
             }
         });
 
-        toolBar.add(undoB);
-        toolBar.add(redoB);
-        toolBar.add(zoomIn);
-        toolBar.add(zoomOut);
+        toolbarButtons.add(undoB);
+        toolbarButtons.add(redoB);
+        toolbarButtons.add(zoomIn);
+        toolbarButtons.add(zoomOut);
 
+        return toolbarButtons;
     }
-    public static Icon buttonIcon(String button) {
+
+    public Icon buttonIcon(String button) {
         Icon iconToReturn = null;
         if(button == "undoIcon"){
             iconToReturn = new ImageIcon("assets/undoIcon.png");

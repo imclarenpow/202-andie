@@ -178,5 +178,7 @@ public class ImagePanel extends JPanel {
             g2.drawImage(image.getCurrentImage(), null, 0, 0);
             g2.dispose();
         }
+
+        Andie.makeToolBarVisible();
     }
 }

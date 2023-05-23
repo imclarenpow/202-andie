@@ -8,6 +8,7 @@ import java.awt.image.*;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputAdapter;
 
+import cosc202.andie.Andie;
 import cosc202.andie.colour.ColourSelectorButton;
 
 /**
@@ -90,7 +91,7 @@ public class Pencil implements ImageOperation, java.io.Serializable {
         this.pencilListener = new PencilMouseMotionListener();
         target.addMouseListener(pencilListener);
         target.addMouseMotionListener(pencilListener);
-
+        Andie.makeToolBarVisible();
         return input; 
     }
     
@@ -135,7 +136,10 @@ public class Pencil implements ImageOperation, java.io.Serializable {
                 startX = x;
                 startY = y;
                 target.repaint();
+                Andie.makeToolBarVisible();
             }
+
+            Andie.makeToolBarVisible();
         }
 
         /**

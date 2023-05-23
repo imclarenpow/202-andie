@@ -412,7 +412,7 @@ public class FilterActions {
             }
 
             int filterIndex = 1;
-            String[] filters = {"1", "2", "3", "4", "5", "6", "7", "8" };
+            String[] filters = {"0","1", "2", "3", "4", "5", "6", "7", "8" };
 
             JPanel panel = new JPanel();
             panel.setLayout(new GridLayout(2, 1));

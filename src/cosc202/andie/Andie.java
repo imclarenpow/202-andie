@@ -1,5 +1,4 @@
 package cosc202.andie;
-import cosc202.andie.Macros.MacroActions;
 import cosc202.andie.colour.*;
 import cosc202.andie.edit.*;
 import cosc202.andie.file.*;
@@ -137,10 +136,6 @@ public class Andie {
         // Actions that affect the representation of colour in the image
         ColourActions colourActions = new ColourActions();
         menuBar.add(colourActions.createMenu());
-
-        // Macro feature buttons
-        MacroActions macroActions = new MacroActions();
-        menuBar.add(macroActions.createMenu());
 
         // Adds help menu to JFrame
         HelpActions helpActions = new HelpActions();

@@ -36,8 +36,8 @@ public class CropButton {
      * @param selectButton the SelectButton that this CropButton is associated with
      */
     public CropButton(SelectButton selectButton) {
-        this.selectButton = selectButton;
-        this.select = selectButton.getSelect();
+        CropButton.selectButton = selectButton;
+        CropButton.select = SelectButton.getSelect();
     }
 
     /**

@@ -8,7 +8,6 @@ import javax.swing.*;
 
 import cosc202.andie.Andie;
 import cosc202.andie.ImagePanel;
-import cosc202.andie.filter.FilterActions;
 
 /** 
  * <p>

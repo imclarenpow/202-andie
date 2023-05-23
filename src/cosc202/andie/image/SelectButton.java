@@ -28,7 +28,6 @@ import cosc202.andie.lang.LanguageSupport;
  */
 public class SelectButton {
     private LanguageSupport lang = new LanguageSupport();
-    //private static Cursor defaultCursor;
     private static ImageIcon icon;
     private static boolean isSelectMode;
     private static Select select;
@@ -189,7 +188,7 @@ public class SelectButton {
                 shapesActions.stopListening();
             }else{
                 select.setEnd(e.getPoint());
-                select.getTarget().getImage().apply(select);
+                select.apply(select.getTarget().getImage().getCurrent());
                 select.getTarget().repaint();
                 select.getTarget().getParent().revalidate();
                 cropButton.startListening();

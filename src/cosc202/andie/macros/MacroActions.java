@@ -143,6 +143,7 @@ public class MacroActions {
                 super(name, icon, desc, mnemonic);
             }
 
+            
             /**
              * <p>
              * Called when a MacroStop action is triggered

@@ -259,6 +259,12 @@ public class Andie {
         
     }
 
+    /**
+     * <p>
+     * Removes the zoom buttons from ANDIE's toolbar
+     * Called when drawing mode is enabled (as zoom is disabled when in draw mode)
+     * </p>
+     */
     public static void removeZoomFromToolBar() {
         for (JButton button : toolbarButtons) {
             if (ToolBarDetails.isZoomButton(button)) {
@@ -316,12 +322,20 @@ public class Andie {
         f.pack();
     }
 
+    /**
+     * Adds a menu to ANDIE's menu bar
+     * @param menu the menu to be added to the menu bar
+     */
     public static void addMenu(JMenu menu){
         menuBar.add(menu);
         f.pack();   
         makeToolBarVisible();
     }
 
+    /**
+     * Removes a menu from ANDIE's menu bar
+     * @param menu the menu to be removed from the menu bar
+     */
     public static void removeMenu(JMenu menu) {
         menuBar.remove(menu);
         f.pack();

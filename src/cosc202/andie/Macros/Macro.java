@@ -1,6 +1,5 @@
-package cosc202.andie.Macros;
+package cosc202.andie.macros;
 
-import java.awt.image.ImageObserver;
 import java.util.Stack;
 
 import cosc202.andie.image.ImageOperation;

@@ -73,3 +73,7 @@ pages: # publish Javadoc website
         - public
     only:
         - main
+language-job:    # This job reads the "language" file.
+  stage: test    # It can run at the same time as other jobs in the test stage.
+  script:
+    - cat src/cosc202/andie/lang/language.txt

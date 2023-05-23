@@ -15,7 +15,7 @@ import cosc202.andie.lang.LanguageSupport;
 
 /** 
  * <p>
- * Adapted from Niamh's PencilButton implemntation
+ * Adapted from Niamh's PencilButton implementation
  * This class represents the SelectButton and its functionality, including calls to Select.java that allow the user to draw on an image
  * The SelectButton is placed on the menu bar 
  * It includes private classes for the SelectAction and a SelectListener to respond to button clicks
@@ -27,6 +27,7 @@ import cosc202.andie.lang.LanguageSupport;
  * @version 1.0
  */
 public class SelectButton {
+    private LanguageSupport lang = new LanguageSupport();
     //private static Cursor defaultCursor;
     private static ImageIcon icon;
     private static boolean isSelectMode;
@@ -124,14 +125,14 @@ public class SelectButton {
      */
     private class SelectListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            Toolkit toolkit = Toolkit.getDefaultToolkit();
+            //Toolkit toolkit = Toolkit.getDefaultToolkit();
             if(isSelectMode) {
                 disableSelectMode();
             } else {
                 SelectAction selectAction = new SelectAction(null, icon, null, null);
                 selectAction.actionPerformed(e);
                 if (hasImage) {
-                    int fullscreen = JOptionPane.showConfirmDialog(null, "Select features must be used in a fullscreen window, do you want to continue?", "Confirm Fullscreen", JOptionPane.OK_CANCEL_OPTION);
+                    int fullscreen = JOptionPane.showConfirmDialog(null, lang.text("mustbefullscr"), lang.text("confull"), JOptionPane.OK_CANCEL_OPTION);
                     if(fullscreen == 0){
                         Andie.setSelectIcon(new ImageIcon("assets/exit26.png",null));
                         Dimension currentScreenSize = Toolkit.getDefaultToolkit().getScreenSize();

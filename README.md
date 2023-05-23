@@ -19,7 +19,7 @@ Examples of ANDIE can be seen below
 
 ### Overview
 ANDIE is designed to allow for fast, straightforward usage with helpful warnings to guide users away from potentially damaging actions.
-The interface consists of eight submenus and an image representing the state of the edited image.
+The interface consists of nine submenus and an image representing the state of the edited image.
 To interact with one of these submenus, simply click on the relevant header at the top of the screen. You will then be
 presented with various options, which are outlined in the *submenus* guide below.
 There is also a mini drawing toolbar with functions such as a pencil and the ability to crop shapes out of the image
@@ -121,6 +121,9 @@ Provides options to adjust image brightness and contrast
 Pop up menu to change language
 ##### Help
 Pop up window with Documentation for each menu
+
+### Macro
+> Lets the user record, save and open macros so that common sets of operations (e.g. greyscale, sharpen filter, flip horizontally) can be reused on different images
 
 ## Other features
 

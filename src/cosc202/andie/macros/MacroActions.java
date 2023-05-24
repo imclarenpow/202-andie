@@ -30,7 +30,7 @@ public class MacroActions {
     private LanguageSupport lang = new LanguageSupport();
     private boolean recording = false;
     private ArrayList<Action> actions;
-    private Stack <ImageOperation> imageOps;
+    private ArrayList <ImageOperation> imageOps;
     private Stack <ImageOperation> macroOps;
     private int size;
     
@@ -158,9 +158,11 @@ public class MacroActions {
                 System.out.println("Macro Record");
 
                 if (recording) {
-                    imageOps = target.getImage().getImageOps();
+                    imageOps = new ArrayList<ImageOperation>(target.getImage().getImageOps());
                     for (int i = size; i < imageOps.size(); i++) {
-                        macroOps.push(imageOps.get(i));
+                        if (!(imageOps.get(i) instanceof Pencil)) {
+                            macroOps.push(imageOps.get(i));
+                        }  
                     }
                     
                     saveMacro(macroOps);

@@ -2,13 +2,10 @@ package cosc202.andie;
 
 import java.util.*;
 import java.io.*;
-import java.awt.event.ActionEvent;
 import java.awt.image.*;
 import javax.imageio.*;
 import javax.swing.JOptionPane;
 
-import cosc202.andie.edit.EditActions;
-import cosc202.andie.edit.EditActions.UndoAction;
 import cosc202.andie.image.*;
 import cosc202.andie.lang.*;
 

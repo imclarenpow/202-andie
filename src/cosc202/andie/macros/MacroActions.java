@@ -107,7 +107,6 @@ public class MacroActions {
        public void actionPerformed(ActionEvent e) {
         
         if(target.getImage().hasImage() ){
-            System.out.println("Macro start");
             recording = true;
             if(target.getImage().getImageOps() != null){
             size = target.getImage().getImageOps().size();
@@ -152,10 +151,6 @@ public class MacroActions {
              */
             public void actionPerformed(ActionEvent e) {
                 macroOps = new Stack<ImageOperation>();
-                JFileChooser fileChooser = new JFileChooser();
-                String filePath = "";
-                // TODO: Implement macro record logic
-                System.out.println("Macro Record");
 
                 if (recording) {
                     imageOps = new ArrayList<ImageOperation>(target.getImage().getImageOps());
@@ -166,8 +161,6 @@ public class MacroActions {
                     }
                     
                     saveMacro(macroOps);
-                    // Print the user's input
-                    System.out.println("User input: ");
                 } else {
                     JOptionPane.showMessageDialog(null, "Warning! There is no macro recording!", "noMacroRecording", JOptionPane.WARNING_MESSAGE);
 

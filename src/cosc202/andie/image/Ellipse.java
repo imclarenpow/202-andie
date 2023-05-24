@@ -19,7 +19,7 @@ import java.awt.geom.*;
  * @author Nic Scott
  * @version 1.0
  */
-public class Ellipse implements ImageOperation {
+public class Ellipse implements ImageOperation, java.io.Serializable {
     //Data fields
     private Color drawingColour;
     private Point start;

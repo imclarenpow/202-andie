@@ -90,6 +90,10 @@ public class EditableImage {
         return current != null;
     }
 
+    public BufferedImage getCurrent(){
+        return current;
+    }
+
     /**
      * <p>
      * Make a 'deep' copy of a BufferedImage.

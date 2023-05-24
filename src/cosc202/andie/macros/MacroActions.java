@@ -268,9 +268,11 @@ public class MacroActions {
                 String filePath = fileChooser.getSelectedFile().getCanonicalPath()+ ".macro";
                 
                 // Save the stack to the chosen filePath
-                ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(filePath));
+                FileOutputStream fileOut = new FileOutputStream(filePath); 
+                ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
                 objOut.writeObject(macroStack);
                 objOut.close();
+                fileOut.close();
                 
             } catch (IOException ex) {
                 ex.printStackTrace();

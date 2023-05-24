@@ -10,7 +10,7 @@ import java.awt.Point;
 
 import cosc202.andie.ImagePanel;
 
-public class Select implements ImageOperation{
+public class Select {
     private BufferedImage input;
     private BufferedImage original;
     private ImagePanel target;

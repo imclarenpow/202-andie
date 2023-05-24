@@ -18,7 +18,7 @@ import java.awt.*;
  * @author Nic Scott
  * @version 1.0
  */
-public class Rectangle implements ImageOperation {
+public class Rectangle implements ImageOperation, java.io.Serializable {
     //Data fields
     private Point start;
     private Point end; 

@@ -9,6 +9,8 @@ import cosc202.andie.image.*;
 import cosc202.andie.lang.*;
 import cosc202.andie.macros.MacroActions;
 import cosc202.andie.view.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import java.awt.*;
 import javax.imageio.*;
@@ -108,6 +110,13 @@ public class Andie {
         ImagePanel imagePanel = new ImagePanel();
         ImageAction.setTarget(imagePanel);
         JScrollPane scrollPane = new JScrollPane(imagePanel);
+        JViewport viewport = scrollPane.getViewport();
+        viewport.addChangeListener(new ChangeListener()  {
+            public void stateChanged(ChangeEvent e) {
+                // Repaint the target panel when the scroll position changes so the toolbar doesn't show multiple times
+                imagePanel.repaint();
+            }
+        });
         frame.add(scrollPane, BorderLayout.CENTER);
         
         // Add in menus for various types of action the user may perform.

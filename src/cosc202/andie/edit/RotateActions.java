@@ -100,7 +100,7 @@ public class RotateActions {
                 PencilButton.disableDrawMode();
             }
             
-            target.getImage().apply(new Rotate("ClockwiseNinety"));
+            target.getImage().apply(new Rotate90Clockwise());
             target.repaint();
             target.getParent().revalidate();
         }
@@ -144,7 +144,7 @@ public class RotateActions {
                 PencilButton.disableDrawMode();
             }
 
-            target.getImage().apply(new Rotate("AntiClockwiseNinety"));
+            target.getImage().apply(new Rotate90Anticlockwise());
             target.repaint();
             target.getParent().revalidate();
         }
@@ -188,7 +188,7 @@ public class RotateActions {
                 PencilButton.disableDrawMode();
             }
 
-            target.getImage().apply(new Rotate("HundredEighty"));
+            target.getImage().apply(new Rotate180());
             target.repaint();
             target.getParent().revalidate();
         }

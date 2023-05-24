@@ -166,6 +166,10 @@ public class MacroActions {
 
                 }
                 recording = false;
+
+                for (ImageOperation action : macroOps) {
+                    System.out.println(action);
+                }
             }
     }
 
@@ -228,23 +232,28 @@ public class MacroActions {
                         // to do with "type erasure" in Java: the compiler cannot
                         // produce code that fails at this point in all cases in
                         // which there is actually a type mismatch for one of the
-                        // elements within the Stack, i.e., a non-ImageOperation.
+                        // elements within the Stack, i.e., a non-ImageOperation
                         @SuppressWarnings("unchecked")
                         Stack<ImageOperation> macroOpsRead = (Stack<ImageOperation>) objIn.readObject();
                         macroOps = macroOpsRead;
                         objIn.close();
                         fileIn.close();
                         
-                        
+                        int count =0;
                         
                         for (ImageOperation imageOperation : macroOpsRead) {
                             if (!(imageOperation instanceof Pencil)) {
                                 target.getImage().apply(imageOperation);
+                                target.repaint();
+                                target.getParent().revalidate();
+                                System.out.println(count);
+                                System.out.println(imageOperation);
+                                
                             }  
+                            count++;
                         }
                         
-                        target.repaint();
-                        target.getParent().revalidate();
+                        System.out.println("done");      
                     } else {
                         // File does not have the ".macro" extension, handle the error or display a message to the user
                         JOptionPane.showMessageDialog(null, lang.text("invalidfilename"), lang.text("invalidfilename"), JOptionPane.ERROR_MESSAGE);

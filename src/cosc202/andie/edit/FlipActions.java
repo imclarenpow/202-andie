@@ -98,7 +98,7 @@ public class FlipActions {
                 PencilButton.disableDrawMode();
             }
             
-            target.getImage().apply(new Flip("Horizontal"));
+            target.getImage().apply(new FlipHorizontal());
             target.repaint();
             target.getParent().revalidate();
         }
@@ -143,7 +143,7 @@ public class FlipActions {
                 PencilButton.disableDrawMode();
             }
 
-            target.getImage().apply(new Flip("Vertical"));
+            target.getImage().apply(new FlipVertical());
             target.repaint();
             target.getParent().revalidate();
         }

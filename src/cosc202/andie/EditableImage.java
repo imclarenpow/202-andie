@@ -308,6 +308,7 @@ public class EditableImage {
         if (current != null) {
             current = op.apply(current);
             ops.add(op);
+            System.out.println("applied" + op);
             return true;
         } else {
             ShowNoImageError();

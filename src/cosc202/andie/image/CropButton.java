@@ -139,7 +139,7 @@ public class CropButton {
             target.getImage().apply(cropper);
             target.repaint();
             target.getParent().revalidate();
-            select.setOriginal(cropper.getCropped());
+            select.setOriginal(target.getImage().getCurrent());
             select.setTarget(target);
             selectButton.disableSelectMode();
         }

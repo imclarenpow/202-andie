@@ -16,9 +16,8 @@ import java.awt.Point;
  * @version 1.0
  */
 
-public class Crop implements ImageOperation {
+public class Crop implements ImageOperation, java.io.Serializable {
     //Data fields
-    private BufferedImage cropped; 
     private Point start;
     private Point end;
     
@@ -54,20 +53,10 @@ public class Crop implements ImageOperation {
         int width = Math.abs(start.x - end.x);
         int height = Math.abs(start.y - end.y);
 
-        cropped = input.getSubimage(x, y, width, height);
-        return cropped; 
+        input = input.getSubimage(x, y, width, height);
+        return input; 
     }
 
-    /**
-     * <p>
-     * Get the cropped image
-     * </p>
-     * 
-     * @return the cropped image
-     */
-    public BufferedImage getCropped(){
-        return cropped; 
-    }
 
     /**
      * <p>

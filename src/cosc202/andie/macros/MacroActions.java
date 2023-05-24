@@ -244,11 +244,12 @@ public class MacroActions {
                         
                         
                         
-                        for (ImageOperation imageOperation : macroOps) {
+                        for (ImageOperation imageOperation : macroOpsRead) {
                             if (!(imageOperation instanceof Pencil)) {
                                 target.getImage().apply(imageOperation);
                             }  
                         }
+                        
                         target.repaint();
                         target.getParent().revalidate();
                     } else {

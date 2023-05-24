@@ -225,6 +225,25 @@ public class MacroActions {
 
                     if (imageFilePath.toLowerCase().endsWith(".macro")) {
                         // File has the ".macro" extension, continue with processing
+                        
+                        FileInputStream fileIn = new FileInputStream(imageFilePath);
+                        ObjectInputStream objIn = new ObjectInputStream(fileIn);
+
+                        // Silence the Java compiler warning about type casting.
+                        // Understanding the cause of the warning is way beyond
+                        // the scope of COSC202, but if you're interested, it has
+                        // to do with "type erasure" in Java: the compiler cannot
+                        // produce code that fails at this point in all cases in
+                        // which there is actually a type mismatch for one of the
+                        // elements within the Stack, i.e., a non-ImageOperation.
+                        @SuppressWarnings("unchecked")
+                        Stack<ImageOperation> macroOpsRead = (Stack<ImageOperation>) objIn.readObject();
+                        macroOps = macroOpsRead;
+                        objIn.close();
+                        fileIn.close();
+                        
+                        
+                        
                         for (ImageOperation imageOperation : macroOps) {
                             if (!(imageOperation instanceof Pencil)) {
                                 target.getImage().apply(imageOperation);

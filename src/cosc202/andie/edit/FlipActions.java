@@ -66,7 +66,7 @@ public class FlipActions {
      * 
      * @see Flip
      */  
-    public class FlipHorizontalAction extends ImageAction{
+    public class FlipHorizontalAction extends ImageAction implements java.io.Serializable {
         /**
          * <p>
          * Create a flip horizontal action.
@@ -112,7 +112,7 @@ public class FlipActions {
      * 
      * @see Flip
      */  
-    public class FlipVerticalAction extends ImageAction{
+    public class FlipVerticalAction extends ImageAction implements java.io.Serializable {
         /**
          * <p>
          * Create a flip Vertically action.

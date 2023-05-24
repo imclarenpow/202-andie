@@ -103,7 +103,7 @@ public class Pencil implements ImageOperation, java.io.Serializable {
      * Adapted from https://docs.oracle.com/javase/tutorial/uiswing/events/mousemotionlistener.html
      * </p>
      */
-    private class PencilMouseMotionListener extends MouseInputAdapter {
+    private class PencilMouseMotionListener extends MouseInputAdapter implements java.io.Serializable {
         /**
          * Responds to mouse drags by drawing onto the target image
          */

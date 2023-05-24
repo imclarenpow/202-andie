@@ -224,7 +224,9 @@ public class MacroActions {
                     if (imageFilePath.toLowerCase().endsWith(".macro")) {
                         // File has the ".macro" extension, continue with processing
                         for (ImageOperation imageOperation : macroOps) {
-                            target.getImage().apply(imageOperation);
+                            if (!(imageOperation instanceof Pencil)) {
+                                target.getImage().apply(imageOperation);
+                            }  
                         }
                         target.repaint();
                         target.getParent().revalidate();

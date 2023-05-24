@@ -116,7 +116,7 @@ public class PencilButton {
      * Handles cases where draw mode is enabled and disabled
      * </p>
      */
-    private class PencilListener implements ActionListener {
+    private class PencilListener implements ActionListener, java.io.Serializable {
         private PencilAction pencilAction;
 
         public boolean reenableListener(ActionEvent e) {

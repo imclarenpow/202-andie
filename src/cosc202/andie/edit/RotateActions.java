@@ -69,7 +69,7 @@ public class RotateActions {
      * 
      * @see Rotate
      */  
-    public class RotateClockwiseAction extends ImageAction{
+    public class RotateClockwiseAction extends ImageAction implements java.io.Serializable {
         /**
          * <p>
          * Create a rotate 90 degrees clockwise action.
@@ -113,7 +113,7 @@ public class RotateActions {
      * 
      * @see Rotate
      */
-    public class RotateAntiClockwiseAction extends ImageAction{
+    public class RotateAntiClockwiseAction extends ImageAction implements java.io.Serializable {
         /**
          * <p>
          * Create a rotate anti-clockwise action.
@@ -157,7 +157,7 @@ public class RotateActions {
      * 
      * @see Rotate
      */
-    public class Rotate180Action extends ImageAction{
+    public class Rotate180Action extends ImageAction implements java.io.Serializable {
         /**
          * <p>
          * Create a rotate 180 degrees action.

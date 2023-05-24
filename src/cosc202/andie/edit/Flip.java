@@ -18,7 +18,7 @@ import cosc202.andie.image.*;
  * 
  * @author Rochelle Cole
  */
-public class Flip implements ImageOperation {
+public class Flip implements ImageOperation, java.io.Serializable {
 
     private String flipDirection;// String to set the direction of the flip
     /**

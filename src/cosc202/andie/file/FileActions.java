@@ -9,6 +9,8 @@ import javax.swing.*;
 import cosc202.andie.Andie;
 import cosc202.andie.EditableImage;
 import cosc202.andie.ImagePanel;
+import cosc202.andie.edit.EditActions;
+import cosc202.andie.edit.EditActions.UndoAction;
 import cosc202.andie.image.*;
 import cosc202.andie.lang.*;
 
@@ -178,6 +180,11 @@ public class FileActions {
         public void actionPerformed(ActionEvent e) {
             try {
                 if (target.getImage().hasImage()) {
+                    // Remove drawings
+                    EditActions editActionsTemp = new EditActions();
+                    UndoAction eraserAction = editActionsTemp.new UndoAction(null, null, null, null);
+                    eraserAction.undoDraw(e);
+
                     target.getImage().save();    
                 } else {
                     ShowNoImageSaveExportError();
@@ -245,6 +252,11 @@ public class FileActions {
         public void actionPerformed(ActionEvent e) {
             try {
                 if (target.getImage().hasImage()) {
+                    // Remove drawings
+                    EditActions editActionsTemp = new EditActions();
+                    UndoAction eraserAction = editActionsTemp.new UndoAction(null, null, null, null);
+                    eraserAction.undoDraw(e);
+                    
                     String imageFilepath = getValidImageFilepath(target, "Save Image");
                     if (!imageFilepath.isEmpty()) {
                         target.getImage().saveAs(imageFilepath);

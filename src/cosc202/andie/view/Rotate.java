@@ -22,7 +22,7 @@ import cosc202.andie.image.*;
  * @author Rochelle Cole and idea from chatGPT
  */
 
-public class Rotate implements ImageOperation{
+public class Rotate implements ImageOperation, java.io.Serializable {
     
     private String rotateDirection;// String to set the direction of the rotate
     /**
